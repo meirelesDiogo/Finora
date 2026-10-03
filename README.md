@@ -1,46 +1,16 @@
 # 💰 Finora
 
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0A0D14,50:2E8BFF,100:7C5CFF&height=200&section=header&text=Finora&fontSize=55&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Seu%20dinheiro.%20Seu%20controle.%20Sua%20vis%C3%A3o.&descAlignY=55&descSize=18" width="100%">
-</p>
+> **Seu dinheiro. Seu controle. Sua visão.**
 
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=18&duration=3000&pause=800&color=2E8BFF&center=true&vCenter=true&width=620&lines=Controle+financeiro+pessoal+moderno;Receitas%2C+despesas%2C+metas+e+projetos;Next.js+%2B+Prisma+%2B+PostgreSQL" alt="Typing SVG" />
-</p>
+**Status:** 🚧 Em desenvolvimento · **Versão:** v0.1 · **Licença:** MIT
 
-<p align="center">
-
-![Status](https://img.shields.io/badge/Status-🚧%20Em%20Desenvolvimento-orange)
-![Version](https://img.shields.io/badge/Version-v0.1-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
-![Open Source](https://img.shields.io/badge/Open%20Source-Yes-success)
-![Contributions](https://img.shields.io/badge/Contributions-Welcome-brightgreen)
-
-</p>
-
-<p align="center">
-
-![Next.js](https://img.shields.io/badge/Next.js-App_Router-black?logo=next.js)
-![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white)
-![Auth.js](https://img.shields.io/badge/Auth.js-2E8BFF?logo=auth0&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
-![Neon](https://img.shields.io/badge/Neon-Serverless_Postgres-7C5CFF?logo=postgresql&logoColor=white)
-![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?logo=prisma)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white)
-
-</p>
-
-<p align="center">
-  <strong>Seu dinheiro. Seu controle. Sua visão.</strong>
-</p>
+**Stack:** Next.js · React · TypeScript · Tailwind CSS · Prisma · PostgreSQL (Neon) · Auth.js
 
 ---
 
 # 📖 Sobre o Projeto
 
-O **Finora** é uma plataforma de **controle financeiro pessoal** que permite registrar tudo o que entra e sai da sua vida financeira e acompanhar isso por meses, contas, categorias, projetos e metas, com gráficos e relatórios que mostram para onde o dinheiro está indo.
+O **Finora** é uma plataforma de **controle financeiro pessoal**. Ela permite registrar tudo o que entra e sai da sua vida financeira e acompanhar isso por meses, contas, categorias, projetos e metas, com gráficos e relatórios que mostram para onde o dinheiro está indo.
 
 Cada mês funciona como um **período financeiro independente**, com seus próprios dados, e o sistema também compara meses entre si para mostrar sua evolução.
 
@@ -55,16 +25,6 @@ Outubro de 2026
 > **🚧 Este projeto está em desenvolvimento ativo e evolui continuamente.**
 >
 > O Finora não é apenas um projeto de portfólio. Ele também representa a evolução do autor como desenvolvedor: arquitetura em camadas, segurança, cálculos financeiros precisos e uma interface cuidada.
-
----
-
-# 📊 Dashboard
-
-Resumo do mês, comparação com o mês anterior, gráficos de evolução, despesas por categoria e histórico mensal em uma única tela.
-
-<p align="center">
-  <img src="docs/assets/dashboard.svg" alt="Dashboard do Finora" width="100%">
-</p>
 
 ---
 
@@ -84,72 +44,41 @@ Resumo do mês, comparação com o mês anterior, gráficos de evolução, despe
 
 # 🧩 Funcionalidades
 
-<table>
-<tr>
-<td width="50%" valign="top">
-
-### 📅 Controle mensal
-Navegue entre meses e veja receitas, despesas e saldo de cada período, com comparação percentual em relação ao mês anterior.
-
-</td>
-<td width="50%" valign="top">
-
-### 💸 Transações
-Lista moderna com filtros por mês, categoria, conta, tipo, projeto e forma de pagamento, além de busca e paginação.
-
-</td>
-</tr>
-<tr>
-<td valign="top">
-
-### 🏦 Contas
-Cada conta mostra saldo, entradas, saídas e histórico, com o saldo total consolidado.
-
-</td>
-<td valign="top">
-
-### 🏷️ Categorias
-Categorias de receita e despesa com cor e ícone próprios. Categorias com transações são protegidas contra exclusão acidental.
-
-</td>
-</tr>
-<tr>
-<td valign="top">
-
-### 🧳 Projetos
-Agrupe gastos de uma viagem, compra ou evento e acompanhe orçamento, total gasto e distribuição por categoria.
-
-</td>
-<td valign="top">
-
-### 🎯 Metas
-Objetivos financeiros com progresso, valor restante, prazo e histórico de contribuições.
-
-</td>
-</tr>
-<tr>
-<td valign="top">
-
-### 📐 Orçamentos
-Limites mensais por categoria, com avisos visuais discretos aos 70%, 90% e 100%.
-
-</td>
-<td valign="top">
-
-### 📑 Relatórios
-Resumo mensal com maiores categorias, principais gastos, projetos que mais consumiram dinheiro e evolução diária.
-
-</td>
-</tr>
-</table>
+| | Funcionalidade | O que faz |
+|---|---|---|
+| 📊 | **Dashboard** | Saldo, receitas, despesas e economia do mês, com comparação em relação ao mês anterior e gráficos de evolução. |
+| 📅 | **Controle mensal** | Seletor de mês para navegar entre períodos, cada um com seus próprios números. |
+| 💸 | **Transações** | Lista com filtros por mês, categoria, conta, tipo, projeto e forma de pagamento, busca e paginação. |
+| 🏦 | **Contas** | Saldo, entradas, saídas e histórico de cada conta, com o saldo total consolidado. |
+| 🏷️ | **Categorias** | Receitas e despesas com cor e ícone próprios. Categorias com transações são protegidas contra exclusão. |
+| 🧳 | **Projetos** | Viagens, compras e eventos com orçamento, total gasto e gastos por categoria. |
+| 📐 | **Orçamentos** | Limites mensais por categoria, com avisos visuais aos 70%, 90% e 100%. |
+| 🎯 | **Metas** | Progresso, valor restante, prazo e histórico de contribuições. |
+| 📑 | **Relatórios** | Resumo mensal, principais gastos, projetos que mais consumiram dinheiro e evolução diária. |
+| 🔑 | **Login com Google** | Entrada rápida com a conta Google, além de e-mail e senha. |
 
 ---
 
-# 🎯 Metas, Projetos e Orçamentos
+# 📊 Dashboard
 
-<p align="center">
-  <img src="docs/assets/progress.svg" alt="Barras de progresso de metas, projetos e orçamentos" width="100%">
-</p>
+O painel principal reúne, em uma única tela:
+
+```text
+┌──────────────────────── Outubro 2026 ────────────────────────┐
+│  Saldo atual     Receitas      Despesas     Economizado      │
+│  R$ 1.400,00     R$ 3.500,00   R$ 2.100,00  40%              │
+│  ▲ 8,2%          ▲ 4,0%        ▼ 12%        da receita       │
+├───────────────────────────────────┬──────────────────────────┤
+│  Receitas x Despesas (linha)      │  Despesas por categoria  │
+│                                   │  Moradia ........ 30%    │
+│                                   │  Alimentação .... 25%    │
+│                                   │  Lazer .......... 20%    │
+│                                   │  Transporte ..... 15%    │
+│                                   │  Outros ......... 10%    │
+├───────────────────────────────────┼──────────────────────────┤
+│  Comparação mensal (Jul–Out)      │  Últimas transações      │
+└───────────────────────────────────┴──────────────────────────┘
+```
 
 ---
 
@@ -160,6 +89,7 @@ Uma das funcionalidades centrais: agrupar transações em um projeto e ver o cus
 ```text
 VIAGEM PARA SÃO PAULO
 R$ 1.300 gastos  ·  Orçamento R$ 1.500  ·  86% utilizado
+████████████████████████████░░░░
 
 Gastos por categoria
 ├── Hospedagem ...... R$ 500
@@ -176,13 +106,28 @@ Linha do tempo
 
 ---
 
+# 🎯 Metas e Orçamentos
+
+```text
+META · Comprar PC
+R$ 2.500 de R$ 5.000
+██████████████░░░░░░░░░░░░░░  50%
+
+ORÇAMENTOS DO MÊS
+Alimentação  ████████████████████░░░░░░░░  70%   no ritmo
+Lazer        ██████████████████████████░░  90%   atenção
+Transporte   ████████████████████████████  100%  atingido
+```
+
+---
+
 # 🔄 Do Gasto ao Panorama Completo
 
-Cada transação alimenta automaticamente categorias, projetos, meses e relatórios.
+Cada transação alimenta automaticamente categorias, projetos, meses e relatórios. Você registra uma vez e o Finora organiza o resto.
 
-<p align="center">
-  <img src="docs/assets/flow.svg" alt="Fluxo: Transação, Categoria, Projeto, Mês, Relatório" width="100%">
-</p>
+```text
+Transação  →  Categoria  →  Projeto  →  Mês  →  Relatório
+```
 
 ---
 
@@ -203,8 +148,8 @@ Cada transação alimenta automaticamente categorias, projetos, meses e relatór
 
 * Node.js
 * Route Handlers do Next.js
-* Zod (validação server-side)
-* Auth.js (NextAuth) para autenticação
+* Zod (validação no servidor)
+* Auth.js (NextAuth) com Google e e-mail/senha
 * bcrypt para hash de senhas
 
 ## Banco de Dados
@@ -223,13 +168,13 @@ Cada transação alimenta automaticamente categorias, projetos, meses e relatór
 
 * Tema escuro: `#0A0D14` · `#10141D` · `#1E2430`
 * Azul `#2E8BFF` e roxo `#7C5CFF`
-* Slogan: **"Seu dinheiro. Seu controle. Sua visão."**
 
 ---
 
 # 🔑 Autenticação e Segurança
 
 * Páginas de **login** (`/login`), **cadastro** (`/register`) e **recuperação de senha** (`/forgot-password`).
+* **Login com Google** via Auth.js.
 * Senhas armazenadas com **bcrypt**.
 * Rotas protegidas no servidor: sem sessão, o usuário é redirecionado para `/login`.
 * **Isolamento por usuário:** toda consulta é filtrada por `userId` no backend, então ninguém acessa transações de outra pessoa.
@@ -275,7 +220,7 @@ Os relatórios mensais **não são armazenados**: são calculados dinamicamente 
 
 ---
 
-# 🏗️ Arquitetura Atual
+# 🏗️ Arquitetura
 
 A lógica de negócio fica separada da interface:
 
@@ -333,6 +278,8 @@ Crie um `.env` na raiz do projeto (use o `.env.example` como base):
 DATABASE_URL="sua_connection_string_do_neon"
 AUTH_SECRET=sua_chave_secreta
 NEXTAUTH_URL=http://localhost:3000
+AUTH_GOOGLE_ID=seu_client_id_do_google
+AUTH_GOOGLE_SECRET=seu_client_secret_do_google
 ```
 
 ## Prisma
@@ -357,10 +304,10 @@ npm run dev
 ### Plataforma
 
 * [x] Cadastro e login de usuários
+* [x] Login com Google
 * [x] Proteção de rotas e isolamento por usuário
 * [x] Dashboard financeiro com seletor de mês
 * [x] Landing page
-* [ ] Login social (Google, GitHub)
 
 ### Finanças
 
@@ -394,18 +341,17 @@ npm run dev
 
 ## Front-end
 * [x] Design system e layout base
+* [x] Landing page, login e cadastro
 * [x] Dashboard e gráficos
 * [x] Transações, contas e categorias
 * [x] Projetos, metas e orçamentos
 * [x] Relatórios
-* [x] Landing page
 
 ## Back-end
 * [x] PostgreSQL + Neon
 * [x] Prisma ORM
-* [x] Autenticação (Auth.js)
+* [x] Autenticação (Auth.js) com Google
 * [x] API com validação e autorização
-* [ ] Login social (OAuth)
 
 ## Deploy
 * [ ] Deploy na Vercel
@@ -417,8 +363,6 @@ npm run dev
 
 ```text
 Finora/
-├── docs/
-│   └── assets/              # imagens e SVGs do README
 ├── prisma/
 │   ├── schema.prisma
 │   └── seed.ts
@@ -427,12 +371,13 @@ Finora/
 │   ├── app/                 # rotas e route handlers (App Router)
 │   ├── components/          # componentes reutilizáveis
 │   ├── hooks/
-│   ├── lib/                 # prisma, auth, configurações
+│   ├── lib/                 # prisma, configurações
 │   ├── repositories/        # acesso a dados
 │   ├── schemas/             # schemas Zod
 │   ├── services/            # regras de negócio e cálculos
 │   ├── types/
-│   └── utils/               # formatadores (moeda, datas)
+│   ├── utils/               # formatadores (moeda, datas)
+│   └── auth.ts              # configuração do Auth.js
 ├── .env.example
 └── README.md
 ```
@@ -504,10 +449,4 @@ O Finora nasceu para transformar registros soltos em uma visão completa da sua 
 
 ---
 
-<p align="center">
-  <strong>💰 Seu dinheiro. Seu controle. Sua visão.</strong>
-</p>
-
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:7C5CFF,50:2E8BFF,100:0A0D14&height=120&section=footer" width="100%">
-</p>
+**💰 Seu dinheiro. Seu controle. Sua visão.**
