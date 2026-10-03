@@ -1,10 +1,23 @@
-<h1 align="center">💰 Finora</h1>
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0A0D14,50:2E8BFF,100:7C5CFF&height=200&section=header&text=Finora&fontSize=55&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Seu%20dinheiro.%20Seu%20controle.%20Sua%20vis%C3%A3o.&descAlignY=55&descSize=18" width="100%">
+</p>
 
-<p align="center"><strong>Seu dinheiro. Seu controle. Sua visão.</strong></p>
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=18&duration=3000&pause=800&color=2E8BFF&center=true&vCenter=true&width=620&lines=Controle+financeiro+pessoal+moderno;Receitas%2C+despesas%2C+metas+e+projetos;Next.js+%2B+Prisma+%2B+PostgreSQL" alt="Typing SVG" />
+</p>
 
-**Status:** 🚧 Em desenvolvimento · **Versão:** v0.1 · **Licença:** MIT
+<p align="center">
 
-**Stack:** Next.js · React · TypeScript · Tailwind CSS · Prisma · PostgreSQL (Neon) · Auth.js
+![Status](https://img.shields.io/badge/Status-🚧%20Em%20Desenvolvimento-orange)
+![Version](https://img.shields.io/badge/Version-v0.1-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Next.js](https://img.shields.io/badge/Next.js-black?logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-2D3748?logo=prisma)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-4169E1?logo=postgresql&logoColor=white)
+
+</p>
 
 ---
 
@@ -450,3 +463,7 @@ O Finora nasceu para transformar registros soltos em uma visão completa da sua 
 ---
 
 **💰 Seu dinheiro. Seu controle. Sua visão.**
+
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:7C5CFF,50:2E8BFF,100:0A0D14&height=120&section=footer" width="100%">
+</p>
