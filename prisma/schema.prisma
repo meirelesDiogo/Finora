@@ -1,12 +1,15 @@
-// Prisma 7: a URL de conexão fica em prisma.config.ts.
-// Prisma 6 ou anterior: adicione  url = env("DATABASE_URL")  dentro de datasource.
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+url      = env("DATABASE_URL")
 }
+
+// --------------------------------------
+// Enums
+// --------------------------------------
 
 enum AccountType {
   CHECKING
@@ -36,26 +39,83 @@ enum PaymentMethod {
   OTHER
 }
 
-model User {
-  id           String   @id @default(cuid())
-  name         String
-  email        String   @unique
-  passwordHash String?
-  avatar       String?
-  currency     String   @default("BRL")
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @default(now()) @updatedAt
+// --------------------------------------
+// Modelo de Usuário (Auth.js + Finora)
+// --------------------------------------
 
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  passwordHash  String?
+  avatar        String?
+  currency      String    @default("BRL")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now()) @updatedAt
+
+  // Relações do Auth.js / NextAuth
   accounts      Account[]
-  categories    Category[]
-  transactions  Transaction[]
-  projects      Project[]
-  budgets       Budget[]
-  goals         Goal[]
-  contributions GoalContribution[]
+  sessions      Session[]
+
+  // Relações do Finora
+  financialAccounts FinancialAccount[]
+  categories        Category[]
+  transactions      Transaction[]
+  projects          Project[]
+  budgets           Budget[]
+  goals             Goal[]
+  contributions     GoalContribution[]
 }
 
+// --------------------------------------
+// Tabelas do Auth.js (OAuth / Google)
+// --------------------------------------
+
 model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// --------------------------------------
+// Tabelas de Domínio Finora
+// --------------------------------------
+
+model FinancialAccount {
   id             String      @id @default(cuid())
   userId         String
   name           String
@@ -71,6 +131,7 @@ model Account {
   transactions Transaction[]
 
   @@index([userId])
+  @@map("financial_accounts")
 }
 
 model Category {
@@ -111,24 +172,24 @@ model Project {
 }
 
 model Transaction {
-  id            String          @id @default(cuid())
+  id            String           @id @default(cuid())
   userId        String
   accountId     String
   categoryId    String
   projectId     String?
   type          TransactionType
-  amount        Decimal         @db.Decimal(14, 2)
+  amount        Decimal          @db.Decimal(14, 2)
   description   String
-  date          DateTime        @db.Date
-  paymentMethod PaymentMethod   @default(OTHER)
+  date          DateTime         @db.Date
+  paymentMethod PaymentMethod    @default(OTHER)
   notes         String?
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @default(now()) @updatedAt
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @default(now()) @updatedAt
 
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  account  Account  @relation(fields: [accountId], references: [id], onDelete: Restrict)
-  category Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
-  project  Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  user     User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  account  FinancialAccount @relation(fields: [accountId], references: [id], onDelete: Restrict)
+  category Category         @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  project  Project?         @relation(fields: [projectId], references: [id], onDelete: SetNull)
 
   @@index([userId])
   @@index([userId, date])

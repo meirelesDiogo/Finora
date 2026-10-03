@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion } from "framer-motion";
 
 const C = 251.3; // circunferência do donut (r = 40)
 const kpis = [
