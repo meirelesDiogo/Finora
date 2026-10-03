@@ -1,4 +1,3 @@
-```jsx
 "use client";
 
 import { motion } from "motion/react";
@@ -19,4 +18,3 @@ export function FadeIn({ children, delay = 0, className }) {
     </motion.div>
   );
 }
-```

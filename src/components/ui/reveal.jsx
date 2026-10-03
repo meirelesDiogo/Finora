@@ -1,4 +1,3 @@
-```jsx
 "use client";
 
 import { motion } from "motion/react";
@@ -20,4 +19,3 @@ export function Reveal({ children, delay = 0, className }) {
     </motion.div>
   );
 }
-```
