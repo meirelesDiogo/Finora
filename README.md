@@ -1,6 +1,6 @@
-# 💰 Finora
+<h1 align="center">💰 Finora</h1>
 
-> **Seu dinheiro. Seu controle. Sua visão.**
+<p align="center"><strong>Seu dinheiro. Seu controle. Sua visão.</strong></p>
 
 **Status:** 🚧 Em desenvolvimento · **Versão:** v0.1 · **Licença:** MIT
 
