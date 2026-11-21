@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, Eye, EyeOff, LockKeyhole, Wallet } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [mostrarSenha, setMostrarSenha] = useState(false);
@@ -23,6 +25,10 @@ export default function Login() {
         body: JSON.stringify({ email, senha }),
       });
       const resultado = await resposta.json();
+      if (resposta.ok) {
+        router.push("/dashboard");
+        return;
+      }
       setMensagem(resultado.mensagem || "Não foi possível entrar.");
     } catch {
       setMensagem("Não foi possível conectar ao servidor. Tente novamente.");

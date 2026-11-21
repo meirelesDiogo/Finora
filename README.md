@@ -58,7 +58,7 @@ Com uma interface moderna e uma estrutura preparada para evolução, o Finora bu
 
 ## ✨ Funcionalidades
 
-As funcionalidades estão sendo desenvolvidas gradualmente e serão disponibilizadas conforme a evolução do projeto.
+O Finora oferece cadastro e login, painel mensal, registro e exclusão de receitas e despesas, categorias e projetos financeiros.
 
 ### Funcionalidades planejadas
 
@@ -75,7 +75,7 @@ As funcionalidades estão sendo desenvolvidas gradualmente e serão disponibiliz
 - 🔐 **Autenticação:** cadastro, login e proteção das informações.
 - 🌙 **Tema claro e escuro:** personalização da aparência da plataforma.
 
-> ⚠️ O Finora está em desenvolvimento. As funcionalidades listadas representam o escopo planejado e não necessariamente estão disponíveis na versão atual.
+Os recursos de contas bancárias, metas, orçamentos, recorrências, parcelamentos e importação/exportação permanecem no roadmap.
 
 ---
 
@@ -169,7 +169,7 @@ npm run dev
 http://localhost:3000
 ```
 
-> Observação: as configurações do banco de dados e as migrações do Prisma serão necessárias conforme a implementação dessas funcionalidades.
+Antes do primeiro acesso, crie um banco PostgreSQL e execute o script `prisma/schema.sql` nele. O cadastro e as telas financeiras usam essa estrutura.
 
 ---
 
@@ -188,6 +188,7 @@ DATABASE_URL="sua_connection_string_do_postgresql"
 | Variável | Descrição |
 |---|---|
 | `DATABASE_URL` | String de conexão com o PostgreSQL |
+| `SESSION_SECRET` | Chave aleatória com pelo menos 32 caracteres para assinar as sessões |
 
 > 🔒 Nunca compartilhe seu arquivo `.env` ou envie informações sensíveis para o GitHub. Utilize o `.gitignore` para impedir que esses arquivos sejam versionados.
 
