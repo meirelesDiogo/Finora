@@ -175,10 +175,10 @@ export async function DELETE(request) {
   if (!userId || !ativoId) return NextResponse.json({ mensagem: "Investimento inválido." }, { status: 400 });
   try {
     const removido = await prisma.$transaction(async (tx) => {
-      const ativos = await tx.$queryRaw\`SELECT cod_ativo FROM ativos_investimento WHERE cod_usuario=\${userId} AND cod_ativo=\${ativoId} FOR UPDATE\`;
+      const ativos = await tx.$queryRawUnsafe("SELECT cod_ativo FROM ativos_investimento WHERE cod_usuario=$1 AND cod_ativo=$2 FOR UPDATE", userId, ativoId);
       if (!ativos.length) return false;
-      await tx.$executeRaw\`DELETE FROM operacoes_investimento WHERE cod_usuario=\${userId} AND cod_ativo=\${ativoId}\`;
-      const quantidade = await tx.$executeRaw\`DELETE FROM ativos_investimento WHERE cod_usuario=\${userId} AND cod_ativo=\${ativoId}\`;
+      await tx.$executeRawUnsafe("DELETE FROM operacoes_investimento WHERE cod_usuario=$1 AND cod_ativo=$2", userId, ativoId);
+      const quantidade = await tx.$executeRawUnsafe("DELETE FROM ativos_investimento WHERE cod_usuario=$1 AND cod_ativo=$2", userId, ativoId);
       return quantidade > 0;
     });
     if (!removido) return NextResponse.json({ mensagem: "Investimento não encontrado." }, { status: 404 });
