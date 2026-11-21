@@ -62,6 +62,7 @@ model lancamentos {
   usuario        usuarios    @relation(fields: [cod_usuario], references: [cod_usuario], onDelete: Cascade)
   categoria      categorias  @relation(fields: [cod_usuario, cod_categoria], references: [cod_usuario, cod_categoria])
   projeto        projetos?   @relation(fields: [cod_usuario, cod_projeto], references: [cod_usuario, cod_projeto])
+  operacao_investimento operacoes_investimento?
 
   @@index([cod_usuario, data_lancamento])
   @@index([cod_usuario, cod_projeto])
@@ -97,6 +98,7 @@ model ativos_investimento {
 
 model operacoes_investimento {
   cod_operacao   BigInt             @id @default(autoincrement())
+  cod_lancamento BigInt?            @unique
   cod_usuario    BigInt
   cod_ativo      BigInt
   tipo           String             @db.VarChar(10)
@@ -109,6 +111,7 @@ model operacoes_investimento {
   data_criacao   DateTime           @default(now()) @db.Timestamp(6)
   usuario        usuarios           @relation(fields: [cod_usuario], references: [cod_usuario], onDelete: Cascade)
   ativo          ativos_investimento @relation(fields: [cod_usuario, cod_ativo], references: [cod_usuario, cod_ativo], onDelete: Cascade)
+  lancamento     lancamentos?       @relation(fields: [cod_lancamento], references: [cod_lancamento], onDelete: Cascade)
 
   @@index([cod_usuario, cod_ativo, data_operacao])
   @@map("operacoes_investimento")
