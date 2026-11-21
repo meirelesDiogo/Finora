@@ -44,7 +44,7 @@ export async function POST(request) {
       const preco = rendaFixa ? 1 : precoInformado;
       const cambio = rendaFixa ? 1 : cambioInformado;
       const saldoAtual = Number(ativos[0].saldo_atual);
-      if (venda && rendaFixa && quantidade + custos > saldoAtual + 0.000001)
+      if (venda && rendaFixa && quantidade > saldoAtual + 0.000001)
         return { erro: "O resgate não pode ser maior que o saldo atual deste investimento.", status: 400 };
       if (venda && !rendaFixa && quantidade > posicao.quantidade + 0.00000001)
         return { erro: "A venda excede a quantidade disponível na carteira.", status: 400 };
@@ -53,7 +53,7 @@ export async function POST(request) {
         (cod_usuario,cod_ativo,tipo,quantidade,preco_unitario,cambio_brl,custos,data_operacao,descricao)
         VALUES (${userId},${ativoId},${tipo},${quantidade},${preco},${cambio},${custos},${new Date(`${data}T00:00:00.000Z`)},${descricao})`;
       if (rendaFixa) {
-        const delta = compra ? quantidade * preco - custos : -(quantidade + custos);
+        const delta = compra ? quantidade * preco : -quantidade;
         const novoSaldo = saldoAtual + delta;
         await tx.$executeRaw`UPDATE ativos_investimento SET saldo_atual=${novoSaldo} WHERE cod_usuario=${userId} AND cod_ativo=${ativoId}`;
       }
