@@ -79,6 +79,8 @@ model ativos_investimento {
   moeda           String       @default("BRL") @db.VarChar(10)
   percentual_cdi  Decimal?     @db.Decimal(8, 3)
   taxa_anual      Decimal?     @db.Decimal(8, 4)
+  rendimento_bruto   Decimal?   @db.Decimal(12, 2)
+  rendimento_liquido Decimal?   @db.Decimal(12, 2)
   data_aplicacao  DateTime?    @db.Date
   data_vencimento DateTime?    @db.Date
   cotacao_atual   Decimal      @default(0) @db.Decimal(18, 8)
