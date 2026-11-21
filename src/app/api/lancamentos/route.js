@@ -173,7 +173,15 @@ export async function PUT(request) {
   if (!userId || !lancamentoId || !formulario) return NextResponse.json({ mensagem: "Confira os dados do lançamento." }, { status: 400 });
   try {
     const atualizado = await prisma.$transaction(async (tx) => {
-      if (!(await conferirVinculos(tx, userId, formulario))) return 0;
+      const categoria = await conferirVinculos(tx, userId, formulario);
+      if (!categoria) return { erro: "Categoria ou projeto inválido.", status: 400 };
+      const atual = await tx.lancamentos.findFirst({
+        where: { cod_usuario: userId, cod_lancamento: lancamentoId },
+        include: { categoria: { select: { nome: true } } },
+      });
+      if (!atual) return { erro: "Lançamento não encontrado.", status: 404 };
+      if (atual.categoria.nome === "Investimento" || categoria.nome === "Investimento")
+        return { erro: "Lançamentos de investimento não podem ser editados por aqui. Exclua e registre novamente pelo painel.", status: 409 };
       const result = await tx.lancamentos.updateMany({
         where: { cod_usuario: userId, cod_lancamento: lancamentoId },
         data: {
@@ -182,9 +190,10 @@ export async function PUT(request) {
           data_lancamento: formulario.data,
         },
       });
-      return result.count;
+      return { count: result.count };
     });
-    if (!atualizado) return NextResponse.json({ mensagem: "Lançamento, categoria ou projeto não encontrado." }, { status: 404 });
+    if (atualizado.erro) return NextResponse.json({ mensagem: atualizado.erro }, { status: atualizado.status });
+    if (!atualizado.count) return NextResponse.json({ mensagem: "Lançamento não encontrado." }, { status: 404 });
     return NextResponse.json({ mensagem: "Lançamento atualizado." });
   } catch (error) {
     return responderErroBanco(error, "Falha ao atualizar lançamento:");
@@ -220,7 +229,7 @@ export async function DELETE(request) {
       return true;
     });
     return removido
-      ? NextResponse.json({ mensagem: "Lançamento removido e carteira atualizada." })
+      ? NextResponse.json({ mensagem: "Lançamento removido e, se era uma aplicação, a carteira foi ajustada." })
       : NextResponse.json({ mensagem: "Lançamento não encontrado." }, { status: 404 });
   } catch (error) {
     return responderErroBanco(error, "Falha ao excluir lançamento:");
