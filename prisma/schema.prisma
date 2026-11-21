@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model usuarios {
+  cod_usuario   BigInt       @id @default(autoincrement())
+  email         String       @unique @db.VarChar(255)
+  senha         String       @db.VarChar(255)
+  data_criacao  DateTime     @default(now()) @db.Timestamp(6)
+  categorias    categorias[]
+  projetos      projetos[]
+  lancamentos   lancamentos[]
+
+  @@map("usuarios")
+}
+
+model categorias {
+  cod_categoria BigInt       @id @default(autoincrement())
+  cod_usuario   BigInt
+  nome          String       @db.VarChar(100)
+  tipo          String       @db.VarChar(10)
+  usuario       usuarios     @relation(fields: [cod_usuario], references: [cod_usuario], onDelete: Cascade)
+  lancamentos   lancamentos[]
+
+  @@unique([cod_usuario, cod_categoria])
+  @@unique([cod_usuario, nome, tipo])
+  @@map("categorias")
+}
+
+model projetos {
+  cod_projeto  BigInt       @id @default(autoincrement())
+  cod_usuario  BigInt
+  nome         String       @db.VarChar(150)
+  descricao    String?      @db.Text
+  data_criacao DateTime     @default(now()) @db.Timestamp(6)
+  usuario      usuarios    @relation(fields: [cod_usuario], references: [cod_usuario], onDelete: Cascade)
+  lancamentos  lancamentos[]
+
+  @@unique([cod_usuario, cod_projeto])
+  @@unique([cod_usuario, nome])
+  @@map("projetos")
+}
+
+model lancamentos {
+  cod_lancamento BigInt      @id @default(autoincrement())
+  cod_usuario    BigInt
+  cod_categoria  BigInt
+  cod_projeto    BigInt?
+  descricao      String      @db.VarChar(255)
+  valor          Decimal     @db.Decimal(12, 2)
+  tipo           String      @db.VarChar(10)
+  data_lancamento DateTime   @db.Date
+  data_criacao   DateTime    @default(now()) @db.Timestamp(6)
+  usuario        usuarios    @relation(fields: [cod_usuario], references: [cod_usuario], onDelete: Cascade)
+  categoria      categorias  @relation(fields: [cod_usuario, cod_categoria], references: [cod_usuario, cod_categoria])
+  projeto        projetos?   @relation(fields: [cod_usuario, cod_projeto], references: [cod_usuario, cod_projeto])
+
+  @@index([cod_usuario, data_lancamento])
+  @@index([cod_usuario, cod_projeto])
+  @@index([cod_usuario, cod_categoria])
+  @@index([cod_usuario, tipo])
+  @@map("lancamentos")
+}
