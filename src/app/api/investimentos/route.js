@@ -23,7 +23,7 @@ export async function GET() {
   if (!userId) return NextResponse.json({ mensagem: "Sessão inválida." }, { status: 401 });
   try {
     const [ativos, operacoes] = await Promise.all([
-      prisma.$queryRaw`SELECT cod_ativo,nome,tipo,ticker,moeda,percentual_cdi,taxa_anual,data_aplicacao,data_vencimento,cotacao_atual,cambio_brl,saldo_atual FROM ativos_investimento WHERE cod_usuario=${userId} ORDER BY nome ASC,cod_ativo ASC`,
+      prisma.$queryRaw`SELECT cod_ativo,nome,tipo,ticker,moeda,percentual_cdi,taxa_anual,rendimento_bruto,rendimento_liquido,data_aplicacao,data_vencimento,cotacao_atual,cambio_brl,saldo_atual FROM ativos_investimento WHERE cod_usuario=${userId} ORDER BY nome ASC,cod_ativo ASC`,
       prisma.$queryRaw`SELECT cod_operacao,cod_ativo,tipo,quantidade,preco_unitario,cambio_brl,custos,data_operacao,descricao FROM operacoes_investimento WHERE cod_usuario=${userId} ORDER BY data_operacao ASC,cod_operacao ASC`,
     ]);
     const porAtivo = new Map();
@@ -46,6 +46,8 @@ export async function GET() {
         ticker: ativo.ticker, moeda: ativo.moeda,
         percentual_cdi: ativo.percentual_cdi === null ? null : Number(ativo.percentual_cdi),
         taxa_anual: ativo.taxa_anual === null ? null : Number(ativo.taxa_anual),
+        rendimento_bruto: ativo.rendimento_bruto === null ? null : Number(ativo.rendimento_bruto),
+        rendimento_liquido: ativo.rendimento_liquido === null ? null : Number(ativo.rendimento_liquido),
         data_aplicacao: ativo.data_aplicacao, data_vencimento: ativo.data_vencimento,
         cotacao_atual: Number(ativo.cotacao_atual), cambio_brl: Number(ativo.cambio_brl),
         quantidade: posicao.quantidade, custo: arredondar(posicao.custo),
@@ -86,6 +88,8 @@ export async function POST(request) {
   const moeda = tipo === "DOLAR" ? "USD" : body.moeda || "BRL";
   const percentualCdi = numeroOpcional(body.percentual_cdi);
   const taxaAnual = numeroOpcional(body.taxa_anual);
+  const rendimentoBruto = numeroOpcional(body.rendimento_bruto);
+  const rendimentoLiquido = numeroOpcional(body.rendimento_liquido);
   const valorInicial = Number(body.valor_inicial || 0);
   const quantidadeInicial = Number(body.quantidade_inicial || 0);
   const precoInicial = Number(body.preco_inicial || 0);
@@ -98,6 +102,8 @@ export async function POST(request) {
   if (!nome || nome.length > 150 || !TIPOS.has(tipo) || !MOEDAS.has(moeda)
     || (percentualCdi !== null && (!Number.isFinite(percentualCdi) || percentualCdi < 0))
     || (taxaAnual !== null && (!Number.isFinite(taxaAnual) || taxaAnual < 0))
+    || (rendimentoBruto !== null && (!Number.isFinite(rendimentoBruto) || rendimentoBruto < 0))
+    || (rendimentoLiquido !== null && (!Number.isFinite(rendimentoLiquido) || rendimentoLiquido < 0))
     || !Number.isFinite(valorInicial) || valorInicial < 0
     || !Number.isFinite(quantidadeInicial) || quantidadeInicial < 0
     || !Number.isFinite(precoInicial) || precoInicial < 0
@@ -115,8 +121,8 @@ export async function POST(request) {
       const saldoInicial = fixa && temAplicacaoInicial ? valorInicial : 0;
       const cotacao = !fixa && temAplicacaoInicial ? precoInicial : 0;
       const rows = await tx.$queryRaw`INSERT INTO ativos_investimento
-        (cod_usuario,nome,tipo,ticker,moeda,percentual_cdi,taxa_anual,data_aplicacao,data_vencimento,cotacao_atual,cambio_brl,saldo_atual)
-        VALUES (${userId},${nome},${tipo},${String(body.ticker ?? "").trim() || null},${moeda},${percentualCdi},${taxaAnual},${dataUtc(inicio)},${dataUtc(vencimento)},${cotacao},${cambioInicial},${saldoInicial})
+        (cod_usuario,nome,tipo,ticker,moeda,percentual_cdi,taxa_anual,rendimento_bruto,rendimento_liquido,data_aplicacao,data_vencimento,cotacao_atual,cambio_brl,saldo_atual)
+        VALUES (${userId},${nome},${tipo},${String(body.ticker ?? "").trim() || null},${moeda},${percentualCdi},${taxaAnual},${rendimentoBruto},${rendimentoLiquido},${dataUtc(inicio)},${dataUtc(vencimento)},${cotacao},${cambioInicial},${saldoInicial})
         RETURNING cod_ativo`;
       const ativoId = rows[0].cod_ativo;
       if (temAplicacaoInicial) {
@@ -151,7 +157,11 @@ export async function PATCH(request) {
     if (TIPOS_RENDA_FIXA.has(atual[0].tipo)) {
       const saldo = Number(body.saldo_atual);
       if (!Number.isFinite(saldo) || saldo < 0) return NextResponse.json({ mensagem: "Informe um saldo válido." }, { status: 400 });
-      count = await prisma.$executeRaw`UPDATE ativos_investimento SET saldo_atual=${saldo} WHERE cod_usuario=${userId} AND cod_ativo=${ativoId}`;
+      const bruto = numeroOpcional(body.rendimento_bruto);
+      const liquido = numeroOpcional(body.rendimento_liquido);
+      if ((bruto !== null && (!Number.isFinite(bruto) || bruto < 0)) || (liquido !== null && (!Number.isFinite(liquido) || liquido < 0)))
+        return NextResponse.json({ mensagem: "Informe valores válidos para os rendimentos bruto e líquido." }, { status: 400 });
+      count = await prisma.$executeRaw`UPDATE ativos_investimento SET saldo_atual=${saldo},rendimento_bruto=${bruto},rendimento_liquido=${liquido} WHERE cod_usuario=${userId} AND cod_ativo=${ativoId}`;
     } else {
       const cotacao = Number(body.cotacao_atual);
       const cambio = Number(body.cambio_brl);
