@@ -429,7 +429,7 @@ export default function Home() {
           </Link>
 
           <p className="text-center text-sm text-slate-400">
-            © {new Date().getFullYear()} Finora. Todos os direitos reservados.
+            © {2026} Finora. Todos os direitos reservados.
           </p>
 
           <div className="flex gap-6 text-sm text-slate-500">
