@@ -20,6 +20,7 @@ export async function POST(request) {
           ["Salário", "RECEITA"], ["Outras receitas", "RECEITA"],
           ["Moradia", "DESPESA"], ["Alimentação", "DESPESA"], ["Transporte", "DESPESA"],
           ["Saúde", "DESPESA"], ["Lazer", "DESPESA"], ["Outras despesas", "DESPESA"],
+          ["Investimento", "DESPESA"],
         ].map(([nome, tipo]) => ({ cod_usuario: created.cod_usuario, nome, tipo })),
       });
       return created;
