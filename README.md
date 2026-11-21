@@ -1,19 +1,14 @@
+# Finora
+
 <div align="center">
 
-<!-- Cabeçalho animado (ondas) -->
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,20,24&height=230&section=header&text=Finora&fontSize=78&fontAlignY=36&animation=fadeIn&desc=Gerenciamento%20financeiro%20simples%2C%20claro%20e%20inteligente&descSize=18&descAlignY=58" alt="Finora" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,20,24&height=230&section=header&text=Finora&fontSize=78&fontAlignY=36&animation=fadeIn&desc=Seu%20dinheiro.%20Seu%20controle.%20Sua%20vis%C3%A3o.&descSize=18&descAlignY=58" alt="Finora" width="100%"/>
 
-<!-- Texto com efeito de digitação -->
-<a href="https://github.com/SEU-USUARIO/finora">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1200&color=00C897&center=true&vCenter=true&width=640&lines=💰+Controle+suas+receitas+e+despesas;🎯+Alcance+suas+metas+financeiras;📊+Entenda+para+onde+vai+seu+dinheiro;🚀+Finora%3A+suas+finanças+em+um+só+lugar" alt="Texto animado do Finora" />
-</a>
-
-<br/>
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1200&color=00C897&center=true&vCenter=true&width=640&height=50&lines=Controle+suas+receitas+e+despesas;Organize+suas+finan%C3%A7as;Acompanhe+seus+objetivos;Finora%3A+suas+finan%C3%A7as+em+um+s%C3%B3+lugar" alt="Finora - Gerenciamento financeiro"/>
 
 ![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow?style=for-the-badge)
 ![Versão](https://img.shields.io/badge/versão-0.1.0-blue?style=for-the-badge)
 ![Licença](https://img.shields.io/badge/licença-MIT-green?style=for-the-badge)
-![PRs](https://img.shields.io/badge/PRs-bem--vindos-brightgreen?style=for-the-badge)
 
 </div>
 
@@ -22,14 +17,13 @@
 ## 📑 Sumário
 
 - [Sobre o projeto](#-sobre-o-projeto)
+- [Objetivos](#-objetivos)
 - [Funcionalidades](#-funcionalidades)
 - [Tecnologias](#-tecnologias)
 - [Pré-requisitos](#-pré-requisitos)
 - [Instalação](#-instalação)
-- [Como usar](#-como-usar)
-- [Estrutura do projeto](#-estrutura-do-projeto)
 - [Configuração](#-configuração)
-- [Testes](#-testes)
+- [Estrutura do projeto](#-estrutura-do-projeto)
 - [Roadmap](#-roadmap)
 - [Contribuindo](#-contribuindo)
 - [Licença](#-licença)
@@ -39,268 +33,319 @@
 
 ## 📖 Sobre o projeto
 
-O **Finora** é um programa de gerenciamento financeiro pessoal criado para ajudar você a ter clareza sobre o seu dinheiro. Com ele, é possível registrar entradas e saídas, organizar gastos por categoria, definir orçamentos e metas, e acompanhar a evolução das suas finanças por meio de relatórios e gráficos.
+O **Finora** é um sistema de gerenciamento financeiro pessoal desenvolvido com o objetivo de proporcionar uma maneira simples, organizada e intuitiva de controlar as finanças.
 
-### 🎯 Objetivos
+A plataforma tem como proposta permitir que os usuários registrem receitas e despesas, organizem suas movimentações financeiras, acompanhem seus gastos e planejem seus objetivos por meio de dashboards, gráficos e relatórios.
 
-- Facilitar o controle diário de receitas e despesas.
-- Dar visibilidade sobre para onde o dinheiro está indo.
-- Ajudar no planejamento e no alcance de metas financeiras.
-- Oferecer uma experiência simples, rápida e segura.
+Com uma interface moderna e uma estrutura preparada para evolução, o Finora busca transformar o controle financeiro em uma experiência mais acessível e eficiente.
 
 <div align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=16&duration=3500&pause=800&color=7C8DB5&center=true&vCenter=true&width=520&lines=Registrar+%E2%86%92+Organizar+%E2%86%92+Analisar+%E2%86%92+Planejar" alt="Fluxo do Finora" />
+
+**Registrar → Organizar → Analisar → Planejar**
+
 </div>
+
+## 🎯 Objetivos
+
+- Facilitar o controle diário de receitas e despesas.
+- Proporcionar maior visibilidade sobre os gastos.
+- Organizar movimentações por categorias e períodos.
+- Auxiliar no planejamento financeiro pessoal.
+- Permitir o acompanhamento de metas e objetivos.
+- Oferecer uma experiência intuitiva, responsiva e segura.
 
 ---
 
 ## ✨ Funcionalidades
 
-- 💵 **Receitas e despesas:** cadastro, edição e exclusão de transações.
-- 🗂️ **Categorias personalizadas:** organize seus gastos do seu jeito.
-- 🏦 **Múltiplas contas:** conta corrente, poupança, carteira, cartão de crédito etc.
-- 📊 **Dashboard:** visão geral com saldo, gastos do mês e comparativos.
-- 🎯 **Metas financeiras:** defina objetivos e acompanhe o progresso.
-- 🧾 **Orçamento mensal:** limite de gastos por categoria com alertas.
-- 🔁 **Transações recorrentes:** contas fixas e assinaturas automáticas.
-- 📅 **Parcelamentos:** controle de compras parceladas.
-- 📈 **Relatórios:** gráficos e resumos por período, categoria e conta.
-- 📤 **Importação e exportação:** suporte a CSV (e outros formatos).
-- 🔐 **Segurança:** autenticação e proteção dos dados do usuário.
-- 🌙 **Tema claro/escuro** *(planejado)*.
+As funcionalidades estão sendo desenvolvidas gradualmente e serão disponibilizadas conforme a evolução do projeto.
 
-> ⚠️ O projeto está em desenvolvimento. Algumas funcionalidades acima podem estar em andamento. Veja o [Roadmap](#-roadmap).
+### Funcionalidades planejadas
+
+- 💵 **Receitas e despesas:** cadastro, edição e exclusão de movimentações.
+- 🗂️ **Categorias personalizadas:** organização de receitas e despesas.
+- 🏦 **Contas financeiras:** gerenciamento de diferentes contas e carteiras.
+- 📊 **Dashboard:** visão geral do saldo, receitas e despesas.
+- 🎯 **Metas financeiras:** criação e acompanhamento de objetivos.
+- 🧾 **Orçamentos:** definição de limites de gastos.
+- 🔁 **Transações recorrentes:** gerenciamento de despesas e receitas periódicas.
+- 📅 **Parcelamentos:** acompanhamento de compras parceladas.
+- 📈 **Relatórios:** gráficos e análises financeiras por período.
+- 📤 **Importação e exportação:** gerenciamento de dados financeiros.
+- 🔐 **Autenticação:** cadastro, login e proteção das informações.
+- 🌙 **Tema claro e escuro:** personalização da aparência da plataforma.
+
+> ⚠️ O Finora está em desenvolvimento. As funcionalidades listadas representam o escopo planejado e não necessariamente estão disponíveis na versão atual.
 
 ---
 
 ## 🛠️ Tecnologias
 
-> Ajuste esta seção de acordo com a stack que você realmente usar.
+O Finora utiliza tecnologias modernas para desenvolver uma aplicação Full Stack, com foco em organização, desempenho, segurança e escalabilidade.
+
+### Linguagens
 
 <div align="center">
 
-<!-- Ícones das tecnologias (troque pelos que você usar) -->
-<img src="https://skillicons.dev/icons?i=js,ts,nodejs,react,postgres,docker,git,github&perline=8" alt="Tecnologias" />
+<img src="https://skillicons.dev/icons?i=js,html,css" alt="JavaScript, HTML5 e CSS3"/>
 
 </div>
 
-| Camada          | Tecnologia                          |
-| --------------- | ----------------------------------- |
-| Linguagem       | `[Python / JavaScript / Java / C#]` |
-| Backend         | `[FastAPI / Node.js / Spring / .NET]` |
-| Frontend        | `[React / Vue / Flutter]`           |
-| Banco de dados  | `[PostgreSQL / SQLite / MySQL]`     |
-| Autenticação    | `[JWT / OAuth2]`                    |
-| Testes          | `[Pytest / Jest / JUnit]`           |
-| Infra           | `[Docker / GitHub Actions]`         |
+### Stack tecnológica
+
+<div align="center">
+
+<img src="https://skillicons.dev/icons?i=nextjs,react,nodejs,tailwind,postgres,prisma,docker,git,github" alt="Tecnologias do Finora"/>
+
+</div>
+
+| Camada | Tecnologia | Finalidade |
+|---|---|---|
+| Linguagem principal | JavaScript | Desenvolvimento Full Stack |
+| Estrutura | HTML5 | Estruturação das páginas |
+| Estilização | CSS3 | Estilização das interfaces |
+| Framework | Next.js | Estrutura principal da aplicação |
+| Biblioteca frontend | React | Construção de interfaces |
+| Backend | Node.js | Execução do JavaScript no servidor |
+| CSS Framework | Tailwind CSS | Estilização e responsividade |
+| Banco de dados | PostgreSQL | Armazenamento das informações |
+| ORM | Prisma ORM | Comunicação com o banco |
+| Hospedagem do banco | Neon | PostgreSQL na nuvem |
+| Gráficos | Recharts | Visualização de dados financeiros |
+| Validação | Zod | Validação de informações |
+| Autenticação | Auth.js | Gerenciamento de autenticação |
+| Versionamento | Git e GitHub | Controle de versão |
+| Containerização | Docker | Ambiente de desenvolvimento |
+| Deploy | Vercel | Hospedagem da aplicação |
 
 ---
 
 ## ✅ Pré-requisitos
 
-Antes de começar, você vai precisar ter instalado:
+Antes de executar o projeto, será necessário ter instalado:
 
-- [Git](https://git-scm.com/)
-- `[Runtime da sua linguagem — ex.: Node.js 20+ ou Python 3.11+]`
-- `[Banco de dados — ex.: PostgreSQL 15+]`
-- *(Opcional)* [Docker](https://www.docker.com/) e Docker Compose
+- [Node.js](https://nodejs.org/) — versão LTS.
+- [Git](https://git-scm.com/).
+- [Visual Studio Code](https://code.visualstudio.com/).
+- Uma conta no [Neon](https://neon.com/) para o banco de dados PostgreSQL.
+
+O Docker poderá ser utilizado posteriormente para configurar um ambiente local de desenvolvimento.
 
 ---
 
 ## 🚀 Instalação
 
+### 1. Clone o repositório
+
 ```bash
-# 1. Clone o repositório
-git clone https://github.com/SEU-USUARIO/finora.git
+git clone https://github.com/MeirelesDiogo/finora.git
+```
 
-# 2. Entre na pasta do projeto
+### 2. Entre na pasta do projeto
+
+```bash
 cd finora
+```
 
-# 3. Instale as dependências
-# Exemplo com Node.js:
+### 3. Instale as dependências
+
+```bash
 npm install
-# Exemplo com Python:
-# pip install -r requirements.txt
+```
 
-# 4. Configure as variáveis de ambiente
-cp .env.example .env
+### 4. Configure as variáveis de ambiente
 
-# 5. Execute as migrações do banco de dados (se aplicável)
-# npm run migrate
+Crie um arquivo `.env` na raiz do projeto, seguindo as instruções da seção [Configuração](#-configuração).
 
-# 6. Inicie a aplicação
+### 5. Inicie a aplicação
+
+```bash
 npm run dev
 ```
 
-<details>
-<summary><b>🐳 Prefere usar Docker? Clique para expandir</b></summary>
+### 6. Acesse no navegador
 
-<br/>
-
-```bash
-docker compose up --build
+```text
+http://localhost:3000
 ```
 
-A aplicação ficará disponível em `http://localhost:3000` *(ajuste a porta conforme o seu projeto)*.
-
-</details>
-
----
-
-## 💡 Como usar
-
-1. **Crie sua conta** e faça login.
-2. **Cadastre suas contas** (ex.: carteira, banco, cartão).
-3. **Registre suas transações** de receita e despesa, escolhendo a categoria.
-4. **Defina um orçamento** mensal por categoria.
-5. **Crie metas** (ex.: reserva de emergência, viagem) e acompanhe o progresso.
-6. **Consulte o dashboard e os relatórios** para entender seus hábitos financeiros.
-
-<!-- Dica: grave um GIF da sua aplicação e coloque em docs/demo.gif, depois descomente a linha abaixo -->
-<!-- <div align="center"><img src="docs/demo.gif" alt="Demonstração do Finora" width="80%"/></div> -->
-
-<details>
-<summary><b>📦 Exemplo de transação (JSON)</b></summary>
-
-<br/>
-
-```json
-{
-  "tipo": "despesa",
-  "descricao": "Supermercado",
-  "valor": 235.90,
-  "categoria": "Alimentação",
-  "conta": "Cartão Nubank",
-  "data": "2026-11-20"
-}
-```
-
-</details>
-
----
-
-## 📂 Estrutura do projeto
-
-> Exemplo de organização. Adapte para a estrutura real do Finora.
-
-```
-finora/
-├── src/
-│   ├── controllers/      # Camada de entrada (rotas/handlers)
-│   ├── services/         # Regras de negócio
-│   ├── models/           # Entidades e modelos de dados
-│   ├── repositories/     # Acesso ao banco de dados
-│   ├── utils/            # Funções utilitárias
-│   └── main              # Ponto de entrada da aplicação
-├── tests/                # Testes automatizados
-├── docs/                 # Documentação adicional
-├── .env.example          # Exemplo de variáveis de ambiente
-├── docker-compose.yml
-├── LICENSE
-└── README.md
-```
+> Observação: as configurações do banco de dados e as migrações do Prisma serão necessárias conforme a implementação dessas funcionalidades.
 
 ---
 
 ## ⚙️ Configuração
 
-As configurações são feitas por variáveis de ambiente no arquivo `.env`:
+O projeto utiliza variáveis de ambiente para armazenar configurações sensíveis e informações de conexão.
 
-| Variável        | Descrição                            | Exemplo                                        |
-| --------------- | ------------------------------------ | ---------------------------------------------- |
-| `PORT`          | Porta em que a aplicação roda        | `3000`                                         |
-| `DATABASE_URL`  | String de conexão com o banco        | `postgresql://user:pass@localhost:5432/finora` |
-| `JWT_SECRET`    | Chave secreta para tokens de acesso  | `uma-chave-bem-segura`                         |
-| `NODE_ENV`      | Ambiente de execução                 | `development`                                  |
+Exemplo de configuração:
 
-> 🔒 **Nunca** envie o arquivo `.env` para o GitHub. Mantenha-o no `.gitignore`.
+```env
+DATABASE_URL="sua_connection_string_do_postgresql"
+```
+
+### Variáveis de ambiente
+
+| Variável | Descrição |
+|---|---|
+| `DATABASE_URL` | String de conexão com o PostgreSQL |
+
+> 🔒 Nunca compartilhe seu arquivo `.env` ou envie informações sensíveis para o GitHub. Utilize o `.gitignore` para impedir que esses arquivos sejam versionados.
 
 ---
 
-## 🧪 Testes
+## 📂 Estrutura do projeto
 
-```bash
-# Executar todos os testes
-npm test
+A estrutura planejada segue a arquitetura do Next.js com App Router:
 
-# Executar com relatório de cobertura
-npm run test:coverage
+```text
+finora/
+│
+├── prisma/
+│   └── schema.prisma
+│
+├── public/
+│
+├── src/
+│   ├── app/
+│   │   ├── (auth)/
+│   │   │   ├── login/
+│   │   │   └── cadastro/
+│   │   │
+│   │   ├── (dashboard)/
+│   │   │   ├── dashboard/
+│   │   │   ├── transacoes/
+│   │   │   ├── categorias/
+│   │   │   ├── contas/
+│   │   │   ├── projetos/
+│   │   │   └── relatorios/
+│   │   │
+│   │   ├── api/
+│   │   ├── globals.css
+│   │   ├── layout.js
+│   │   └── page.js
+│   │
+│   ├── components/
+│   │   ├── ui/
+│   │   ├── layout/
+│   │   └── dashboard/
+│   │
+│   ├── lib/
+│   │
+│   ├── services/
+│   │
+│   └── validations/
+│
+├── .env
+├── .env.example
+├── .gitignore
+├── package.json
+├── prisma.config.ts
+└── README.md
 ```
+
+> A estrutura apresentada representa a organização planejada. Diretórios e arquivos serão adicionados conforme o desenvolvimento.
 
 ---
 
 ## 🗺️ Roadmap
 
-- [x] Definição do escopo e da arquitetura
-- [ ] Cadastro e autenticação de usuários
-- [ ] CRUD de transações
-- [ ] Categorias e contas
-- [ ] Dashboard com gráficos
-- [ ] Orçamento mensal e alertas
-- [ ] Metas financeiras
-- [ ] Transações recorrentes e parcelamentos
-- [ ] Importação/exportação de dados (CSV)
-- [ ] Relatórios avançados
-- [ ] Tema escuro
-- [ ] Aplicativo mobile
-- [ ] Integração com bancos (Open Finance)
+O desenvolvimento do Finora será dividido em etapas para facilitar a implementação e evolução do sistema.
 
-Tem uma ideia? Abra uma [issue](https://github.com/SEU-USUARIO/finora/issues) com a sugestão!
+- [x] Definição da proposta e do escopo inicial.
+- [x] Definição da stack tecnológica.
+- [ ] Configuração inicial do Next.js.
+- [ ] Configuração do PostgreSQL e Prisma.
+- [ ] Modelagem do banco de dados.
+- [ ] Cadastro e autenticação de usuários.
+- [ ] Gerenciamento de receitas e despesas.
+- [ ] Gerenciamento de categorias.
+- [ ] Gerenciamento de contas financeiras.
+- [ ] Dashboard financeiro.
+- [ ] Gráficos e indicadores.
+- [ ] Gerenciamento de projetos financeiros.
+- [ ] Orçamentos e limites de gastos.
+- [ ] Metas financeiras.
+- [ ] Transações recorrentes e parcelamentos.
+- [ ] Relatórios financeiros.
+- [ ] Importação e exportação de dados.
+- [ ] Tema claro e escuro.
+- [ ] Testes e melhorias de segurança.
+- [ ] Publicação da aplicação.
+
+### Futuras possibilidades
+
+- [ ] Aplicativo mobile.
+- [ ] Integração bancária via Open Finance.
+- [ ] Recursos de inteligência financeira.
 
 ---
 
 ## 🤝 Contribuindo
 
-Contribuições são muito bem-vindas! Para contribuir:
+Contribuições, sugestões e melhorias são bem-vindas!
 
-1. Faça um **fork** do projeto.
-2. Crie uma branch para a sua feature:
-   ```bash
-   git checkout -b feature/minha-feature
-   ```
-3. Faça o commit das suas alterações:
-   ```bash
-   git commit -m "feat: adiciona minha feature"
-   ```
-4. Envie para a sua branch:
-   ```bash
-   git push origin feature/minha-feature
-   ```
-5. Abra um **Pull Request**.
+Caso queira contribuir:
+
+1. Faça um fork do projeto.
+2. Crie uma branch para sua funcionalidade:
+
+```bash
+git checkout -b feature/minha-feature
+```
+
+3. Faça suas alterações.
+4. Registre suas alterações utilizando commits descritivos:
+
+```bash
+git commit -m "feat: adiciona nova funcionalidade"
+```
+
+5. Envie sua branch:
+
+```bash
+git push origin feature/minha-feature
+```
+
+6. Abra um Pull Request.
 
 ### 📝 Padrão de commits
 
-Este projeto segue o [Conventional Commits](https://www.conventionalcommits.org/pt-br/):
+O projeto utiliza como referência o [Conventional Commits](https://www.conventionalcommits.org/pt-br/).
 
-- `feat:` nova funcionalidade
-- `fix:` correção de bug
-- `docs:` mudanças na documentação
-- `refactor:` refatoração de código
-- `test:` adição ou ajuste de testes
-- `chore:` tarefas de manutenção
+| Prefixo | Finalidade |
+|---|---|
+| `feat:` | Nova funcionalidade |
+| `fix:` | Correção de erros |
+| `docs:` | Alterações na documentação |
+| `refactor:` | Refatoração do código |
+| `style:` | Alterações de formatação |
+| `test:` | Testes |
+| `chore:` | Manutenção do projeto |
 
 ---
 
 ## 📄 Licença
 
-Este projeto está licenciado sob a licença **MIT**. Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
+Este projeto está licenciado sob a licença **MIT**.
+
+Consulte o arquivo [LICENSE](LICENSE) para obter mais informações.
 
 ---
 
 ## 👤 Autor
 
-Feito com ☕ e código por **[Seu Nome]**.
+Desenvolvido por **Diogo Alexandre Meireles**.
 
-- GitHub: [@SEU-USUARIO](https://github.com/SEU-USUARIO)
-- LinkedIn: [seu-perfil](https://www.linkedin.com/in/seu-perfil)
-- E-mail: seu-email@exemplo.com
+- GitHub: [@MeirelesDiogo](https://github.com/MeirelesDiogo)
+- LinkedIn: [Diogo Meireles](https://www.linkedin.com/in/meirelesdiogo)
+- E-mail: meirelesdiogo.dev@gmail.com
 
 ---
 
 <div align="center">
 
-⭐ **Se o Finora te ajudou, deixe uma estrela no repositório!** ⭐
+⭐ **Se o Finora despertou seu interesse, considere deixar uma estrela no repositório!**
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,20,24&height=130&section=footer" alt="Rodapé" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,20,24&height=130&section=footer" alt="Finora"/>
 
 </div>
