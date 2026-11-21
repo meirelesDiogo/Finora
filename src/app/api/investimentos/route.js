@@ -165,3 +165,26 @@ export async function PATCH(request) {
     return NextResponse.json({ mensagem: "Não foi possível atualizar o valor." }, { status: 500 });
   }
 }
+
+export async function DELETE(request) {
+  const sessionId = await currentUserId();
+  if (!sessionId) return NextResponse.json({ mensagem: "Faça login para continuar." }, { status: 401 });
+  const userId = idDoBanco(sessionId);
+  const { searchParams } = new URL(request.url);
+  const ativoId = idDoBanco(searchParams.get("id"));
+  if (!userId || !ativoId) return NextResponse.json({ mensagem: "Investimento inválido." }, { status: 400 });
+  try {
+    const removido = await prisma.$transaction(async (tx) => {
+      const ativos = await tx.$queryRaw\`SELECT cod_ativo FROM ativos_investimento WHERE cod_usuario=\${userId} AND cod_ativo=\${ativoId} FOR UPDATE\`;
+      if (!ativos.length) return false;
+      await tx.$executeRaw\`DELETE FROM operacoes_investimento WHERE cod_usuario=\${userId} AND cod_ativo=\${ativoId}\`;
+      const quantidade = await tx.$executeRaw\`DELETE FROM ativos_investimento WHERE cod_usuario=\${userId} AND cod_ativo=\${ativoId}\`;
+      return quantidade > 0;
+    });
+    if (!removido) return NextResponse.json({ mensagem: "Investimento não encontrado." }, { status: 404 });
+    return NextResponse.json({ mensagem: "Investimento e histórico excluídos." });
+  } catch (error) {
+    console.error("Falha ao excluir investimento:", error);
+    return NextResponse.json({ mensagem: "Não foi possível excluir o investimento." }, { status: 500 });
+  }
+}
