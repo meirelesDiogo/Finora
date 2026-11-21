@@ -2,9 +2,12 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { createSessionToken, sessionCookie } from "@/lib/auth";
+import { respostaConfiguracaoAusente, variavelDeAmbienteAusente } from "@/lib/configuracao";
 
 export async function POST(request) {
   try {
+    const ausente = variavelDeAmbienteAusente();
+    if (ausente) return NextResponse.json({ mensagem: respostaConfiguracaoAusente(ausente) }, { status: 503 });
     const { email, senha } = await request.json();
     const normalizedEmail = String(email || "").trim().toLowerCase();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail) || String(senha || "").length < 8)
@@ -28,6 +31,6 @@ export async function POST(request) {
   } catch (error) {
     if (error.code === "P2002") return NextResponse.json({ mensagem: "Este e-mail já está cadastrado." }, { status: 409 });
     console.error("Falha no cadastro:", error);
-    return NextResponse.json({ mensagem: "Não foi possível criar sua conta. Confira a configuração do banco." }, { status: 500 });
+    return NextResponse.json({ mensagem: "Não foi possível criar a conta. Confira DATABASE_URL e SESSION_SECRET nas variáveis da Vercel." }, { status: 500 });
   }
 }

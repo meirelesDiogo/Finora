@@ -2,9 +2,12 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { createSessionToken, sessionCookie } from "@/lib/auth";
+import { respostaConfiguracaoAusente, variavelDeAmbienteAusente } from "@/lib/configuracao";
 
 export async function POST(request) {
   try {
+    const ausente = variavelDeAmbienteAusente();
+    if (ausente) return NextResponse.json({ mensagem: respostaConfiguracaoAusente(ausente) }, { status: 503 });
     const { email, senha } = await request.json();
     const user = await prisma.usuarios.findUnique({ where: { email: String(email || "").trim().toLowerCase() }, select: { cod_usuario: true, senha: true } });
     if (!user || !(await bcrypt.compare(String(senha || ""), user.senha)))
