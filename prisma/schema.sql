@@ -55,7 +55,8 @@ FROM usuarios u
 CROSS JOIN (VALUES
   ('Salário','RECEITA'),('Outras receitas','RECEITA'),
   ('Moradia','DESPESA'),('Alimentação','DESPESA'),('Transporte','DESPESA'),
-  ('Saúde','DESPESA'),('Lazer','DESPESA'),('Outras despesas','DESPESA')
+  ('Saúde','DESPESA'),('Lazer','DESPESA'),('Outras despesas','DESPESA'),
+  ('Investimento','DESPESA')
 ) AS padrao(nome,tipo)
 WHERE NOT EXISTS (SELECT 1 FROM categorias c WHERE c.cod_usuario=u.cod_usuario)
 ON CONFLICT (cod_usuario,nome,tipo) DO NOTHING;
