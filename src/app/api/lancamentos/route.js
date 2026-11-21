@@ -1,69 +1,151 @@
 import { NextResponse } from "next/server";
-import pool from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 import { currentUserId } from "@/lib/auth";
 
+const idDoBanco = (value) => /^\d+$/.test(String(value ?? "")) ? BigInt(value) : null;
+const dataValida = (value) => {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(value ?? ""))) return false;
+  const data = new Date(`${value}T00:00:00.000Z`);
+  return !Number.isNaN(data.valueOf()) && data.toISOString().slice(0, 10) === value;
+};
+const dataUtc = (value) => new Date(`${value}T00:00:00.000Z`);
+const responderErroBanco = (error, mensagem) => {
+  console.error(mensagem, error);
+  return NextResponse.json({ mensagem }, { status: 500 });
+};
+
 export async function GET(request) {
-  const userId = await currentUserId();
-  if (!userId) return NextResponse.json({ mensagem: "Faça login para continuar." }, { status: 401 });
+  const sessionId = await currentUserId();
+  if (!sessionId) return NextResponse.json({ mensagem: "Faça login para continuar." }, { status: 401 });
+  const userId = idDoBanco(sessionId);
+  if (!userId) return NextResponse.json({ mensagem: "Sessão inválida." }, { status: 401 });
+
   const { searchParams } = new URL(request.url);
   const mes = Number(searchParams.get("mes")) || new Date().getMonth() + 1;
   const ano = Number(searchParams.get("ano")) || new Date().getFullYear();
-  const todos = searchParams.get("todos") === "1";
-  const [lancamentos, categorias, projetos, totais] = await Promise.all([
-    pool.query("SELECT l.cod_lancamento,l.descricao,l.valor::float,l.tipo,l.data_lancamento,c.nome AS categoria,p.nome AS projeto FROM lancamentos l JOIN categorias c ON c.cod_usuario=l.cod_usuario AND c.cod_categoria=l.cod_categoria LEFT JOIN projetos p ON p.cod_usuario=l.cod_usuario AND p.cod_projeto=l.cod_projeto WHERE l.cod_usuario=$1 AND ($4::boolean OR (EXTRACT(MONTH FROM l.data_lancamento)=$2 AND EXTRACT(YEAR FROM l.data_lancamento)=$3)) ORDER BY l.data_lancamento DESC,l.cod_lancamento DESC LIMIT 1000", [userId, mes, ano, todos]),
-    pool.query("SELECT cod_categoria,nome,tipo FROM categorias WHERE cod_usuario=$1 ORDER BY tipo,nome", [userId]),
-    pool.query("SELECT cod_projeto,nome FROM projetos WHERE cod_usuario=$1 ORDER BY nome", [userId]),
-    pool.query("SELECT COALESCE(SUM(valor) FILTER(WHERE tipo='RECEITA'),0)::float receitas,COALESCE(SUM(valor) FILTER(WHERE tipo='DESPESA'),0)::float despesas FROM lancamentos WHERE cod_usuario=$1 AND EXTRACT(MONTH FROM data_lancamento)=$2 AND EXTRACT(YEAR FROM data_lancamento)=$3", [userId, mes, ano]),
-  ]);
-  return NextResponse.json({ lancamentos: lancamentos.rows, categorias: categorias.rows, projetos: projetos.rows, totais: totais.rows[0] });
+  if (mes < 1 || mes > 12 || ano < 1900 || ano > 2100)
+    return NextResponse.json({ mensagem: "Período inválido." }, { status: 400 });
+  const inicio = new Date(Date.UTC(ano, mes - 1, 1));
+  const fim = new Date(Date.UTC(ano, mes, 1));
+
+  try {
+    const where = { cod_usuario: userId, data_lancamento: { gte: inicio, lt: fim } };
+    const [lancamentos, categorias, projetos, receitas, despesas] = await Promise.all([
+      prisma.lancamentos.findMany({
+        where,
+        include: { categoria: { select: { nome: true } }, projeto: { select: { nome: true } } },
+        orderBy: [{ data_lancamento: "desc" }, { cod_lancamento: "desc" }],
+        take: 1000,
+      }),
+      prisma.categorias.findMany({ where: { cod_usuario: userId }, select: { cod_categoria: true, nome: true, tipo: true }, orderBy: [{ tipo: "asc" }, { nome: "asc" }] }),
+      prisma.projetos.findMany({ where: { cod_usuario: userId }, select: { cod_projeto: true, nome: true }, orderBy: { nome: "asc" } }),
+      prisma.lancamentos.aggregate({ where: { ...where, tipo: "RECEITA" }, _sum: { valor: true } }),
+      prisma.lancamentos.aggregate({ where: { ...where, tipo: "DESPESA" }, _sum: { valor: true } }),
+    ]);
+    return NextResponse.json({
+      lancamentos: lancamentos.map((item) => ({
+        cod_lancamento: String(item.cod_lancamento), descricao: item.descricao,
+        valor: Number(item.valor), tipo: item.tipo, data_lancamento: item.data_lancamento,
+        categoria: item.categoria.nome, projeto: item.projeto?.nome ?? null,
+      })),
+      categorias: categorias.map((item) => ({ ...item, cod_categoria: String(item.cod_categoria) })),
+      projetos: projetos.map((item) => ({ ...item, cod_projeto: String(item.cod_projeto) })),
+      totais: { receitas: Number(receitas._sum.valor ?? 0), despesas: Number(despesas._sum.valor ?? 0) },
+    });
+  } catch (error) {
+    return responderErroBanco(error, "Falha ao consultar lançamentos:");
+  }
+}
+
+function validarFormulario(body) {
+  const descricao = String(body.descricao ?? "").trim();
+  const valor = Number(body.valor);
+  const categoriaId = idDoBanco(body.categoria);
+  const projetoId = body.projeto ? idDoBanco(body.projeto) : null;
+  const tipo = body.tipo;
+  const data = body.data;
+  if (!descricao || descricao.length > 255 || !Number.isFinite(valor) || valor <= 0
+    || !categoriaId || (body.projeto && !projetoId)
+    || !["RECEITA", "DESPESA"].includes(tipo) || !dataValida(data)) return null;
+  return { descricao, valor, categoriaId, projetoId, tipo, data: dataUtc(data) };
+}
+
+async function conferirVinculos(tx, userId, formulario) {
+  const categoria = await tx.categorias.findFirst({
+    where: { cod_usuario: userId, cod_categoria: formulario.categoriaId, tipo: formulario.tipo },
+    select: { cod_categoria: true },
+  });
+  if (!categoria) return false;
+  if (!formulario.projetoId) return true;
+  const projeto = await tx.projetos.findFirst({
+    where: { cod_usuario: userId, cod_projeto: formulario.projetoId },
+    select: { cod_projeto: true },
+  });
+  return Boolean(projeto);
 }
 
 export async function POST(request) {
-  const userId = await currentUserId();
-  if (!userId) return NextResponse.json({ mensagem: "Faça login para continuar." }, { status: 401 });
-  const body = await request.json();
-  const descricao = String(body.descricao || "").trim();
-  const valor = Number(body.valor);
-  const tipo = body.tipo;
-  const data = body.data;
-  const categoria = Number(body.categoria);
-  const projeto = body.projeto ? Number(body.projeto) : null;
-  if (!descricao || descricao.length > 255 || !Number.isFinite(valor) || valor <= 0 || !["RECEITA", "DESPESA"].includes(tipo) || !/^\d{4}-\d{2}-\d{2}$/.test(data || "") || !Number.isInteger(categoria))
-    return NextResponse.json({ mensagem: "Confira os dados do lançamento." }, { status: 400 });
+  const sessionId = await currentUserId();
+  if (!sessionId) return NextResponse.json({ mensagem: "Faça login para continuar." }, { status: 401 });
+  const userId = idDoBanco(sessionId);
+  const formulario = validarFormulario(await request.json());
+  if (!userId || !formulario) return NextResponse.json({ mensagem: "Confira os dados do lançamento." }, { status: 400 });
   try {
-    const result = await pool.query("INSERT INTO lancamentos(cod_usuario,cod_categoria,cod_projeto,descricao,valor,tipo,data_lancamento) SELECT $1,c.cod_categoria,p.cod_projeto,$4,$5,$6,$7 FROM categorias c LEFT JOIN projetos p ON p.cod_usuario=$1 AND p.cod_projeto=$3 WHERE c.cod_usuario=$1 AND c.cod_categoria=$2 AND c.tipo=$6 AND ($3::bigint IS NULL OR p.cod_projeto IS NOT NULL) RETURNING cod_lancamento", [userId,categoria,projeto,descricao,valor,tipo,data]);
-    if (!result.rowCount) return NextResponse.json({ mensagem: "Categoria ou projeto inválido." }, { status: 400 });
+    const criado = await prisma.$transaction(async (tx) => {
+      if (!(await conferirVinculos(tx, userId, formulario))) return null;
+      return tx.lancamentos.create({ data: {
+        cod_usuario: userId, cod_categoria: formulario.categoriaId, cod_projeto: formulario.projetoId,
+        descricao: formulario.descricao, valor: formulario.valor, tipo: formulario.tipo,
+        data_lancamento: formulario.data,
+      } });
+    });
+    if (!criado) return NextResponse.json({ mensagem: "Categoria ou projeto inválido." }, { status: 400 });
     return NextResponse.json({ mensagem: "Lançamento registrado." }, { status: 201 });
-  } catch (error) { console.error(error); return NextResponse.json({ mensagem: "Não foi possível salvar o lançamento." }, { status: 500 }); }
-}
-
-export async function DELETE(request) {
-  const userId = await currentUserId();
-  if (!userId) return NextResponse.json({ mensagem: "Faça login para continuar." }, { status: 401 });
-  const id = new URL(request.url).searchParams.get("id");
-  const result = await pool.query("DELETE FROM lancamentos WHERE cod_usuario=$1 AND cod_lancamento=$2", [userId,id]);
-  return result.rowCount ? NextResponse.json({ mensagem: "Lançamento removido." }) : NextResponse.json({ mensagem: "Lançamento não encontrado." }, { status: 404 });
+  } catch (error) {
+    return responderErroBanco(error, "Falha ao registrar lançamento:");
+  }
 }
 
 export async function PUT(request) {
-  const userId = await currentUserId();
-  if (!userId) return NextResponse.json({ mensagem: "Faça login para continuar." }, { status: 401 });
+  const sessionId = await currentUserId();
+  if (!sessionId) return NextResponse.json({ mensagem: "Faça login para continuar." }, { status: 401 });
+  const userId = idDoBanco(sessionId);
   const body = await request.json();
-  const id = String(body.id || "");
-  const descricao = String(body.descricao || "").trim();
-  const valor = Number(body.valor);
-  const categoria = Number(body.categoria);
-  const tipo = body.tipo;
-  const data = body.data;
-  const projeto = body.projeto ? Number(body.projeto) : null;
-  if (!/^\d+$/.test(id) || !descricao || descricao.length > 255 || !Number.isFinite(valor) || valor <= 0 || !Number.isInteger(categoria) || !["RECEITA","DESPESA"].includes(tipo) || !/^\d{4}-\d{2}-\d{2}$/.test(data || ""))
-    return NextResponse.json({ mensagem: "Confira os dados do lançamento." }, { status: 400 });
+  const lancamentoId = idDoBanco(body.id);
+  const formulario = validarFormulario(body);
+  if (!userId || !lancamentoId || !formulario) return NextResponse.json({ mensagem: "Confira os dados do lançamento." }, { status: 400 });
   try {
-    const result = await pool.query("UPDATE lancamentos l SET cod_categoria=c.cod_categoria,cod_projeto=p.cod_projeto,descricao=$4,valor=$5,tipo=$6,data_lancamento=$7 FROM categorias c LEFT JOIN projetos p ON p.cod_usuario=$1 AND p.cod_projeto=$3 WHERE l.cod_usuario=$1 AND l.cod_lancamento=$8 AND c.cod_usuario=$1 AND c.cod_categoria=$2 AND c.tipo=$6 AND ($3::bigint IS NULL OR p.cod_projeto IS NOT NULL) RETURNING l.cod_lancamento", [userId,categoria,projeto,descricao,valor,tipo,data,id]);
-    if (!result.rowCount) return NextResponse.json({ mensagem: "Lançamento, categoria ou projeto não encontrado." }, { status: 404 });
+    const atualizado = await prisma.$transaction(async (tx) => {
+      if (!(await conferirVinculos(tx, userId, formulario))) return 0;
+      const result = await tx.lancamentos.updateMany({
+        where: { cod_usuario: userId, cod_lancamento: lancamentoId },
+        data: {
+          cod_categoria: formulario.categoriaId, cod_projeto: formulario.projetoId,
+          descricao: formulario.descricao, valor: formulario.valor, tipo: formulario.tipo,
+          data_lancamento: formulario.data,
+        },
+      });
+      return result.count;
+    });
+    if (!atualizado) return NextResponse.json({ mensagem: "Lançamento, categoria ou projeto não encontrado." }, { status: 404 });
     return NextResponse.json({ mensagem: "Lançamento atualizado." });
   } catch (error) {
-    console.error("Falha ao atualizar lançamento:", error);
-    return NextResponse.json({ mensagem: "Não foi possível atualizar o lançamento." }, { status: 500 });
+    return responderErroBanco(error, "Falha ao atualizar lançamento:");
+  }
+}
+
+export async function DELETE(request) {
+  const sessionId = await currentUserId();
+  if (!sessionId) return NextResponse.json({ mensagem: "Faça login para continuar." }, { status: 401 });
+  const userId = idDoBanco(sessionId);
+  const lancamentoId = idDoBanco(new URL(request.url).searchParams.get("id"));
+  if (!userId || !lancamentoId) return NextResponse.json({ mensagem: "Lançamento inválido." }, { status: 400 });
+  try {
+    const result = await prisma.lancamentos.deleteMany({ where: { cod_usuario: userId, cod_lancamento: lancamentoId } });
+    return result.count
+      ? NextResponse.json({ mensagem: "Lançamento removido." })
+      : NextResponse.json({ mensagem: "Lançamento não encontrado." }, { status: 404 });
+  } catch (error) {
+    return responderErroBanco(error, "Falha ao excluir lançamento:");
   }
 }

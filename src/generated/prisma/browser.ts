@@ -18,22 +18,22 @@ export { Prisma }
 export * as $Enums from './enums.ts'
 export * from './enums.ts';
 /**
+ * Model usuarios
+ * 
+ */
+export type usuarios = Prisma.usuariosModel
+/**
  * Model categorias
- * This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+ * 
  */
 export type categorias = Prisma.categoriasModel
-/**
- * Model lancamentos
- * This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
- */
-export type lancamentos = Prisma.lancamentosModel
 /**
  * Model projetos
  * 
  */
 export type projetos = Prisma.projetosModel
 /**
- * Model usuarios
+ * Model lancamentos
  * 
  */
-export type usuarios = Prisma.usuariosModel
+export type lancamentos = Prisma.lancamentosModel

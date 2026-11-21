@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import pool from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 import { createSessionToken, sessionCookie } from "@/lib/auth";
 
 export async function POST(request) {
@@ -10,25 +10,23 @@ export async function POST(request) {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail) || String(senha || "").length < 8)
       return NextResponse.json({ mensagem: "Informe um e-mail válido e uma senha com pelo menos 8 caracteres." }, { status: 400 });
     const hash = await bcrypt.hash(senha, 12);
-    const client = await pool.connect();
-    let id;
-    try {
-      await client.query("BEGIN");
-      const result = await client.query("INSERT INTO usuarios(email, senha) VALUES($1,$2) RETURNING cod_usuario", [normalizedEmail, hash]);
-      id = result.rows[0].cod_usuario;
-      await client.query("INSERT INTO categorias(cod_usuario,nome,tipo) VALUES ($1,'Salário','RECEITA'),($1,'Outras receitas','RECEITA'),($1,'Moradia','DESPESA'),($1,'Alimentação','DESPESA'),($1,'Transporte','DESPESA'),($1,'Saúde','DESPESA'),($1,'Lazer','DESPESA'),($1,'Outras despesas','DESPESA')", [id]);
-      await client.query("COMMIT");
-    } catch (error) {
-      await client.query("ROLLBACK");
-      throw error;
-    } finally {
-      client.release();
-    }
+    const user = await prisma.$transaction(async (tx) => {
+      const created = await tx.usuarios.create({ data: { email: normalizedEmail, senha: hash } });
+      await tx.categorias.createMany({
+        data: [
+          ["Salário", "RECEITA"], ["Outras receitas", "RECEITA"],
+          ["Moradia", "DESPESA"], ["Alimentação", "DESPESA"], ["Transporte", "DESPESA"],
+          ["Saúde", "DESPESA"], ["Lazer", "DESPESA"], ["Outras despesas", "DESPESA"],
+        ].map(([nome, tipo]) => ({ cod_usuario: created.cod_usuario, nome, tipo })),
+      });
+      return created;
+    });
+    const id = user.cod_usuario;
     const response = NextResponse.json({ mensagem: "Conta criada com sucesso." }, { status: 201 });
     response.cookies.set(sessionCookie, createSessionToken(id), { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 30 });
     return response;
   } catch (error) {
-    if (error.code === "23505") return NextResponse.json({ mensagem: "Este e-mail já está cadastrado." }, { status: 409 });
+    if (error.code === "P2002") return NextResponse.json({ mensagem: "Este e-mail já está cadastrado." }, { status: 409 });
     console.error("Falha no cadastro:", error);
     return NextResponse.json({ mensagem: "Não foi possível criar sua conta. Confira a configuração do banco." }, { status: 500 });
   }

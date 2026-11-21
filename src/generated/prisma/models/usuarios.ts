@@ -209,8 +209,8 @@ export type usuariosWhereInput = {
   senha?: Prisma.StringFilter<"usuarios"> | string
   data_criacao?: Prisma.DateTimeFilter<"usuarios"> | Date | string
   categorias?: Prisma.CategoriasListRelationFilter
-  lancamentos?: Prisma.LancamentosListRelationFilter
   projetos?: Prisma.ProjetosListRelationFilter
+  lancamentos?: Prisma.LancamentosListRelationFilter
 }
 
 export type usuariosOrderByWithRelationInput = {
@@ -219,8 +219,8 @@ export type usuariosOrderByWithRelationInput = {
   senha?: Prisma.SortOrder
   data_criacao?: Prisma.SortOrder
   categorias?: Prisma.categoriasOrderByRelationAggregateInput
-  lancamentos?: Prisma.lancamentosOrderByRelationAggregateInput
   projetos?: Prisma.projetosOrderByRelationAggregateInput
+  lancamentos?: Prisma.lancamentosOrderByRelationAggregateInput
 }
 
 export type usuariosWhereUniqueInput = Prisma.AtLeast<{
@@ -232,8 +232,8 @@ export type usuariosWhereUniqueInput = Prisma.AtLeast<{
   senha?: Prisma.StringFilter<"usuarios"> | string
   data_criacao?: Prisma.DateTimeFilter<"usuarios"> | Date | string
   categorias?: Prisma.CategoriasListRelationFilter
-  lancamentos?: Prisma.LancamentosListRelationFilter
   projetos?: Prisma.ProjetosListRelationFilter
+  lancamentos?: Prisma.LancamentosListRelationFilter
 }, "cod_usuario" | "email">
 
 export type usuariosOrderByWithAggregationInput = {
@@ -263,9 +263,9 @@ export type usuariosCreateInput = {
   email: string
   senha: string
   data_criacao?: Date | string
-  categorias?: Prisma.categoriasCreateNestedManyWithoutUsuariosInput
-  lancamentos?: Prisma.lancamentosCreateNestedManyWithoutUsuariosInput
-  projetos?: Prisma.projetosCreateNestedManyWithoutUsuariosInput
+  categorias?: Prisma.categoriasCreateNestedManyWithoutUsuarioInput
+  projetos?: Prisma.projetosCreateNestedManyWithoutUsuarioInput
+  lancamentos?: Prisma.lancamentosCreateNestedManyWithoutUsuarioInput
 }
 
 export type usuariosUncheckedCreateInput = {
@@ -273,9 +273,9 @@ export type usuariosUncheckedCreateInput = {
   email: string
   senha: string
   data_criacao?: Date | string
-  categorias?: Prisma.categoriasUncheckedCreateNestedManyWithoutUsuariosInput
-  lancamentos?: Prisma.lancamentosUncheckedCreateNestedManyWithoutUsuariosInput
-  projetos?: Prisma.projetosUncheckedCreateNestedManyWithoutUsuariosInput
+  categorias?: Prisma.categoriasUncheckedCreateNestedManyWithoutUsuarioInput
+  projetos?: Prisma.projetosUncheckedCreateNestedManyWithoutUsuarioInput
+  lancamentos?: Prisma.lancamentosUncheckedCreateNestedManyWithoutUsuarioInput
 }
 
 export type usuariosUpdateInput = {
@@ -283,9 +283,9 @@ export type usuariosUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   senha?: Prisma.StringFieldUpdateOperationsInput | string
   data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  categorias?: Prisma.categoriasUpdateManyWithoutUsuariosNestedInput
-  lancamentos?: Prisma.lancamentosUpdateManyWithoutUsuariosNestedInput
-  projetos?: Prisma.projetosUpdateManyWithoutUsuariosNestedInput
+  categorias?: Prisma.categoriasUpdateManyWithoutUsuarioNestedInput
+  projetos?: Prisma.projetosUpdateManyWithoutUsuarioNestedInput
+  lancamentos?: Prisma.lancamentosUpdateManyWithoutUsuarioNestedInput
 }
 
 export type usuariosUncheckedUpdateInput = {
@@ -293,9 +293,9 @@ export type usuariosUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   senha?: Prisma.StringFieldUpdateOperationsInput | string
   data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  categorias?: Prisma.categoriasUncheckedUpdateManyWithoutUsuariosNestedInput
-  lancamentos?: Prisma.lancamentosUncheckedUpdateManyWithoutUsuariosNestedInput
-  projetos?: Prisma.projetosUncheckedUpdateManyWithoutUsuariosNestedInput
+  categorias?: Prisma.categoriasUncheckedUpdateManyWithoutUsuarioNestedInput
+  projetos?: Prisma.projetosUncheckedUpdateManyWithoutUsuarioNestedInput
+  lancamentos?: Prisma.lancamentosUncheckedUpdateManyWithoutUsuarioNestedInput
 }
 
 export type usuariosCreateManyInput = {
@@ -317,11 +317,6 @@ export type usuariosUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   senha?: Prisma.StringFieldUpdateOperationsInput | string
   data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type UsuariosScalarRelationFilter = {
-  is?: Prisma.usuariosWhereInput
-  isNot?: Prisma.usuariosWhereInput
 }
 
 export type usuariosCountOrderByAggregateInput = {
@@ -353,6 +348,27 @@ export type usuariosSumOrderByAggregateInput = {
   cod_usuario?: Prisma.SortOrder
 }
 
+export type UsuariosScalarRelationFilter = {
+  is?: Prisma.usuariosWhereInput
+  isNot?: Prisma.usuariosWhereInput
+}
+
+export type BigIntFieldUpdateOperationsInput = {
+  set?: bigint | number
+  increment?: bigint | number
+  decrement?: bigint | number
+  multiply?: bigint | number
+  divide?: bigint | number
+}
+
+export type StringFieldUpdateOperationsInput = {
+  set?: string
+}
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
+}
+
 export type usuariosCreateNestedOneWithoutCategoriasInput = {
   create?: Prisma.XOR<Prisma.usuariosCreateWithoutCategoriasInput, Prisma.usuariosUncheckedCreateWithoutCategoriasInput>
   connectOrCreate?: Prisma.usuariosCreateOrConnectWithoutCategoriasInput
@@ -365,20 +381,6 @@ export type usuariosUpdateOneRequiredWithoutCategoriasNestedInput = {
   upsert?: Prisma.usuariosUpsertWithoutCategoriasInput
   connect?: Prisma.usuariosWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.usuariosUpdateToOneWithWhereWithoutCategoriasInput, Prisma.usuariosUpdateWithoutCategoriasInput>, Prisma.usuariosUncheckedUpdateWithoutCategoriasInput>
-}
-
-export type usuariosCreateNestedOneWithoutLancamentosInput = {
-  create?: Prisma.XOR<Prisma.usuariosCreateWithoutLancamentosInput, Prisma.usuariosUncheckedCreateWithoutLancamentosInput>
-  connectOrCreate?: Prisma.usuariosCreateOrConnectWithoutLancamentosInput
-  connect?: Prisma.usuariosWhereUniqueInput
-}
-
-export type usuariosUpdateOneRequiredWithoutLancamentosNestedInput = {
-  create?: Prisma.XOR<Prisma.usuariosCreateWithoutLancamentosInput, Prisma.usuariosUncheckedCreateWithoutLancamentosInput>
-  connectOrCreate?: Prisma.usuariosCreateOrConnectWithoutLancamentosInput
-  upsert?: Prisma.usuariosUpsertWithoutLancamentosInput
-  connect?: Prisma.usuariosWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.usuariosUpdateToOneWithWhereWithoutLancamentosInput, Prisma.usuariosUpdateWithoutLancamentosInput>, Prisma.usuariosUncheckedUpdateWithoutLancamentosInput>
 }
 
 export type usuariosCreateNestedOneWithoutProjetosInput = {
@@ -395,13 +397,27 @@ export type usuariosUpdateOneRequiredWithoutProjetosNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.usuariosUpdateToOneWithWhereWithoutProjetosInput, Prisma.usuariosUpdateWithoutProjetosInput>, Prisma.usuariosUncheckedUpdateWithoutProjetosInput>
 }
 
+export type usuariosCreateNestedOneWithoutLancamentosInput = {
+  create?: Prisma.XOR<Prisma.usuariosCreateWithoutLancamentosInput, Prisma.usuariosUncheckedCreateWithoutLancamentosInput>
+  connectOrCreate?: Prisma.usuariosCreateOrConnectWithoutLancamentosInput
+  connect?: Prisma.usuariosWhereUniqueInput
+}
+
+export type usuariosUpdateOneRequiredWithoutLancamentosNestedInput = {
+  create?: Prisma.XOR<Prisma.usuariosCreateWithoutLancamentosInput, Prisma.usuariosUncheckedCreateWithoutLancamentosInput>
+  connectOrCreate?: Prisma.usuariosCreateOrConnectWithoutLancamentosInput
+  upsert?: Prisma.usuariosUpsertWithoutLancamentosInput
+  connect?: Prisma.usuariosWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.usuariosUpdateToOneWithWhereWithoutLancamentosInput, Prisma.usuariosUpdateWithoutLancamentosInput>, Prisma.usuariosUncheckedUpdateWithoutLancamentosInput>
+}
+
 export type usuariosCreateWithoutCategoriasInput = {
   cod_usuario?: bigint | number
   email: string
   senha: string
   data_criacao?: Date | string
-  lancamentos?: Prisma.lancamentosCreateNestedManyWithoutUsuariosInput
-  projetos?: Prisma.projetosCreateNestedManyWithoutUsuariosInput
+  projetos?: Prisma.projetosCreateNestedManyWithoutUsuarioInput
+  lancamentos?: Prisma.lancamentosCreateNestedManyWithoutUsuarioInput
 }
 
 export type usuariosUncheckedCreateWithoutCategoriasInput = {
@@ -409,8 +425,8 @@ export type usuariosUncheckedCreateWithoutCategoriasInput = {
   email: string
   senha: string
   data_criacao?: Date | string
-  lancamentos?: Prisma.lancamentosUncheckedCreateNestedManyWithoutUsuariosInput
-  projetos?: Prisma.projetosUncheckedCreateNestedManyWithoutUsuariosInput
+  projetos?: Prisma.projetosUncheckedCreateNestedManyWithoutUsuarioInput
+  lancamentos?: Prisma.lancamentosUncheckedCreateNestedManyWithoutUsuarioInput
 }
 
 export type usuariosCreateOrConnectWithoutCategoriasInput = {
@@ -434,8 +450,8 @@ export type usuariosUpdateWithoutCategoriasInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   senha?: Prisma.StringFieldUpdateOperationsInput | string
   data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lancamentos?: Prisma.lancamentosUpdateManyWithoutUsuariosNestedInput
-  projetos?: Prisma.projetosUpdateManyWithoutUsuariosNestedInput
+  projetos?: Prisma.projetosUpdateManyWithoutUsuarioNestedInput
+  lancamentos?: Prisma.lancamentosUpdateManyWithoutUsuarioNestedInput
 }
 
 export type usuariosUncheckedUpdateWithoutCategoriasInput = {
@@ -443,60 +459,8 @@ export type usuariosUncheckedUpdateWithoutCategoriasInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   senha?: Prisma.StringFieldUpdateOperationsInput | string
   data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lancamentos?: Prisma.lancamentosUncheckedUpdateManyWithoutUsuariosNestedInput
-  projetos?: Prisma.projetosUncheckedUpdateManyWithoutUsuariosNestedInput
-}
-
-export type usuariosCreateWithoutLancamentosInput = {
-  cod_usuario?: bigint | number
-  email: string
-  senha: string
-  data_criacao?: Date | string
-  categorias?: Prisma.categoriasCreateNestedManyWithoutUsuariosInput
-  projetos?: Prisma.projetosCreateNestedManyWithoutUsuariosInput
-}
-
-export type usuariosUncheckedCreateWithoutLancamentosInput = {
-  cod_usuario?: bigint | number
-  email: string
-  senha: string
-  data_criacao?: Date | string
-  categorias?: Prisma.categoriasUncheckedCreateNestedManyWithoutUsuariosInput
-  projetos?: Prisma.projetosUncheckedCreateNestedManyWithoutUsuariosInput
-}
-
-export type usuariosCreateOrConnectWithoutLancamentosInput = {
-  where: Prisma.usuariosWhereUniqueInput
-  create: Prisma.XOR<Prisma.usuariosCreateWithoutLancamentosInput, Prisma.usuariosUncheckedCreateWithoutLancamentosInput>
-}
-
-export type usuariosUpsertWithoutLancamentosInput = {
-  update: Prisma.XOR<Prisma.usuariosUpdateWithoutLancamentosInput, Prisma.usuariosUncheckedUpdateWithoutLancamentosInput>
-  create: Prisma.XOR<Prisma.usuariosCreateWithoutLancamentosInput, Prisma.usuariosUncheckedCreateWithoutLancamentosInput>
-  where?: Prisma.usuariosWhereInput
-}
-
-export type usuariosUpdateToOneWithWhereWithoutLancamentosInput = {
-  where?: Prisma.usuariosWhereInput
-  data: Prisma.XOR<Prisma.usuariosUpdateWithoutLancamentosInput, Prisma.usuariosUncheckedUpdateWithoutLancamentosInput>
-}
-
-export type usuariosUpdateWithoutLancamentosInput = {
-  cod_usuario?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  senha?: Prisma.StringFieldUpdateOperationsInput | string
-  data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  categorias?: Prisma.categoriasUpdateManyWithoutUsuariosNestedInput
-  projetos?: Prisma.projetosUpdateManyWithoutUsuariosNestedInput
-}
-
-export type usuariosUncheckedUpdateWithoutLancamentosInput = {
-  cod_usuario?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  senha?: Prisma.StringFieldUpdateOperationsInput | string
-  data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  categorias?: Prisma.categoriasUncheckedUpdateManyWithoutUsuariosNestedInput
-  projetos?: Prisma.projetosUncheckedUpdateManyWithoutUsuariosNestedInput
+  projetos?: Prisma.projetosUncheckedUpdateManyWithoutUsuarioNestedInput
+  lancamentos?: Prisma.lancamentosUncheckedUpdateManyWithoutUsuarioNestedInput
 }
 
 export type usuariosCreateWithoutProjetosInput = {
@@ -504,8 +468,8 @@ export type usuariosCreateWithoutProjetosInput = {
   email: string
   senha: string
   data_criacao?: Date | string
-  categorias?: Prisma.categoriasCreateNestedManyWithoutUsuariosInput
-  lancamentos?: Prisma.lancamentosCreateNestedManyWithoutUsuariosInput
+  categorias?: Prisma.categoriasCreateNestedManyWithoutUsuarioInput
+  lancamentos?: Prisma.lancamentosCreateNestedManyWithoutUsuarioInput
 }
 
 export type usuariosUncheckedCreateWithoutProjetosInput = {
@@ -513,8 +477,8 @@ export type usuariosUncheckedCreateWithoutProjetosInput = {
   email: string
   senha: string
   data_criacao?: Date | string
-  categorias?: Prisma.categoriasUncheckedCreateNestedManyWithoutUsuariosInput
-  lancamentos?: Prisma.lancamentosUncheckedCreateNestedManyWithoutUsuariosInput
+  categorias?: Prisma.categoriasUncheckedCreateNestedManyWithoutUsuarioInput
+  lancamentos?: Prisma.lancamentosUncheckedCreateNestedManyWithoutUsuarioInput
 }
 
 export type usuariosCreateOrConnectWithoutProjetosInput = {
@@ -538,8 +502,8 @@ export type usuariosUpdateWithoutProjetosInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   senha?: Prisma.StringFieldUpdateOperationsInput | string
   data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  categorias?: Prisma.categoriasUpdateManyWithoutUsuariosNestedInput
-  lancamentos?: Prisma.lancamentosUpdateManyWithoutUsuariosNestedInput
+  categorias?: Prisma.categoriasUpdateManyWithoutUsuarioNestedInput
+  lancamentos?: Prisma.lancamentosUpdateManyWithoutUsuarioNestedInput
 }
 
 export type usuariosUncheckedUpdateWithoutProjetosInput = {
@@ -547,8 +511,60 @@ export type usuariosUncheckedUpdateWithoutProjetosInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   senha?: Prisma.StringFieldUpdateOperationsInput | string
   data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  categorias?: Prisma.categoriasUncheckedUpdateManyWithoutUsuariosNestedInput
-  lancamentos?: Prisma.lancamentosUncheckedUpdateManyWithoutUsuariosNestedInput
+  categorias?: Prisma.categoriasUncheckedUpdateManyWithoutUsuarioNestedInput
+  lancamentos?: Prisma.lancamentosUncheckedUpdateManyWithoutUsuarioNestedInput
+}
+
+export type usuariosCreateWithoutLancamentosInput = {
+  cod_usuario?: bigint | number
+  email: string
+  senha: string
+  data_criacao?: Date | string
+  categorias?: Prisma.categoriasCreateNestedManyWithoutUsuarioInput
+  projetos?: Prisma.projetosCreateNestedManyWithoutUsuarioInput
+}
+
+export type usuariosUncheckedCreateWithoutLancamentosInput = {
+  cod_usuario?: bigint | number
+  email: string
+  senha: string
+  data_criacao?: Date | string
+  categorias?: Prisma.categoriasUncheckedCreateNestedManyWithoutUsuarioInput
+  projetos?: Prisma.projetosUncheckedCreateNestedManyWithoutUsuarioInput
+}
+
+export type usuariosCreateOrConnectWithoutLancamentosInput = {
+  where: Prisma.usuariosWhereUniqueInput
+  create: Prisma.XOR<Prisma.usuariosCreateWithoutLancamentosInput, Prisma.usuariosUncheckedCreateWithoutLancamentosInput>
+}
+
+export type usuariosUpsertWithoutLancamentosInput = {
+  update: Prisma.XOR<Prisma.usuariosUpdateWithoutLancamentosInput, Prisma.usuariosUncheckedUpdateWithoutLancamentosInput>
+  create: Prisma.XOR<Prisma.usuariosCreateWithoutLancamentosInput, Prisma.usuariosUncheckedCreateWithoutLancamentosInput>
+  where?: Prisma.usuariosWhereInput
+}
+
+export type usuariosUpdateToOneWithWhereWithoutLancamentosInput = {
+  where?: Prisma.usuariosWhereInput
+  data: Prisma.XOR<Prisma.usuariosUpdateWithoutLancamentosInput, Prisma.usuariosUncheckedUpdateWithoutLancamentosInput>
+}
+
+export type usuariosUpdateWithoutLancamentosInput = {
+  cod_usuario?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  senha?: Prisma.StringFieldUpdateOperationsInput | string
+  data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  categorias?: Prisma.categoriasUpdateManyWithoutUsuarioNestedInput
+  projetos?: Prisma.projetosUpdateManyWithoutUsuarioNestedInput
+}
+
+export type usuariosUncheckedUpdateWithoutLancamentosInput = {
+  cod_usuario?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  senha?: Prisma.StringFieldUpdateOperationsInput | string
+  data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  categorias?: Prisma.categoriasUncheckedUpdateManyWithoutUsuarioNestedInput
+  projetos?: Prisma.projetosUncheckedUpdateManyWithoutUsuarioNestedInput
 }
 
 
@@ -558,14 +574,14 @@ export type usuariosUncheckedUpdateWithoutProjetosInput = {
 
 export type UsuariosCountOutputType = {
   categorias: number
-  lancamentos: number
   projetos: number
+  lancamentos: number
 }
 
 export type UsuariosCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   categorias?: boolean | UsuariosCountOutputTypeCountCategoriasArgs
-  lancamentos?: boolean | UsuariosCountOutputTypeCountLancamentosArgs
   projetos?: boolean | UsuariosCountOutputTypeCountProjetosArgs
+  lancamentos?: boolean | UsuariosCountOutputTypeCountLancamentosArgs
 }
 
 /**
@@ -588,15 +604,15 @@ export type UsuariosCountOutputTypeCountCategoriasArgs<ExtArgs extends runtime.T
 /**
  * UsuariosCountOutputType without action
  */
-export type UsuariosCountOutputTypeCountLancamentosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.lancamentosWhereInput
+export type UsuariosCountOutputTypeCountProjetosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.projetosWhereInput
 }
 
 /**
  * UsuariosCountOutputType without action
  */
-export type UsuariosCountOutputTypeCountProjetosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.projetosWhereInput
+export type UsuariosCountOutputTypeCountLancamentosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.lancamentosWhereInput
 }
 
 
@@ -606,8 +622,8 @@ export type usuariosSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   senha?: boolean
   data_criacao?: boolean
   categorias?: boolean | Prisma.usuarios$categoriasArgs<ExtArgs>
-  lancamentos?: boolean | Prisma.usuarios$lancamentosArgs<ExtArgs>
   projetos?: boolean | Prisma.usuarios$projetosArgs<ExtArgs>
+  lancamentos?: boolean | Prisma.usuarios$lancamentosArgs<ExtArgs>
   _count?: boolean | Prisma.UsuariosCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["usuarios"]>
 
@@ -635,8 +651,8 @@ export type usuariosSelectScalar = {
 export type usuariosOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"cod_usuario" | "email" | "senha" | "data_criacao", ExtArgs["result"]["usuarios"]>
 export type usuariosInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   categorias?: boolean | Prisma.usuarios$categoriasArgs<ExtArgs>
-  lancamentos?: boolean | Prisma.usuarios$lancamentosArgs<ExtArgs>
   projetos?: boolean | Prisma.usuarios$projetosArgs<ExtArgs>
+  lancamentos?: boolean | Prisma.usuarios$lancamentosArgs<ExtArgs>
   _count?: boolean | Prisma.UsuariosCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type usuariosIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -646,8 +662,8 @@ export type $usuariosPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "usuarios"
   objects: {
     categorias: Prisma.$categoriasPayload<ExtArgs>[]
-    lancamentos: Prisma.$lancamentosPayload<ExtArgs>[]
     projetos: Prisma.$projetosPayload<ExtArgs>[]
+    lancamentos: Prisma.$lancamentosPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     cod_usuario: bigint
@@ -1049,8 +1065,8 @@ readonly fields: usuariosFieldRefs;
 export interface Prisma__usuariosClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   categorias<T extends Prisma.usuarios$categoriasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usuarios$categoriasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$categoriasPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  lancamentos<T extends Prisma.usuarios$lancamentosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usuarios$lancamentosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$lancamentosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   projetos<T extends Prisma.usuarios$projetosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usuarios$projetosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$projetosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  lancamentos<T extends Prisma.usuarios$lancamentosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usuarios$lancamentosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$lancamentosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1501,30 +1517,6 @@ export type usuarios$categoriasArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
- * usuarios.lancamentos
- */
-export type usuarios$lancamentosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the lancamentos
-   */
-  select?: Prisma.lancamentosSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the lancamentos
-   */
-  omit?: Prisma.lancamentosOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.lancamentosInclude<ExtArgs> | null
-  where?: Prisma.lancamentosWhereInput
-  orderBy?: Prisma.lancamentosOrderByWithRelationInput | Prisma.lancamentosOrderByWithRelationInput[]
-  cursor?: Prisma.lancamentosWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.LancamentosScalarFieldEnum | Prisma.LancamentosScalarFieldEnum[]
-}
-
-/**
  * usuarios.projetos
  */
 export type usuarios$projetosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1546,6 +1538,30 @@ export type usuarios$projetosArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.ProjetosScalarFieldEnum | Prisma.ProjetosScalarFieldEnum[]
+}
+
+/**
+ * usuarios.lancamentos
+ */
+export type usuarios$lancamentosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the lancamentos
+   */
+  select?: Prisma.lancamentosSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the lancamentos
+   */
+  omit?: Prisma.lancamentosOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.lancamentosInclude<ExtArgs> | null
+  where?: Prisma.lancamentosWhereInput
+  orderBy?: Prisma.lancamentosOrderByWithRelationInput | Prisma.lancamentosOrderByWithRelationInput[]
+  cursor?: Prisma.lancamentosWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LancamentosScalarFieldEnum | Prisma.LancamentosScalarFieldEnum[]
 }
 
 /**

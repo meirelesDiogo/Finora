@@ -1,14 +1,69 @@
 import { NextResponse } from "next/server";
-import pool from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 import { currentUserId } from "@/lib/auth";
 
+const idDoBanco = (value) => /^\d+$/.test(String(value ?? "")) ? BigInt(value) : null;
+
 export async function GET() {
-  const userId = await currentUserId();
-  if (!userId) return NextResponse.json({ mensagem: "Faça login para continuar." }, { status: 401 });
-  const [mensal,categorias,projetos] = await Promise.all([
-    pool.query(`WITH meses AS (SELECT generate_series(date_trunc('month',CURRENT_DATE)-interval '5 months',date_trunc('month',CURRENT_DATE),interval '1 month')::date AS inicio) SELECT to_char(m.inicio,'YYYY-MM') AS periodo,COALESCE(SUM(l.valor) FILTER(WHERE l.tipo='RECEITA'),0)::float AS receitas,COALESCE(SUM(l.valor) FILTER(WHERE l.tipo='DESPESA'),0)::float AS despesas FROM meses m LEFT JOIN lancamentos l ON l.cod_usuario=$1 AND l.data_lancamento>=m.inicio AND l.data_lancamento<(m.inicio+interval '1 month') GROUP BY m.inicio ORDER BY m.inicio`, [userId]),
-    pool.query("SELECT c.nome,COALESCE(SUM(l.valor),0)::float AS total,COUNT(l.cod_lancamento)::int AS quantidade FROM categorias c LEFT JOIN lancamentos l ON l.cod_usuario=c.cod_usuario AND l.cod_categoria=c.cod_categoria AND l.tipo='DESPESA' AND date_trunc('month',l.data_lancamento)=date_trunc('month',CURRENT_DATE) WHERE c.cod_usuario=$1 AND c.tipo='DESPESA' GROUP BY c.cod_categoria ORDER BY total DESC", [userId]),
-    pool.query("SELECT p.nome,COALESCE(SUM(l.valor) FILTER(WHERE l.tipo='RECEITA'),0)::float AS receitas,COALESCE(SUM(l.valor) FILTER(WHERE l.tipo='DESPESA'),0)::float AS despesas FROM projetos p LEFT JOIN lancamentos l ON l.cod_usuario=p.cod_usuario AND l.cod_projeto=p.cod_projeto WHERE p.cod_usuario=$1 GROUP BY p.cod_projeto ORDER BY p.nome", [userId]),
-  ]);
-  return NextResponse.json({ mensal:mensal.rows, categorias:categorias.rows, projetos:projetos.rows });
+  const sessionId = await currentUserId();
+  if (!sessionId) return NextResponse.json({ mensagem: "Faça login para continuar." }, { status: 401 });
+  const userId = idDoBanco(sessionId);
+  if (!userId) return NextResponse.json({ mensagem: "Sessão inválida." }, { status: 401 });
+  const agora = new Date();
+  const inicioMes = new Date(Date.UTC(agora.getUTCFullYear(), agora.getUTCMonth(), 1));
+  const fimMes = new Date(Date.UTC(agora.getUTCFullYear(), agora.getUTCMonth() + 1, 1));
+  const inicioSeisMeses = new Date(Date.UTC(agora.getUTCFullYear(), agora.getUTCMonth() - 5, 1));
+  const fimProximoMes = new Date(Date.UTC(agora.getUTCFullYear(), agora.getUTCMonth() + 1, 1));
+
+  try {
+    const [agrupadoPorDia, categorias, despesasPorCategoria, projetos, valoresPorProjeto] = await Promise.all([
+      prisma.lancamentos.groupBy({
+        by: ["data_lancamento", "tipo"],
+        where: { cod_usuario: userId, data_lancamento: { gte: inicioSeisMeses, lt: fimProximoMes } },
+        _sum: { valor: true },
+      }),
+      prisma.categorias.findMany({ where: { cod_usuario: userId, tipo: "DESPESA" }, select: { cod_categoria: true, nome: true }, orderBy: { nome: "asc" } }),
+      prisma.lancamentos.groupBy({
+        by: ["cod_categoria"],
+        where: { cod_usuario: userId, tipo: "DESPESA", data_lancamento: { gte: inicioMes, lt: fimMes } },
+        _sum: { valor: true },
+      }),
+      prisma.projetos.findMany({ where: { cod_usuario: userId }, select: { cod_projeto: true, nome: true }, orderBy: { nome: "asc" } }),
+      prisma.lancamentos.groupBy({
+        by: ["cod_projeto", "tipo"],
+        where: { cod_usuario: userId, cod_projeto: { not: null } },
+        _sum: { valor: true },
+      }),
+    ]);
+
+    const mensalPorChave = new Map();
+    for (let index = 0; index < 6; index += 1) {
+      const mes = new Date(Date.UTC(inicioSeisMeses.getUTCFullYear(), inicioSeisMeses.getUTCMonth() + index, 1));
+      const periodo = `${mes.getUTCFullYear()}-${String(mes.getUTCMonth() + 1).padStart(2, "0")}`;
+      mensalPorChave.set(periodo, { periodo, receitas: 0, despesas: 0 });
+    }
+    for (const item of agrupadoPorDia) {
+      const data = item.data_lancamento;
+      const periodo = `${data.getUTCFullYear()}-${String(data.getUTCMonth() + 1).padStart(2, "0")}`;
+      const resumo = mensalPorChave.get(periodo);
+      if (resumo) resumo[item.tipo === "RECEITA" ? "receitas" : "despesas"] += Number(item._sum.valor ?? 0);
+    }
+    const totaisCategorias = new Map(despesasPorCategoria.map((item) => [String(item.cod_categoria), Number(item._sum.valor ?? 0)]));
+
+    return NextResponse.json({
+      mensal: [...mensalPorChave.values()],
+      categorias: categorias.map((item) => ({ nome: item.nome, total: totaisCategorias.get(String(item.cod_categoria)) ?? 0 })),
+      projetos: projetos.map((item) => {
+        const valores = valoresPorProjeto.filter((row) => row.cod_projeto === item.cod_projeto);
+        return {
+          nome: item.nome,
+          receitas: Number(valores.find((row) => row.tipo === "RECEITA")?._sum.valor ?? 0),
+          despesas: Number(valores.find((row) => row.tipo === "DESPESA")?._sum.valor ?? 0),
+        };
+      }),
+    });
+  } catch (error) {
+    console.error("Falha ao consultar relatórios:", error);
+    return NextResponse.json({ mensagem: "Não foi possível carregar os relatórios." }, { status: 500 });
+  }
 }

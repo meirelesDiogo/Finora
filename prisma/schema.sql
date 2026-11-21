@@ -45,3 +45,15 @@ SELECT cod_usuario, EXTRACT(YEAR FROM data_lancamento)::INT ano,
  COALESCE(SUM(valor) FILTER (WHERE tipo='DESPESA'),0) total_despesas,
  COALESCE(SUM(CASE WHEN tipo='RECEITA' THEN valor ELSE -valor END),0) saldo
 FROM lancamentos GROUP BY cod_usuario, EXTRACT(YEAR FROM data_lancamento), EXTRACT(MONTH FROM data_lancamento);
+
+-- Completa categorias de contas criadas antes da configuração inicial.
+INSERT INTO categorias(cod_usuario,nome,tipo)
+SELECT u.cod_usuario, padrao.nome, padrao.tipo
+FROM usuarios u
+CROSS JOIN (VALUES
+  ('Salário','RECEITA'),('Outras receitas','RECEITA'),
+  ('Moradia','DESPESA'),('Alimentação','DESPESA'),('Transporte','DESPESA'),
+  ('Saúde','DESPESA'),('Lazer','DESPESA'),('Outras despesas','DESPESA')
+) AS padrao(nome,tipo)
+WHERE NOT EXISTS (SELECT 1 FROM categorias c WHERE c.cod_usuario=u.cod_usuario)
+ON CONFLICT (cod_usuario,nome,tipo) DO NOTHING;

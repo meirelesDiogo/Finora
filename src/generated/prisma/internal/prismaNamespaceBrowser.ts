@@ -51,10 +51,10 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  usuarios: 'usuarios',
   categorias: 'categorias',
-  lancamentos: 'lancamentos',
   projetos: 'projetos',
-  usuarios: 'usuarios'
+  lancamentos: 'lancamentos'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -73,6 +73,16 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const UsuariosScalarFieldEnum = {
+  cod_usuario: 'cod_usuario',
+  email: 'email',
+  senha: 'senha',
+  data_criacao: 'data_criacao'
+} as const
+
+export type UsuariosScalarFieldEnum = (typeof UsuariosScalarFieldEnum)[keyof typeof UsuariosScalarFieldEnum]
+
+
 export const CategoriasScalarFieldEnum = {
   cod_categoria: 'cod_categoria',
   cod_usuario: 'cod_usuario',
@@ -81,6 +91,17 @@ export const CategoriasScalarFieldEnum = {
 } as const
 
 export type CategoriasScalarFieldEnum = (typeof CategoriasScalarFieldEnum)[keyof typeof CategoriasScalarFieldEnum]
+
+
+export const ProjetosScalarFieldEnum = {
+  cod_projeto: 'cod_projeto',
+  cod_usuario: 'cod_usuario',
+  nome: 'nome',
+  descricao: 'descricao',
+  data_criacao: 'data_criacao'
+} as const
+
+export type ProjetosScalarFieldEnum = (typeof ProjetosScalarFieldEnum)[keyof typeof ProjetosScalarFieldEnum]
 
 
 export const LancamentosScalarFieldEnum = {
@@ -96,27 +117,6 @@ export const LancamentosScalarFieldEnum = {
 } as const
 
 export type LancamentosScalarFieldEnum = (typeof LancamentosScalarFieldEnum)[keyof typeof LancamentosScalarFieldEnum]
-
-
-export const ProjetosScalarFieldEnum = {
-  cod_projeto: 'cod_projeto',
-  cod_usuario: 'cod_usuario',
-  nome: 'nome',
-  descricao: 'descricao',
-  data_criacao: 'data_criacao'
-} as const
-
-export type ProjetosScalarFieldEnum = (typeof ProjetosScalarFieldEnum)[keyof typeof ProjetosScalarFieldEnum]
-
-
-export const UsuariosScalarFieldEnum = {
-  cod_usuario: 'cod_usuario',
-  email: 'email',
-  senha: 'senha',
-  data_criacao: 'data_criacao'
-} as const
-
-export type UsuariosScalarFieldEnum = (typeof UsuariosScalarFieldEnum)[keyof typeof UsuariosScalarFieldEnum]
 
 
 export const SortOrder = {

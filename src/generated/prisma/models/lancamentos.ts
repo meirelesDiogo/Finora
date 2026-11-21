@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace.ts"
 
 /**
  * Model lancamentos
- * This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+ * 
  */
 export type lancamentosModel = runtime.Types.Result.DefaultSelection<Prisma.$lancamentosPayload>
 
@@ -264,9 +264,9 @@ export type lancamentosWhereInput = {
   tipo?: Prisma.StringFilter<"lancamentos"> | string
   data_lancamento?: Prisma.DateTimeFilter<"lancamentos"> | Date | string
   data_criacao?: Prisma.DateTimeFilter<"lancamentos"> | Date | string
-  categorias?: Prisma.XOR<Prisma.CategoriasScalarRelationFilter, Prisma.categoriasWhereInput>
-  projetos?: Prisma.XOR<Prisma.ProjetosNullableScalarRelationFilter, Prisma.projetosWhereInput> | null
-  usuarios?: Prisma.XOR<Prisma.UsuariosScalarRelationFilter, Prisma.usuariosWhereInput>
+  usuario?: Prisma.XOR<Prisma.UsuariosScalarRelationFilter, Prisma.usuariosWhereInput>
+  categoria?: Prisma.XOR<Prisma.CategoriasScalarRelationFilter, Prisma.categoriasWhereInput>
+  projeto?: Prisma.XOR<Prisma.ProjetosNullableScalarRelationFilter, Prisma.projetosWhereInput> | null
 }
 
 export type lancamentosOrderByWithRelationInput = {
@@ -279,9 +279,9 @@ export type lancamentosOrderByWithRelationInput = {
   tipo?: Prisma.SortOrder
   data_lancamento?: Prisma.SortOrder
   data_criacao?: Prisma.SortOrder
-  categorias?: Prisma.categoriasOrderByWithRelationInput
-  projetos?: Prisma.projetosOrderByWithRelationInput
-  usuarios?: Prisma.usuariosOrderByWithRelationInput
+  usuario?: Prisma.usuariosOrderByWithRelationInput
+  categoria?: Prisma.categoriasOrderByWithRelationInput
+  projeto?: Prisma.projetosOrderByWithRelationInput
 }
 
 export type lancamentosWhereUniqueInput = Prisma.AtLeast<{
@@ -297,9 +297,9 @@ export type lancamentosWhereUniqueInput = Prisma.AtLeast<{
   tipo?: Prisma.StringFilter<"lancamentos"> | string
   data_lancamento?: Prisma.DateTimeFilter<"lancamentos"> | Date | string
   data_criacao?: Prisma.DateTimeFilter<"lancamentos"> | Date | string
-  categorias?: Prisma.XOR<Prisma.CategoriasScalarRelationFilter, Prisma.categoriasWhereInput>
-  projetos?: Prisma.XOR<Prisma.ProjetosNullableScalarRelationFilter, Prisma.projetosWhereInput> | null
-  usuarios?: Prisma.XOR<Prisma.UsuariosScalarRelationFilter, Prisma.usuariosWhereInput>
+  usuario?: Prisma.XOR<Prisma.UsuariosScalarRelationFilter, Prisma.usuariosWhereInput>
+  categoria?: Prisma.XOR<Prisma.CategoriasScalarRelationFilter, Prisma.categoriasWhereInput>
+  projeto?: Prisma.XOR<Prisma.ProjetosNullableScalarRelationFilter, Prisma.projetosWhereInput> | null
 }, "cod_lancamento">
 
 export type lancamentosOrderByWithAggregationInput = {
@@ -341,9 +341,9 @@ export type lancamentosCreateInput = {
   tipo: string
   data_lancamento: Date | string
   data_criacao?: Date | string
-  categorias: Prisma.categoriasCreateNestedOneWithoutLancamentosInput
-  projetos?: Prisma.projetosCreateNestedOneWithoutLancamentosInput
-  usuarios: Prisma.usuariosCreateNestedOneWithoutLancamentosInput
+  usuario: Prisma.usuariosCreateNestedOneWithoutLancamentosInput
+  categoria: Prisma.categoriasCreateNestedOneWithoutLancamentosInput
+  projeto?: Prisma.projetosCreateNestedOneWithoutLancamentosInput
 }
 
 export type lancamentosUncheckedCreateInput = {
@@ -365,9 +365,9 @@ export type lancamentosUpdateInput = {
   tipo?: Prisma.StringFieldUpdateOperationsInput | string
   data_lancamento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  categorias?: Prisma.categoriasUpdateOneRequiredWithoutLancamentosNestedInput
-  projetos?: Prisma.projetosUpdateOneWithoutLancamentosNestedInput
-  usuarios?: Prisma.usuariosUpdateOneRequiredWithoutLancamentosNestedInput
+  usuario?: Prisma.usuariosUpdateOneRequiredWithoutLancamentosNestedInput
+  categoria?: Prisma.categoriasUpdateOneRequiredWithoutLancamentosNestedInput
+  projeto?: Prisma.projetosUpdateOneWithoutLancamentosNestedInput
 }
 
 export type lancamentosUncheckedUpdateInput = {
@@ -477,45 +477,129 @@ export type lancamentosSumOrderByAggregateInput = {
   valor?: Prisma.SortOrder
 }
 
-export type lancamentosCreateNestedManyWithoutCategoriasInput = {
-  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutCategoriasInput, Prisma.lancamentosUncheckedCreateWithoutCategoriasInput> | Prisma.lancamentosCreateWithoutCategoriasInput[] | Prisma.lancamentosUncheckedCreateWithoutCategoriasInput[]
-  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutCategoriasInput | Prisma.lancamentosCreateOrConnectWithoutCategoriasInput[]
-  createMany?: Prisma.lancamentosCreateManyCategoriasInputEnvelope
+export type lancamentosCreateNestedManyWithoutUsuarioInput = {
+  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutUsuarioInput, Prisma.lancamentosUncheckedCreateWithoutUsuarioInput> | Prisma.lancamentosCreateWithoutUsuarioInput[] | Prisma.lancamentosUncheckedCreateWithoutUsuarioInput[]
+  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutUsuarioInput | Prisma.lancamentosCreateOrConnectWithoutUsuarioInput[]
+  createMany?: Prisma.lancamentosCreateManyUsuarioInputEnvelope
   connect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
 }
 
-export type lancamentosUncheckedCreateNestedManyWithoutCategoriasInput = {
-  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutCategoriasInput, Prisma.lancamentosUncheckedCreateWithoutCategoriasInput> | Prisma.lancamentosCreateWithoutCategoriasInput[] | Prisma.lancamentosUncheckedCreateWithoutCategoriasInput[]
-  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutCategoriasInput | Prisma.lancamentosCreateOrConnectWithoutCategoriasInput[]
-  createMany?: Prisma.lancamentosCreateManyCategoriasInputEnvelope
+export type lancamentosUncheckedCreateNestedManyWithoutUsuarioInput = {
+  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutUsuarioInput, Prisma.lancamentosUncheckedCreateWithoutUsuarioInput> | Prisma.lancamentosCreateWithoutUsuarioInput[] | Prisma.lancamentosUncheckedCreateWithoutUsuarioInput[]
+  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutUsuarioInput | Prisma.lancamentosCreateOrConnectWithoutUsuarioInput[]
+  createMany?: Prisma.lancamentosCreateManyUsuarioInputEnvelope
   connect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
 }
 
-export type lancamentosUpdateManyWithoutCategoriasNestedInput = {
-  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutCategoriasInput, Prisma.lancamentosUncheckedCreateWithoutCategoriasInput> | Prisma.lancamentosCreateWithoutCategoriasInput[] | Prisma.lancamentosUncheckedCreateWithoutCategoriasInput[]
-  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutCategoriasInput | Prisma.lancamentosCreateOrConnectWithoutCategoriasInput[]
-  upsert?: Prisma.lancamentosUpsertWithWhereUniqueWithoutCategoriasInput | Prisma.lancamentosUpsertWithWhereUniqueWithoutCategoriasInput[]
-  createMany?: Prisma.lancamentosCreateManyCategoriasInputEnvelope
+export type lancamentosUpdateManyWithoutUsuarioNestedInput = {
+  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutUsuarioInput, Prisma.lancamentosUncheckedCreateWithoutUsuarioInput> | Prisma.lancamentosCreateWithoutUsuarioInput[] | Prisma.lancamentosUncheckedCreateWithoutUsuarioInput[]
+  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutUsuarioInput | Prisma.lancamentosCreateOrConnectWithoutUsuarioInput[]
+  upsert?: Prisma.lancamentosUpsertWithWhereUniqueWithoutUsuarioInput | Prisma.lancamentosUpsertWithWhereUniqueWithoutUsuarioInput[]
+  createMany?: Prisma.lancamentosCreateManyUsuarioInputEnvelope
   set?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
   disconnect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
   delete?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
   connect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-  update?: Prisma.lancamentosUpdateWithWhereUniqueWithoutCategoriasInput | Prisma.lancamentosUpdateWithWhereUniqueWithoutCategoriasInput[]
-  updateMany?: Prisma.lancamentosUpdateManyWithWhereWithoutCategoriasInput | Prisma.lancamentosUpdateManyWithWhereWithoutCategoriasInput[]
+  update?: Prisma.lancamentosUpdateWithWhereUniqueWithoutUsuarioInput | Prisma.lancamentosUpdateWithWhereUniqueWithoutUsuarioInput[]
+  updateMany?: Prisma.lancamentosUpdateManyWithWhereWithoutUsuarioInput | Prisma.lancamentosUpdateManyWithWhereWithoutUsuarioInput[]
   deleteMany?: Prisma.lancamentosScalarWhereInput | Prisma.lancamentosScalarWhereInput[]
 }
 
-export type lancamentosUncheckedUpdateManyWithoutCategoriasNestedInput = {
-  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutCategoriasInput, Prisma.lancamentosUncheckedCreateWithoutCategoriasInput> | Prisma.lancamentosCreateWithoutCategoriasInput[] | Prisma.lancamentosUncheckedCreateWithoutCategoriasInput[]
-  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutCategoriasInput | Prisma.lancamentosCreateOrConnectWithoutCategoriasInput[]
-  upsert?: Prisma.lancamentosUpsertWithWhereUniqueWithoutCategoriasInput | Prisma.lancamentosUpsertWithWhereUniqueWithoutCategoriasInput[]
-  createMany?: Prisma.lancamentosCreateManyCategoriasInputEnvelope
+export type lancamentosUncheckedUpdateManyWithoutUsuarioNestedInput = {
+  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutUsuarioInput, Prisma.lancamentosUncheckedCreateWithoutUsuarioInput> | Prisma.lancamentosCreateWithoutUsuarioInput[] | Prisma.lancamentosUncheckedCreateWithoutUsuarioInput[]
+  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutUsuarioInput | Prisma.lancamentosCreateOrConnectWithoutUsuarioInput[]
+  upsert?: Prisma.lancamentosUpsertWithWhereUniqueWithoutUsuarioInput | Prisma.lancamentosUpsertWithWhereUniqueWithoutUsuarioInput[]
+  createMany?: Prisma.lancamentosCreateManyUsuarioInputEnvelope
   set?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
   disconnect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
   delete?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
   connect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-  update?: Prisma.lancamentosUpdateWithWhereUniqueWithoutCategoriasInput | Prisma.lancamentosUpdateWithWhereUniqueWithoutCategoriasInput[]
-  updateMany?: Prisma.lancamentosUpdateManyWithWhereWithoutCategoriasInput | Prisma.lancamentosUpdateManyWithWhereWithoutCategoriasInput[]
+  update?: Prisma.lancamentosUpdateWithWhereUniqueWithoutUsuarioInput | Prisma.lancamentosUpdateWithWhereUniqueWithoutUsuarioInput[]
+  updateMany?: Prisma.lancamentosUpdateManyWithWhereWithoutUsuarioInput | Prisma.lancamentosUpdateManyWithWhereWithoutUsuarioInput[]
+  deleteMany?: Prisma.lancamentosScalarWhereInput | Prisma.lancamentosScalarWhereInput[]
+}
+
+export type lancamentosCreateNestedManyWithoutCategoriaInput = {
+  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutCategoriaInput, Prisma.lancamentosUncheckedCreateWithoutCategoriaInput> | Prisma.lancamentosCreateWithoutCategoriaInput[] | Prisma.lancamentosUncheckedCreateWithoutCategoriaInput[]
+  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutCategoriaInput | Prisma.lancamentosCreateOrConnectWithoutCategoriaInput[]
+  createMany?: Prisma.lancamentosCreateManyCategoriaInputEnvelope
+  connect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
+}
+
+export type lancamentosUncheckedCreateNestedManyWithoutCategoriaInput = {
+  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutCategoriaInput, Prisma.lancamentosUncheckedCreateWithoutCategoriaInput> | Prisma.lancamentosCreateWithoutCategoriaInput[] | Prisma.lancamentosUncheckedCreateWithoutCategoriaInput[]
+  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutCategoriaInput | Prisma.lancamentosCreateOrConnectWithoutCategoriaInput[]
+  createMany?: Prisma.lancamentosCreateManyCategoriaInputEnvelope
+  connect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
+}
+
+export type lancamentosUpdateManyWithoutCategoriaNestedInput = {
+  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutCategoriaInput, Prisma.lancamentosUncheckedCreateWithoutCategoriaInput> | Prisma.lancamentosCreateWithoutCategoriaInput[] | Prisma.lancamentosUncheckedCreateWithoutCategoriaInput[]
+  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutCategoriaInput | Prisma.lancamentosCreateOrConnectWithoutCategoriaInput[]
+  upsert?: Prisma.lancamentosUpsertWithWhereUniqueWithoutCategoriaInput | Prisma.lancamentosUpsertWithWhereUniqueWithoutCategoriaInput[]
+  createMany?: Prisma.lancamentosCreateManyCategoriaInputEnvelope
+  set?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
+  disconnect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
+  delete?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
+  connect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
+  update?: Prisma.lancamentosUpdateWithWhereUniqueWithoutCategoriaInput | Prisma.lancamentosUpdateWithWhereUniqueWithoutCategoriaInput[]
+  updateMany?: Prisma.lancamentosUpdateManyWithWhereWithoutCategoriaInput | Prisma.lancamentosUpdateManyWithWhereWithoutCategoriaInput[]
+  deleteMany?: Prisma.lancamentosScalarWhereInput | Prisma.lancamentosScalarWhereInput[]
+}
+
+export type lancamentosUncheckedUpdateManyWithoutCategoriaNestedInput = {
+  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutCategoriaInput, Prisma.lancamentosUncheckedCreateWithoutCategoriaInput> | Prisma.lancamentosCreateWithoutCategoriaInput[] | Prisma.lancamentosUncheckedCreateWithoutCategoriaInput[]
+  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutCategoriaInput | Prisma.lancamentosCreateOrConnectWithoutCategoriaInput[]
+  upsert?: Prisma.lancamentosUpsertWithWhereUniqueWithoutCategoriaInput | Prisma.lancamentosUpsertWithWhereUniqueWithoutCategoriaInput[]
+  createMany?: Prisma.lancamentosCreateManyCategoriaInputEnvelope
+  set?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
+  disconnect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
+  delete?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
+  connect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
+  update?: Prisma.lancamentosUpdateWithWhereUniqueWithoutCategoriaInput | Prisma.lancamentosUpdateWithWhereUniqueWithoutCategoriaInput[]
+  updateMany?: Prisma.lancamentosUpdateManyWithWhereWithoutCategoriaInput | Prisma.lancamentosUpdateManyWithWhereWithoutCategoriaInput[]
+  deleteMany?: Prisma.lancamentosScalarWhereInput | Prisma.lancamentosScalarWhereInput[]
+}
+
+export type lancamentosCreateNestedManyWithoutProjetoInput = {
+  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutProjetoInput, Prisma.lancamentosUncheckedCreateWithoutProjetoInput> | Prisma.lancamentosCreateWithoutProjetoInput[] | Prisma.lancamentosUncheckedCreateWithoutProjetoInput[]
+  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutProjetoInput | Prisma.lancamentosCreateOrConnectWithoutProjetoInput[]
+  createMany?: Prisma.lancamentosCreateManyProjetoInputEnvelope
+  connect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
+}
+
+export type lancamentosUncheckedCreateNestedManyWithoutProjetoInput = {
+  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutProjetoInput, Prisma.lancamentosUncheckedCreateWithoutProjetoInput> | Prisma.lancamentosCreateWithoutProjetoInput[] | Prisma.lancamentosUncheckedCreateWithoutProjetoInput[]
+  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutProjetoInput | Prisma.lancamentosCreateOrConnectWithoutProjetoInput[]
+  createMany?: Prisma.lancamentosCreateManyProjetoInputEnvelope
+  connect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
+}
+
+export type lancamentosUpdateManyWithoutProjetoNestedInput = {
+  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutProjetoInput, Prisma.lancamentosUncheckedCreateWithoutProjetoInput> | Prisma.lancamentosCreateWithoutProjetoInput[] | Prisma.lancamentosUncheckedCreateWithoutProjetoInput[]
+  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutProjetoInput | Prisma.lancamentosCreateOrConnectWithoutProjetoInput[]
+  upsert?: Prisma.lancamentosUpsertWithWhereUniqueWithoutProjetoInput | Prisma.lancamentosUpsertWithWhereUniqueWithoutProjetoInput[]
+  createMany?: Prisma.lancamentosCreateManyProjetoInputEnvelope
+  set?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
+  disconnect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
+  delete?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
+  connect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
+  update?: Prisma.lancamentosUpdateWithWhereUniqueWithoutProjetoInput | Prisma.lancamentosUpdateWithWhereUniqueWithoutProjetoInput[]
+  updateMany?: Prisma.lancamentosUpdateManyWithWhereWithoutProjetoInput | Prisma.lancamentosUpdateManyWithWhereWithoutProjetoInput[]
+  deleteMany?: Prisma.lancamentosScalarWhereInput | Prisma.lancamentosScalarWhereInput[]
+}
+
+export type lancamentosUncheckedUpdateManyWithoutProjetoNestedInput = {
+  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutProjetoInput, Prisma.lancamentosUncheckedCreateWithoutProjetoInput> | Prisma.lancamentosCreateWithoutProjetoInput[] | Prisma.lancamentosUncheckedCreateWithoutProjetoInput[]
+  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutProjetoInput | Prisma.lancamentosCreateOrConnectWithoutProjetoInput[]
+  upsert?: Prisma.lancamentosUpsertWithWhereUniqueWithoutProjetoInput | Prisma.lancamentosUpsertWithWhereUniqueWithoutProjetoInput[]
+  createMany?: Prisma.lancamentosCreateManyProjetoInputEnvelope
+  set?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
+  disconnect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
+  delete?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
+  connect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
+  update?: Prisma.lancamentosUpdateWithWhereUniqueWithoutProjetoInput | Prisma.lancamentosUpdateWithWhereUniqueWithoutProjetoInput[]
+  updateMany?: Prisma.lancamentosUpdateManyWithWhereWithoutProjetoInput | Prisma.lancamentosUpdateManyWithWhereWithoutProjetoInput[]
   deleteMany?: Prisma.lancamentosScalarWhereInput | Prisma.lancamentosScalarWhereInput[]
 }
 
@@ -527,10 +611,6 @@ export type DecimalFieldUpdateOperationsInput = {
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
-}
-
 export type NullableBigIntFieldUpdateOperationsInput = {
   set?: bigint | number | null
   increment?: bigint | number
@@ -539,103 +619,20 @@ export type NullableBigIntFieldUpdateOperationsInput = {
   divide?: bigint | number
 }
 
-export type lancamentosCreateNestedManyWithoutProjetosInput = {
-  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutProjetosInput, Prisma.lancamentosUncheckedCreateWithoutProjetosInput> | Prisma.lancamentosCreateWithoutProjetosInput[] | Prisma.lancamentosUncheckedCreateWithoutProjetosInput[]
-  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutProjetosInput | Prisma.lancamentosCreateOrConnectWithoutProjetosInput[]
-  createMany?: Prisma.lancamentosCreateManyProjetosInputEnvelope
-  connect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-}
-
-export type lancamentosUncheckedCreateNestedManyWithoutProjetosInput = {
-  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutProjetosInput, Prisma.lancamentosUncheckedCreateWithoutProjetosInput> | Prisma.lancamentosCreateWithoutProjetosInput[] | Prisma.lancamentosUncheckedCreateWithoutProjetosInput[]
-  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutProjetosInput | Prisma.lancamentosCreateOrConnectWithoutProjetosInput[]
-  createMany?: Prisma.lancamentosCreateManyProjetosInputEnvelope
-  connect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-}
-
-export type lancamentosUpdateManyWithoutProjetosNestedInput = {
-  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutProjetosInput, Prisma.lancamentosUncheckedCreateWithoutProjetosInput> | Prisma.lancamentosCreateWithoutProjetosInput[] | Prisma.lancamentosUncheckedCreateWithoutProjetosInput[]
-  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutProjetosInput | Prisma.lancamentosCreateOrConnectWithoutProjetosInput[]
-  upsert?: Prisma.lancamentosUpsertWithWhereUniqueWithoutProjetosInput | Prisma.lancamentosUpsertWithWhereUniqueWithoutProjetosInput[]
-  createMany?: Prisma.lancamentosCreateManyProjetosInputEnvelope
-  set?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-  disconnect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-  delete?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-  connect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-  update?: Prisma.lancamentosUpdateWithWhereUniqueWithoutProjetosInput | Prisma.lancamentosUpdateWithWhereUniqueWithoutProjetosInput[]
-  updateMany?: Prisma.lancamentosUpdateManyWithWhereWithoutProjetosInput | Prisma.lancamentosUpdateManyWithWhereWithoutProjetosInput[]
-  deleteMany?: Prisma.lancamentosScalarWhereInput | Prisma.lancamentosScalarWhereInput[]
-}
-
-export type lancamentosUncheckedUpdateManyWithoutProjetosNestedInput = {
-  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutProjetosInput, Prisma.lancamentosUncheckedCreateWithoutProjetosInput> | Prisma.lancamentosCreateWithoutProjetosInput[] | Prisma.lancamentosUncheckedCreateWithoutProjetosInput[]
-  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutProjetosInput | Prisma.lancamentosCreateOrConnectWithoutProjetosInput[]
-  upsert?: Prisma.lancamentosUpsertWithWhereUniqueWithoutProjetosInput | Prisma.lancamentosUpsertWithWhereUniqueWithoutProjetosInput[]
-  createMany?: Prisma.lancamentosCreateManyProjetosInputEnvelope
-  set?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-  disconnect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-  delete?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-  connect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-  update?: Prisma.lancamentosUpdateWithWhereUniqueWithoutProjetosInput | Prisma.lancamentosUpdateWithWhereUniqueWithoutProjetosInput[]
-  updateMany?: Prisma.lancamentosUpdateManyWithWhereWithoutProjetosInput | Prisma.lancamentosUpdateManyWithWhereWithoutProjetosInput[]
-  deleteMany?: Prisma.lancamentosScalarWhereInput | Prisma.lancamentosScalarWhereInput[]
-}
-
-export type lancamentosCreateNestedManyWithoutUsuariosInput = {
-  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutUsuariosInput, Prisma.lancamentosUncheckedCreateWithoutUsuariosInput> | Prisma.lancamentosCreateWithoutUsuariosInput[] | Prisma.lancamentosUncheckedCreateWithoutUsuariosInput[]
-  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutUsuariosInput | Prisma.lancamentosCreateOrConnectWithoutUsuariosInput[]
-  createMany?: Prisma.lancamentosCreateManyUsuariosInputEnvelope
-  connect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-}
-
-export type lancamentosUncheckedCreateNestedManyWithoutUsuariosInput = {
-  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutUsuariosInput, Prisma.lancamentosUncheckedCreateWithoutUsuariosInput> | Prisma.lancamentosCreateWithoutUsuariosInput[] | Prisma.lancamentosUncheckedCreateWithoutUsuariosInput[]
-  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutUsuariosInput | Prisma.lancamentosCreateOrConnectWithoutUsuariosInput[]
-  createMany?: Prisma.lancamentosCreateManyUsuariosInputEnvelope
-  connect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-}
-
-export type lancamentosUpdateManyWithoutUsuariosNestedInput = {
-  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutUsuariosInput, Prisma.lancamentosUncheckedCreateWithoutUsuariosInput> | Prisma.lancamentosCreateWithoutUsuariosInput[] | Prisma.lancamentosUncheckedCreateWithoutUsuariosInput[]
-  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutUsuariosInput | Prisma.lancamentosCreateOrConnectWithoutUsuariosInput[]
-  upsert?: Prisma.lancamentosUpsertWithWhereUniqueWithoutUsuariosInput | Prisma.lancamentosUpsertWithWhereUniqueWithoutUsuariosInput[]
-  createMany?: Prisma.lancamentosCreateManyUsuariosInputEnvelope
-  set?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-  disconnect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-  delete?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-  connect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-  update?: Prisma.lancamentosUpdateWithWhereUniqueWithoutUsuariosInput | Prisma.lancamentosUpdateWithWhereUniqueWithoutUsuariosInput[]
-  updateMany?: Prisma.lancamentosUpdateManyWithWhereWithoutUsuariosInput | Prisma.lancamentosUpdateManyWithWhereWithoutUsuariosInput[]
-  deleteMany?: Prisma.lancamentosScalarWhereInput | Prisma.lancamentosScalarWhereInput[]
-}
-
-export type lancamentosUncheckedUpdateManyWithoutUsuariosNestedInput = {
-  create?: Prisma.XOR<Prisma.lancamentosCreateWithoutUsuariosInput, Prisma.lancamentosUncheckedCreateWithoutUsuariosInput> | Prisma.lancamentosCreateWithoutUsuariosInput[] | Prisma.lancamentosUncheckedCreateWithoutUsuariosInput[]
-  connectOrCreate?: Prisma.lancamentosCreateOrConnectWithoutUsuariosInput | Prisma.lancamentosCreateOrConnectWithoutUsuariosInput[]
-  upsert?: Prisma.lancamentosUpsertWithWhereUniqueWithoutUsuariosInput | Prisma.lancamentosUpsertWithWhereUniqueWithoutUsuariosInput[]
-  createMany?: Prisma.lancamentosCreateManyUsuariosInputEnvelope
-  set?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-  disconnect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-  delete?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-  connect?: Prisma.lancamentosWhereUniqueInput | Prisma.lancamentosWhereUniqueInput[]
-  update?: Prisma.lancamentosUpdateWithWhereUniqueWithoutUsuariosInput | Prisma.lancamentosUpdateWithWhereUniqueWithoutUsuariosInput[]
-  updateMany?: Prisma.lancamentosUpdateManyWithWhereWithoutUsuariosInput | Prisma.lancamentosUpdateManyWithWhereWithoutUsuariosInput[]
-  deleteMany?: Prisma.lancamentosScalarWhereInput | Prisma.lancamentosScalarWhereInput[]
-}
-
-export type lancamentosCreateWithoutCategoriasInput = {
+export type lancamentosCreateWithoutUsuarioInput = {
   cod_lancamento?: bigint | number
   descricao: string
   valor: runtime.Decimal | runtime.DecimalJsLike | number | string
   tipo: string
   data_lancamento: Date | string
   data_criacao?: Date | string
-  projetos?: Prisma.projetosCreateNestedOneWithoutLancamentosInput
-  usuarios: Prisma.usuariosCreateNestedOneWithoutLancamentosInput
+  categoria: Prisma.categoriasCreateNestedOneWithoutLancamentosInput
+  projeto?: Prisma.projetosCreateNestedOneWithoutLancamentosInput
 }
 
-export type lancamentosUncheckedCreateWithoutCategoriasInput = {
+export type lancamentosUncheckedCreateWithoutUsuarioInput = {
   cod_lancamento?: bigint | number
+  cod_categoria: bigint | number
   cod_projeto?: bigint | number | null
   descricao: string
   valor: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -644,30 +641,30 @@ export type lancamentosUncheckedCreateWithoutCategoriasInput = {
   data_criacao?: Date | string
 }
 
-export type lancamentosCreateOrConnectWithoutCategoriasInput = {
+export type lancamentosCreateOrConnectWithoutUsuarioInput = {
   where: Prisma.lancamentosWhereUniqueInput
-  create: Prisma.XOR<Prisma.lancamentosCreateWithoutCategoriasInput, Prisma.lancamentosUncheckedCreateWithoutCategoriasInput>
+  create: Prisma.XOR<Prisma.lancamentosCreateWithoutUsuarioInput, Prisma.lancamentosUncheckedCreateWithoutUsuarioInput>
 }
 
-export type lancamentosCreateManyCategoriasInputEnvelope = {
-  data: Prisma.lancamentosCreateManyCategoriasInput | Prisma.lancamentosCreateManyCategoriasInput[]
+export type lancamentosCreateManyUsuarioInputEnvelope = {
+  data: Prisma.lancamentosCreateManyUsuarioInput | Prisma.lancamentosCreateManyUsuarioInput[]
   skipDuplicates?: boolean
 }
 
-export type lancamentosUpsertWithWhereUniqueWithoutCategoriasInput = {
+export type lancamentosUpsertWithWhereUniqueWithoutUsuarioInput = {
   where: Prisma.lancamentosWhereUniqueInput
-  update: Prisma.XOR<Prisma.lancamentosUpdateWithoutCategoriasInput, Prisma.lancamentosUncheckedUpdateWithoutCategoriasInput>
-  create: Prisma.XOR<Prisma.lancamentosCreateWithoutCategoriasInput, Prisma.lancamentosUncheckedCreateWithoutCategoriasInput>
+  update: Prisma.XOR<Prisma.lancamentosUpdateWithoutUsuarioInput, Prisma.lancamentosUncheckedUpdateWithoutUsuarioInput>
+  create: Prisma.XOR<Prisma.lancamentosCreateWithoutUsuarioInput, Prisma.lancamentosUncheckedCreateWithoutUsuarioInput>
 }
 
-export type lancamentosUpdateWithWhereUniqueWithoutCategoriasInput = {
+export type lancamentosUpdateWithWhereUniqueWithoutUsuarioInput = {
   where: Prisma.lancamentosWhereUniqueInput
-  data: Prisma.XOR<Prisma.lancamentosUpdateWithoutCategoriasInput, Prisma.lancamentosUncheckedUpdateWithoutCategoriasInput>
+  data: Prisma.XOR<Prisma.lancamentosUpdateWithoutUsuarioInput, Prisma.lancamentosUncheckedUpdateWithoutUsuarioInput>
 }
 
-export type lancamentosUpdateManyWithWhereWithoutCategoriasInput = {
+export type lancamentosUpdateManyWithWhereWithoutUsuarioInput = {
   where: Prisma.lancamentosScalarWhereInput
-  data: Prisma.XOR<Prisma.lancamentosUpdateManyMutationInput, Prisma.lancamentosUncheckedUpdateManyWithoutCategoriasInput>
+  data: Prisma.XOR<Prisma.lancamentosUpdateManyMutationInput, Prisma.lancamentosUncheckedUpdateManyWithoutUsuarioInput>
 }
 
 export type lancamentosScalarWhereInput = {
@@ -685,20 +682,20 @@ export type lancamentosScalarWhereInput = {
   data_criacao?: Prisma.DateTimeFilter<"lancamentos"> | Date | string
 }
 
-export type lancamentosCreateWithoutProjetosInput = {
+export type lancamentosCreateWithoutCategoriaInput = {
   cod_lancamento?: bigint | number
   descricao: string
   valor: runtime.Decimal | runtime.DecimalJsLike | number | string
   tipo: string
   data_lancamento: Date | string
   data_criacao?: Date | string
-  categorias: Prisma.categoriasCreateNestedOneWithoutLancamentosInput
-  usuarios: Prisma.usuariosCreateNestedOneWithoutLancamentosInput
+  usuario: Prisma.usuariosCreateNestedOneWithoutLancamentosInput
+  projeto?: Prisma.projetosCreateNestedOneWithoutLancamentosInput
 }
 
-export type lancamentosUncheckedCreateWithoutProjetosInput = {
+export type lancamentosUncheckedCreateWithoutCategoriaInput = {
   cod_lancamento?: bigint | number
-  cod_categoria: bigint | number
+  cod_projeto?: bigint | number | null
   descricao: string
   valor: runtime.Decimal | runtime.DecimalJsLike | number | string
   tipo: string
@@ -706,47 +703,46 @@ export type lancamentosUncheckedCreateWithoutProjetosInput = {
   data_criacao?: Date | string
 }
 
-export type lancamentosCreateOrConnectWithoutProjetosInput = {
+export type lancamentosCreateOrConnectWithoutCategoriaInput = {
   where: Prisma.lancamentosWhereUniqueInput
-  create: Prisma.XOR<Prisma.lancamentosCreateWithoutProjetosInput, Prisma.lancamentosUncheckedCreateWithoutProjetosInput>
+  create: Prisma.XOR<Prisma.lancamentosCreateWithoutCategoriaInput, Prisma.lancamentosUncheckedCreateWithoutCategoriaInput>
 }
 
-export type lancamentosCreateManyProjetosInputEnvelope = {
-  data: Prisma.lancamentosCreateManyProjetosInput | Prisma.lancamentosCreateManyProjetosInput[]
+export type lancamentosCreateManyCategoriaInputEnvelope = {
+  data: Prisma.lancamentosCreateManyCategoriaInput | Prisma.lancamentosCreateManyCategoriaInput[]
   skipDuplicates?: boolean
 }
 
-export type lancamentosUpsertWithWhereUniqueWithoutProjetosInput = {
+export type lancamentosUpsertWithWhereUniqueWithoutCategoriaInput = {
   where: Prisma.lancamentosWhereUniqueInput
-  update: Prisma.XOR<Prisma.lancamentosUpdateWithoutProjetosInput, Prisma.lancamentosUncheckedUpdateWithoutProjetosInput>
-  create: Prisma.XOR<Prisma.lancamentosCreateWithoutProjetosInput, Prisma.lancamentosUncheckedCreateWithoutProjetosInput>
+  update: Prisma.XOR<Prisma.lancamentosUpdateWithoutCategoriaInput, Prisma.lancamentosUncheckedUpdateWithoutCategoriaInput>
+  create: Prisma.XOR<Prisma.lancamentosCreateWithoutCategoriaInput, Prisma.lancamentosUncheckedCreateWithoutCategoriaInput>
 }
 
-export type lancamentosUpdateWithWhereUniqueWithoutProjetosInput = {
+export type lancamentosUpdateWithWhereUniqueWithoutCategoriaInput = {
   where: Prisma.lancamentosWhereUniqueInput
-  data: Prisma.XOR<Prisma.lancamentosUpdateWithoutProjetosInput, Prisma.lancamentosUncheckedUpdateWithoutProjetosInput>
+  data: Prisma.XOR<Prisma.lancamentosUpdateWithoutCategoriaInput, Prisma.lancamentosUncheckedUpdateWithoutCategoriaInput>
 }
 
-export type lancamentosUpdateManyWithWhereWithoutProjetosInput = {
+export type lancamentosUpdateManyWithWhereWithoutCategoriaInput = {
   where: Prisma.lancamentosScalarWhereInput
-  data: Prisma.XOR<Prisma.lancamentosUpdateManyMutationInput, Prisma.lancamentosUncheckedUpdateManyWithoutProjetosInput>
+  data: Prisma.XOR<Prisma.lancamentosUpdateManyMutationInput, Prisma.lancamentosUncheckedUpdateManyWithoutCategoriaInput>
 }
 
-export type lancamentosCreateWithoutUsuariosInput = {
+export type lancamentosCreateWithoutProjetoInput = {
   cod_lancamento?: bigint | number
   descricao: string
   valor: runtime.Decimal | runtime.DecimalJsLike | number | string
   tipo: string
   data_lancamento: Date | string
   data_criacao?: Date | string
-  categorias: Prisma.categoriasCreateNestedOneWithoutLancamentosInput
-  projetos?: Prisma.projetosCreateNestedOneWithoutLancamentosInput
+  usuario: Prisma.usuariosCreateNestedOneWithoutLancamentosInput
+  categoria: Prisma.categoriasCreateNestedOneWithoutLancamentosInput
 }
 
-export type lancamentosUncheckedCreateWithoutUsuariosInput = {
+export type lancamentosUncheckedCreateWithoutProjetoInput = {
   cod_lancamento?: bigint | number
   cod_categoria: bigint | number
-  cod_projeto?: bigint | number | null
   descricao: string
   valor: runtime.Decimal | runtime.DecimalJsLike | number | string
   tipo: string
@@ -754,115 +750,33 @@ export type lancamentosUncheckedCreateWithoutUsuariosInput = {
   data_criacao?: Date | string
 }
 
-export type lancamentosCreateOrConnectWithoutUsuariosInput = {
+export type lancamentosCreateOrConnectWithoutProjetoInput = {
   where: Prisma.lancamentosWhereUniqueInput
-  create: Prisma.XOR<Prisma.lancamentosCreateWithoutUsuariosInput, Prisma.lancamentosUncheckedCreateWithoutUsuariosInput>
+  create: Prisma.XOR<Prisma.lancamentosCreateWithoutProjetoInput, Prisma.lancamentosUncheckedCreateWithoutProjetoInput>
 }
 
-export type lancamentosCreateManyUsuariosInputEnvelope = {
-  data: Prisma.lancamentosCreateManyUsuariosInput | Prisma.lancamentosCreateManyUsuariosInput[]
+export type lancamentosCreateManyProjetoInputEnvelope = {
+  data: Prisma.lancamentosCreateManyProjetoInput | Prisma.lancamentosCreateManyProjetoInput[]
   skipDuplicates?: boolean
 }
 
-export type lancamentosUpsertWithWhereUniqueWithoutUsuariosInput = {
+export type lancamentosUpsertWithWhereUniqueWithoutProjetoInput = {
   where: Prisma.lancamentosWhereUniqueInput
-  update: Prisma.XOR<Prisma.lancamentosUpdateWithoutUsuariosInput, Prisma.lancamentosUncheckedUpdateWithoutUsuariosInput>
-  create: Prisma.XOR<Prisma.lancamentosCreateWithoutUsuariosInput, Prisma.lancamentosUncheckedCreateWithoutUsuariosInput>
+  update: Prisma.XOR<Prisma.lancamentosUpdateWithoutProjetoInput, Prisma.lancamentosUncheckedUpdateWithoutProjetoInput>
+  create: Prisma.XOR<Prisma.lancamentosCreateWithoutProjetoInput, Prisma.lancamentosUncheckedCreateWithoutProjetoInput>
 }
 
-export type lancamentosUpdateWithWhereUniqueWithoutUsuariosInput = {
+export type lancamentosUpdateWithWhereUniqueWithoutProjetoInput = {
   where: Prisma.lancamentosWhereUniqueInput
-  data: Prisma.XOR<Prisma.lancamentosUpdateWithoutUsuariosInput, Prisma.lancamentosUncheckedUpdateWithoutUsuariosInput>
+  data: Prisma.XOR<Prisma.lancamentosUpdateWithoutProjetoInput, Prisma.lancamentosUncheckedUpdateWithoutProjetoInput>
 }
 
-export type lancamentosUpdateManyWithWhereWithoutUsuariosInput = {
+export type lancamentosUpdateManyWithWhereWithoutProjetoInput = {
   where: Prisma.lancamentosScalarWhereInput
-  data: Prisma.XOR<Prisma.lancamentosUpdateManyMutationInput, Prisma.lancamentosUncheckedUpdateManyWithoutUsuariosInput>
+  data: Prisma.XOR<Prisma.lancamentosUpdateManyMutationInput, Prisma.lancamentosUncheckedUpdateManyWithoutProjetoInput>
 }
 
-export type lancamentosCreateManyCategoriasInput = {
-  cod_lancamento?: bigint | number
-  cod_projeto?: bigint | number | null
-  descricao: string
-  valor: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tipo: string
-  data_lancamento: Date | string
-  data_criacao?: Date | string
-}
-
-export type lancamentosUpdateWithoutCategoriasInput = {
-  cod_lancamento?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  descricao?: Prisma.StringFieldUpdateOperationsInput | string
-  valor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tipo?: Prisma.StringFieldUpdateOperationsInput | string
-  data_lancamento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  projetos?: Prisma.projetosUpdateOneWithoutLancamentosNestedInput
-  usuarios?: Prisma.usuariosUpdateOneRequiredWithoutLancamentosNestedInput
-}
-
-export type lancamentosUncheckedUpdateWithoutCategoriasInput = {
-  cod_lancamento?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  cod_projeto?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-  descricao?: Prisma.StringFieldUpdateOperationsInput | string
-  valor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tipo?: Prisma.StringFieldUpdateOperationsInput | string
-  data_lancamento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type lancamentosUncheckedUpdateManyWithoutCategoriasInput = {
-  cod_lancamento?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  cod_projeto?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-  descricao?: Prisma.StringFieldUpdateOperationsInput | string
-  valor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tipo?: Prisma.StringFieldUpdateOperationsInput | string
-  data_lancamento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type lancamentosCreateManyProjetosInput = {
-  cod_lancamento?: bigint | number
-  cod_categoria: bigint | number
-  descricao: string
-  valor: runtime.Decimal | runtime.DecimalJsLike | number | string
-  tipo: string
-  data_lancamento: Date | string
-  data_criacao?: Date | string
-}
-
-export type lancamentosUpdateWithoutProjetosInput = {
-  cod_lancamento?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  descricao?: Prisma.StringFieldUpdateOperationsInput | string
-  valor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tipo?: Prisma.StringFieldUpdateOperationsInput | string
-  data_lancamento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  categorias?: Prisma.categoriasUpdateOneRequiredWithoutLancamentosNestedInput
-  usuarios?: Prisma.usuariosUpdateOneRequiredWithoutLancamentosNestedInput
-}
-
-export type lancamentosUncheckedUpdateWithoutProjetosInput = {
-  cod_lancamento?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  cod_categoria?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  descricao?: Prisma.StringFieldUpdateOperationsInput | string
-  valor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tipo?: Prisma.StringFieldUpdateOperationsInput | string
-  data_lancamento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type lancamentosUncheckedUpdateManyWithoutProjetosInput = {
-  cod_lancamento?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  cod_categoria?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  descricao?: Prisma.StringFieldUpdateOperationsInput | string
-  valor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  tipo?: Prisma.StringFieldUpdateOperationsInput | string
-  data_lancamento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type lancamentosCreateManyUsuariosInput = {
+export type lancamentosCreateManyUsuarioInput = {
   cod_lancamento?: bigint | number
   cod_categoria: bigint | number
   cod_projeto?: bigint | number | null
@@ -873,18 +787,18 @@ export type lancamentosCreateManyUsuariosInput = {
   data_criacao?: Date | string
 }
 
-export type lancamentosUpdateWithoutUsuariosInput = {
+export type lancamentosUpdateWithoutUsuarioInput = {
   cod_lancamento?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   descricao?: Prisma.StringFieldUpdateOperationsInput | string
   valor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tipo?: Prisma.StringFieldUpdateOperationsInput | string
   data_lancamento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  categorias?: Prisma.categoriasUpdateOneRequiredWithoutLancamentosNestedInput
-  projetos?: Prisma.projetosUpdateOneWithoutLancamentosNestedInput
+  categoria?: Prisma.categoriasUpdateOneRequiredWithoutLancamentosNestedInput
+  projeto?: Prisma.projetosUpdateOneWithoutLancamentosNestedInput
 }
 
-export type lancamentosUncheckedUpdateWithoutUsuariosInput = {
+export type lancamentosUncheckedUpdateWithoutUsuarioInput = {
   cod_lancamento?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   cod_categoria?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   cod_projeto?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -895,10 +809,92 @@ export type lancamentosUncheckedUpdateWithoutUsuariosInput = {
   data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type lancamentosUncheckedUpdateManyWithoutUsuariosInput = {
+export type lancamentosUncheckedUpdateManyWithoutUsuarioInput = {
   cod_lancamento?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   cod_categoria?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   cod_projeto?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  descricao?: Prisma.StringFieldUpdateOperationsInput | string
+  valor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tipo?: Prisma.StringFieldUpdateOperationsInput | string
+  data_lancamento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type lancamentosCreateManyCategoriaInput = {
+  cod_lancamento?: bigint | number
+  cod_projeto?: bigint | number | null
+  descricao: string
+  valor: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tipo: string
+  data_lancamento: Date | string
+  data_criacao?: Date | string
+}
+
+export type lancamentosUpdateWithoutCategoriaInput = {
+  cod_lancamento?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  descricao?: Prisma.StringFieldUpdateOperationsInput | string
+  valor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tipo?: Prisma.StringFieldUpdateOperationsInput | string
+  data_lancamento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  usuario?: Prisma.usuariosUpdateOneRequiredWithoutLancamentosNestedInput
+  projeto?: Prisma.projetosUpdateOneWithoutLancamentosNestedInput
+}
+
+export type lancamentosUncheckedUpdateWithoutCategoriaInput = {
+  cod_lancamento?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  cod_projeto?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  descricao?: Prisma.StringFieldUpdateOperationsInput | string
+  valor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tipo?: Prisma.StringFieldUpdateOperationsInput | string
+  data_lancamento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type lancamentosUncheckedUpdateManyWithoutCategoriaInput = {
+  cod_lancamento?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  cod_projeto?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  descricao?: Prisma.StringFieldUpdateOperationsInput | string
+  valor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tipo?: Prisma.StringFieldUpdateOperationsInput | string
+  data_lancamento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type lancamentosCreateManyProjetoInput = {
+  cod_lancamento?: bigint | number
+  cod_categoria: bigint | number
+  descricao: string
+  valor: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tipo: string
+  data_lancamento: Date | string
+  data_criacao?: Date | string
+}
+
+export type lancamentosUpdateWithoutProjetoInput = {
+  cod_lancamento?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  descricao?: Prisma.StringFieldUpdateOperationsInput | string
+  valor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tipo?: Prisma.StringFieldUpdateOperationsInput | string
+  data_lancamento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  usuario?: Prisma.usuariosUpdateOneRequiredWithoutLancamentosNestedInput
+  categoria?: Prisma.categoriasUpdateOneRequiredWithoutLancamentosNestedInput
+}
+
+export type lancamentosUncheckedUpdateWithoutProjetoInput = {
+  cod_lancamento?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  cod_categoria?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  descricao?: Prisma.StringFieldUpdateOperationsInput | string
+  valor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tipo?: Prisma.StringFieldUpdateOperationsInput | string
+  data_lancamento?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  data_criacao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type lancamentosUncheckedUpdateManyWithoutProjetoInput = {
+  cod_lancamento?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  cod_categoria?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   descricao?: Prisma.StringFieldUpdateOperationsInput | string
   valor?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tipo?: Prisma.StringFieldUpdateOperationsInput | string
@@ -918,9 +914,9 @@ export type lancamentosSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   tipo?: boolean
   data_lancamento?: boolean
   data_criacao?: boolean
-  categorias?: boolean | Prisma.categoriasDefaultArgs<ExtArgs>
-  projetos?: boolean | Prisma.lancamentos$projetosArgs<ExtArgs>
-  usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
+  usuario?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
+  categoria?: boolean | Prisma.categoriasDefaultArgs<ExtArgs>
+  projeto?: boolean | Prisma.lancamentos$projetoArgs<ExtArgs>
 }, ExtArgs["result"]["lancamentos"]>
 
 export type lancamentosSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -933,9 +929,9 @@ export type lancamentosSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   tipo?: boolean
   data_lancamento?: boolean
   data_criacao?: boolean
-  categorias?: boolean | Prisma.categoriasDefaultArgs<ExtArgs>
-  projetos?: boolean | Prisma.lancamentos$projetosArgs<ExtArgs>
-  usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
+  usuario?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
+  categoria?: boolean | Prisma.categoriasDefaultArgs<ExtArgs>
+  projeto?: boolean | Prisma.lancamentos$projetoArgs<ExtArgs>
 }, ExtArgs["result"]["lancamentos"]>
 
 export type lancamentosSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -948,9 +944,9 @@ export type lancamentosSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   tipo?: boolean
   data_lancamento?: boolean
   data_criacao?: boolean
-  categorias?: boolean | Prisma.categoriasDefaultArgs<ExtArgs>
-  projetos?: boolean | Prisma.lancamentos$projetosArgs<ExtArgs>
-  usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
+  usuario?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
+  categoria?: boolean | Prisma.categoriasDefaultArgs<ExtArgs>
+  projeto?: boolean | Prisma.lancamentos$projetoArgs<ExtArgs>
 }, ExtArgs["result"]["lancamentos"]>
 
 export type lancamentosSelectScalar = {
@@ -967,27 +963,27 @@ export type lancamentosSelectScalar = {
 
 export type lancamentosOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"cod_lancamento" | "cod_usuario" | "cod_categoria" | "cod_projeto" | "descricao" | "valor" | "tipo" | "data_lancamento" | "data_criacao", ExtArgs["result"]["lancamentos"]>
 export type lancamentosInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  categorias?: boolean | Prisma.categoriasDefaultArgs<ExtArgs>
-  projetos?: boolean | Prisma.lancamentos$projetosArgs<ExtArgs>
-  usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
+  usuario?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
+  categoria?: boolean | Prisma.categoriasDefaultArgs<ExtArgs>
+  projeto?: boolean | Prisma.lancamentos$projetoArgs<ExtArgs>
 }
 export type lancamentosIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  categorias?: boolean | Prisma.categoriasDefaultArgs<ExtArgs>
-  projetos?: boolean | Prisma.lancamentos$projetosArgs<ExtArgs>
-  usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
+  usuario?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
+  categoria?: boolean | Prisma.categoriasDefaultArgs<ExtArgs>
+  projeto?: boolean | Prisma.lancamentos$projetoArgs<ExtArgs>
 }
 export type lancamentosIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  categorias?: boolean | Prisma.categoriasDefaultArgs<ExtArgs>
-  projetos?: boolean | Prisma.lancamentos$projetosArgs<ExtArgs>
-  usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
+  usuario?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
+  categoria?: boolean | Prisma.categoriasDefaultArgs<ExtArgs>
+  projeto?: boolean | Prisma.lancamentos$projetoArgs<ExtArgs>
 }
 
 export type $lancamentosPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "lancamentos"
   objects: {
-    categorias: Prisma.$categoriasPayload<ExtArgs>
-    projetos: Prisma.$projetosPayload<ExtArgs> | null
-    usuarios: Prisma.$usuariosPayload<ExtArgs>
+    usuario: Prisma.$usuariosPayload<ExtArgs>
+    categoria: Prisma.$categoriasPayload<ExtArgs>
+    projeto: Prisma.$projetosPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     cod_lancamento: bigint
@@ -1393,9 +1389,9 @@ readonly fields: lancamentosFieldRefs;
  */
 export interface Prisma__lancamentosClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  categorias<T extends Prisma.categoriasDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.categoriasDefaultArgs<ExtArgs>>): Prisma.Prisma__categoriasClient<runtime.Types.Result.GetResult<Prisma.$categoriasPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  projetos<T extends Prisma.lancamentos$projetosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.lancamentos$projetosArgs<ExtArgs>>): Prisma.Prisma__projetosClient<runtime.Types.Result.GetResult<Prisma.$projetosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  usuarios<T extends Prisma.usuariosDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usuariosDefaultArgs<ExtArgs>>): Prisma.Prisma__usuariosClient<runtime.Types.Result.GetResult<Prisma.$usuariosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  usuario<T extends Prisma.usuariosDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usuariosDefaultArgs<ExtArgs>>): Prisma.Prisma__usuariosClient<runtime.Types.Result.GetResult<Prisma.$usuariosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  categoria<T extends Prisma.categoriasDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.categoriasDefaultArgs<ExtArgs>>): Prisma.Prisma__categoriasClient<runtime.Types.Result.GetResult<Prisma.$categoriasPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  projeto<T extends Prisma.lancamentos$projetoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.lancamentos$projetoArgs<ExtArgs>>): Prisma.Prisma__projetosClient<runtime.Types.Result.GetResult<Prisma.$projetosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1835,9 +1831,9 @@ export type lancamentosDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 /**
- * lancamentos.projetos
+ * lancamentos.projeto
  */
-export type lancamentos$projetosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type lancamentos$projetoArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the projetos
    */

@@ -31,8 +31,8 @@ export * from "./enums.ts"
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more Categorias
- * const categorias = await prisma.categorias.findMany()
+ * // Fetch zero or more Usuarios
+ * const usuarios = await prisma.usuarios.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -42,22 +42,22 @@ export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts exten
 export { Prisma }
 
 /**
+ * Model usuarios
+ * 
+ */
+export type usuarios = Prisma.usuariosModel
+/**
  * Model categorias
- * This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+ * 
  */
 export type categorias = Prisma.categoriasModel
-/**
- * Model lancamentos
- * This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
- */
-export type lancamentos = Prisma.lancamentosModel
 /**
  * Model projetos
  * 
  */
 export type projetos = Prisma.projetosModel
 /**
- * Model usuarios
+ * Model lancamentos
  * 
  */
-export type usuarios = Prisma.usuariosModel
+export type lancamentos = Prisma.lancamentosModel

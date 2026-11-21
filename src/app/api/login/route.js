@@ -1,16 +1,16 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import pool from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 import { createSessionToken, sessionCookie } from "@/lib/auth";
 
 export async function POST(request) {
   try {
     const { email, senha } = await request.json();
-    const result = await pool.query("SELECT cod_usuario, senha FROM usuarios WHERE email = $1", [String(email || "").trim().toLowerCase()]);
-    if (!result.rowCount || !(await bcrypt.compare(String(senha || ""), result.rows[0].senha)))
+    const user = await prisma.usuarios.findUnique({ where: { email: String(email || "").trim().toLowerCase() }, select: { cod_usuario: true, senha: true } });
+    if (!user || !(await bcrypt.compare(String(senha || ""), user.senha)))
       return NextResponse.json({ mensagem: "E-mail ou senha incorretos." }, { status: 401 });
     const response = NextResponse.json({ mensagem: "Login realizado." });
-    response.cookies.set(sessionCookie, createSessionToken(result.rows[0].cod_usuario), { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 30 });
+    response.cookies.set(sessionCookie, createSessionToken(user.cod_usuario), { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 30 });
     return response;
   } catch (error) {
     console.error("Falha no login:", error);

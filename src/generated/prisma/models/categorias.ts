@@ -14,7 +14,7 @@ import type * as Prisma from "../internal/prismaNamespace.ts"
 
 /**
  * Model categorias
- * This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+ * 
  */
 export type categoriasModel = runtime.Types.Result.DefaultSelection<Prisma.$categoriasPayload>
 
@@ -212,7 +212,7 @@ export type categoriasWhereInput = {
   cod_usuario?: Prisma.BigIntFilter<"categorias"> | bigint | number
   nome?: Prisma.StringFilter<"categorias"> | string
   tipo?: Prisma.StringFilter<"categorias"> | string
-  usuarios?: Prisma.XOR<Prisma.UsuariosScalarRelationFilter, Prisma.usuariosWhereInput>
+  usuario?: Prisma.XOR<Prisma.UsuariosScalarRelationFilter, Prisma.usuariosWhereInput>
   lancamentos?: Prisma.LancamentosListRelationFilter
 }
 
@@ -221,23 +221,23 @@ export type categoriasOrderByWithRelationInput = {
   cod_usuario?: Prisma.SortOrder
   nome?: Prisma.SortOrder
   tipo?: Prisma.SortOrder
-  usuarios?: Prisma.usuariosOrderByWithRelationInput
+  usuario?: Prisma.usuariosOrderByWithRelationInput
   lancamentos?: Prisma.lancamentosOrderByRelationAggregateInput
 }
 
 export type categoriasWhereUniqueInput = Prisma.AtLeast<{
   cod_categoria?: bigint | number
-  cod_usuario_nome_tipo?: Prisma.categoriasCod_usuarioNomeTipoCompoundUniqueInput
   cod_usuario_cod_categoria?: Prisma.categoriasCod_usuarioCod_categoriaCompoundUniqueInput
+  cod_usuario_nome_tipo?: Prisma.categoriasCod_usuarioNomeTipoCompoundUniqueInput
   AND?: Prisma.categoriasWhereInput | Prisma.categoriasWhereInput[]
   OR?: Prisma.categoriasWhereInput[]
   NOT?: Prisma.categoriasWhereInput | Prisma.categoriasWhereInput[]
   cod_usuario?: Prisma.BigIntFilter<"categorias"> | bigint | number
   nome?: Prisma.StringFilter<"categorias"> | string
   tipo?: Prisma.StringFilter<"categorias"> | string
-  usuarios?: Prisma.XOR<Prisma.UsuariosScalarRelationFilter, Prisma.usuariosWhereInput>
+  usuario?: Prisma.XOR<Prisma.UsuariosScalarRelationFilter, Prisma.usuariosWhereInput>
   lancamentos?: Prisma.LancamentosListRelationFilter
-}, "cod_categoria" | "cod_usuario_nome_tipo" | "cod_usuario_cod_categoria">
+}, "cod_categoria" | "cod_usuario_cod_categoria" | "cod_usuario_nome_tipo">
 
 export type categoriasOrderByWithAggregationInput = {
   cod_categoria?: Prisma.SortOrder
@@ -265,8 +265,8 @@ export type categoriasCreateInput = {
   cod_categoria?: bigint | number
   nome: string
   tipo: string
-  usuarios: Prisma.usuariosCreateNestedOneWithoutCategoriasInput
-  lancamentos?: Prisma.lancamentosCreateNestedManyWithoutCategoriasInput
+  usuario: Prisma.usuariosCreateNestedOneWithoutCategoriasInput
+  lancamentos?: Prisma.lancamentosCreateNestedManyWithoutCategoriaInput
 }
 
 export type categoriasUncheckedCreateInput = {
@@ -274,15 +274,15 @@ export type categoriasUncheckedCreateInput = {
   cod_usuario: bigint | number
   nome: string
   tipo: string
-  lancamentos?: Prisma.lancamentosUncheckedCreateNestedManyWithoutCategoriasInput
+  lancamentos?: Prisma.lancamentosUncheckedCreateNestedManyWithoutCategoriaInput
 }
 
 export type categoriasUpdateInput = {
   cod_categoria?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   tipo?: Prisma.StringFieldUpdateOperationsInput | string
-  usuarios?: Prisma.usuariosUpdateOneRequiredWithoutCategoriasNestedInput
-  lancamentos?: Prisma.lancamentosUpdateManyWithoutCategoriasNestedInput
+  usuario?: Prisma.usuariosUpdateOneRequiredWithoutCategoriasNestedInput
+  lancamentos?: Prisma.lancamentosUpdateManyWithoutCategoriaNestedInput
 }
 
 export type categoriasUncheckedUpdateInput = {
@@ -290,7 +290,7 @@ export type categoriasUncheckedUpdateInput = {
   cod_usuario?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   tipo?: Prisma.StringFieldUpdateOperationsInput | string
-  lancamentos?: Prisma.lancamentosUncheckedUpdateManyWithoutCategoriasNestedInput
+  lancamentos?: Prisma.lancamentosUncheckedUpdateManyWithoutCategoriaNestedInput
 }
 
 export type categoriasCreateManyInput = {
@@ -313,15 +313,25 @@ export type categoriasUncheckedUpdateManyInput = {
   tipo?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type categoriasCod_usuarioNomeTipoCompoundUniqueInput = {
-  cod_usuario: bigint | number
-  nome: string
-  tipo: string
+export type CategoriasListRelationFilter = {
+  every?: Prisma.categoriasWhereInput
+  some?: Prisma.categoriasWhereInput
+  none?: Prisma.categoriasWhereInput
+}
+
+export type categoriasOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type categoriasCod_usuarioCod_categoriaCompoundUniqueInput = {
   cod_usuario: bigint | number
   cod_categoria: bigint | number
+}
+
+export type categoriasCod_usuarioNomeTipoCompoundUniqueInput = {
+  cod_usuario: bigint | number
+  nome: string
+  tipo: string
 }
 
 export type categoriasCountOrderByAggregateInput = {
@@ -360,26 +370,46 @@ export type CategoriasScalarRelationFilter = {
   isNot?: Prisma.categoriasWhereInput
 }
 
-export type CategoriasListRelationFilter = {
-  every?: Prisma.categoriasWhereInput
-  some?: Prisma.categoriasWhereInput
-  none?: Prisma.categoriasWhereInput
+export type categoriasCreateNestedManyWithoutUsuarioInput = {
+  create?: Prisma.XOR<Prisma.categoriasCreateWithoutUsuarioInput, Prisma.categoriasUncheckedCreateWithoutUsuarioInput> | Prisma.categoriasCreateWithoutUsuarioInput[] | Prisma.categoriasUncheckedCreateWithoutUsuarioInput[]
+  connectOrCreate?: Prisma.categoriasCreateOrConnectWithoutUsuarioInput | Prisma.categoriasCreateOrConnectWithoutUsuarioInput[]
+  createMany?: Prisma.categoriasCreateManyUsuarioInputEnvelope
+  connect?: Prisma.categoriasWhereUniqueInput | Prisma.categoriasWhereUniqueInput[]
 }
 
-export type categoriasOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
+export type categoriasUncheckedCreateNestedManyWithoutUsuarioInput = {
+  create?: Prisma.XOR<Prisma.categoriasCreateWithoutUsuarioInput, Prisma.categoriasUncheckedCreateWithoutUsuarioInput> | Prisma.categoriasCreateWithoutUsuarioInput[] | Prisma.categoriasUncheckedCreateWithoutUsuarioInput[]
+  connectOrCreate?: Prisma.categoriasCreateOrConnectWithoutUsuarioInput | Prisma.categoriasCreateOrConnectWithoutUsuarioInput[]
+  createMany?: Prisma.categoriasCreateManyUsuarioInputEnvelope
+  connect?: Prisma.categoriasWhereUniqueInput | Prisma.categoriasWhereUniqueInput[]
 }
 
-export type BigIntFieldUpdateOperationsInput = {
-  set?: bigint | number
-  increment?: bigint | number
-  decrement?: bigint | number
-  multiply?: bigint | number
-  divide?: bigint | number
+export type categoriasUpdateManyWithoutUsuarioNestedInput = {
+  create?: Prisma.XOR<Prisma.categoriasCreateWithoutUsuarioInput, Prisma.categoriasUncheckedCreateWithoutUsuarioInput> | Prisma.categoriasCreateWithoutUsuarioInput[] | Prisma.categoriasUncheckedCreateWithoutUsuarioInput[]
+  connectOrCreate?: Prisma.categoriasCreateOrConnectWithoutUsuarioInput | Prisma.categoriasCreateOrConnectWithoutUsuarioInput[]
+  upsert?: Prisma.categoriasUpsertWithWhereUniqueWithoutUsuarioInput | Prisma.categoriasUpsertWithWhereUniqueWithoutUsuarioInput[]
+  createMany?: Prisma.categoriasCreateManyUsuarioInputEnvelope
+  set?: Prisma.categoriasWhereUniqueInput | Prisma.categoriasWhereUniqueInput[]
+  disconnect?: Prisma.categoriasWhereUniqueInput | Prisma.categoriasWhereUniqueInput[]
+  delete?: Prisma.categoriasWhereUniqueInput | Prisma.categoriasWhereUniqueInput[]
+  connect?: Prisma.categoriasWhereUniqueInput | Prisma.categoriasWhereUniqueInput[]
+  update?: Prisma.categoriasUpdateWithWhereUniqueWithoutUsuarioInput | Prisma.categoriasUpdateWithWhereUniqueWithoutUsuarioInput[]
+  updateMany?: Prisma.categoriasUpdateManyWithWhereWithoutUsuarioInput | Prisma.categoriasUpdateManyWithWhereWithoutUsuarioInput[]
+  deleteMany?: Prisma.categoriasScalarWhereInput | Prisma.categoriasScalarWhereInput[]
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
+export type categoriasUncheckedUpdateManyWithoutUsuarioNestedInput = {
+  create?: Prisma.XOR<Prisma.categoriasCreateWithoutUsuarioInput, Prisma.categoriasUncheckedCreateWithoutUsuarioInput> | Prisma.categoriasCreateWithoutUsuarioInput[] | Prisma.categoriasUncheckedCreateWithoutUsuarioInput[]
+  connectOrCreate?: Prisma.categoriasCreateOrConnectWithoutUsuarioInput | Prisma.categoriasCreateOrConnectWithoutUsuarioInput[]
+  upsert?: Prisma.categoriasUpsertWithWhereUniqueWithoutUsuarioInput | Prisma.categoriasUpsertWithWhereUniqueWithoutUsuarioInput[]
+  createMany?: Prisma.categoriasCreateManyUsuarioInputEnvelope
+  set?: Prisma.categoriasWhereUniqueInput | Prisma.categoriasWhereUniqueInput[]
+  disconnect?: Prisma.categoriasWhereUniqueInput | Prisma.categoriasWhereUniqueInput[]
+  delete?: Prisma.categoriasWhereUniqueInput | Prisma.categoriasWhereUniqueInput[]
+  connect?: Prisma.categoriasWhereUniqueInput | Prisma.categoriasWhereUniqueInput[]
+  update?: Prisma.categoriasUpdateWithWhereUniqueWithoutUsuarioInput | Prisma.categoriasUpdateWithWhereUniqueWithoutUsuarioInput[]
+  updateMany?: Prisma.categoriasUpdateManyWithWhereWithoutUsuarioInput | Prisma.categoriasUpdateManyWithWhereWithoutUsuarioInput[]
+  deleteMany?: Prisma.categoriasScalarWhereInput | Prisma.categoriasScalarWhereInput[]
 }
 
 export type categoriasCreateNestedOneWithoutLancamentosInput = {
@@ -396,53 +426,61 @@ export type categoriasUpdateOneRequiredWithoutLancamentosNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.categoriasUpdateToOneWithWhereWithoutLancamentosInput, Prisma.categoriasUpdateWithoutLancamentosInput>, Prisma.categoriasUncheckedUpdateWithoutLancamentosInput>
 }
 
-export type categoriasCreateNestedManyWithoutUsuariosInput = {
-  create?: Prisma.XOR<Prisma.categoriasCreateWithoutUsuariosInput, Prisma.categoriasUncheckedCreateWithoutUsuariosInput> | Prisma.categoriasCreateWithoutUsuariosInput[] | Prisma.categoriasUncheckedCreateWithoutUsuariosInput[]
-  connectOrCreate?: Prisma.categoriasCreateOrConnectWithoutUsuariosInput | Prisma.categoriasCreateOrConnectWithoutUsuariosInput[]
-  createMany?: Prisma.categoriasCreateManyUsuariosInputEnvelope
-  connect?: Prisma.categoriasWhereUniqueInput | Prisma.categoriasWhereUniqueInput[]
+export type categoriasCreateWithoutUsuarioInput = {
+  cod_categoria?: bigint | number
+  nome: string
+  tipo: string
+  lancamentos?: Prisma.lancamentosCreateNestedManyWithoutCategoriaInput
 }
 
-export type categoriasUncheckedCreateNestedManyWithoutUsuariosInput = {
-  create?: Prisma.XOR<Prisma.categoriasCreateWithoutUsuariosInput, Prisma.categoriasUncheckedCreateWithoutUsuariosInput> | Prisma.categoriasCreateWithoutUsuariosInput[] | Prisma.categoriasUncheckedCreateWithoutUsuariosInput[]
-  connectOrCreate?: Prisma.categoriasCreateOrConnectWithoutUsuariosInput | Prisma.categoriasCreateOrConnectWithoutUsuariosInput[]
-  createMany?: Prisma.categoriasCreateManyUsuariosInputEnvelope
-  connect?: Prisma.categoriasWhereUniqueInput | Prisma.categoriasWhereUniqueInput[]
+export type categoriasUncheckedCreateWithoutUsuarioInput = {
+  cod_categoria?: bigint | number
+  nome: string
+  tipo: string
+  lancamentos?: Prisma.lancamentosUncheckedCreateNestedManyWithoutCategoriaInput
 }
 
-export type categoriasUpdateManyWithoutUsuariosNestedInput = {
-  create?: Prisma.XOR<Prisma.categoriasCreateWithoutUsuariosInput, Prisma.categoriasUncheckedCreateWithoutUsuariosInput> | Prisma.categoriasCreateWithoutUsuariosInput[] | Prisma.categoriasUncheckedCreateWithoutUsuariosInput[]
-  connectOrCreate?: Prisma.categoriasCreateOrConnectWithoutUsuariosInput | Prisma.categoriasCreateOrConnectWithoutUsuariosInput[]
-  upsert?: Prisma.categoriasUpsertWithWhereUniqueWithoutUsuariosInput | Prisma.categoriasUpsertWithWhereUniqueWithoutUsuariosInput[]
-  createMany?: Prisma.categoriasCreateManyUsuariosInputEnvelope
-  set?: Prisma.categoriasWhereUniqueInput | Prisma.categoriasWhereUniqueInput[]
-  disconnect?: Prisma.categoriasWhereUniqueInput | Prisma.categoriasWhereUniqueInput[]
-  delete?: Prisma.categoriasWhereUniqueInput | Prisma.categoriasWhereUniqueInput[]
-  connect?: Prisma.categoriasWhereUniqueInput | Prisma.categoriasWhereUniqueInput[]
-  update?: Prisma.categoriasUpdateWithWhereUniqueWithoutUsuariosInput | Prisma.categoriasUpdateWithWhereUniqueWithoutUsuariosInput[]
-  updateMany?: Prisma.categoriasUpdateManyWithWhereWithoutUsuariosInput | Prisma.categoriasUpdateManyWithWhereWithoutUsuariosInput[]
-  deleteMany?: Prisma.categoriasScalarWhereInput | Prisma.categoriasScalarWhereInput[]
+export type categoriasCreateOrConnectWithoutUsuarioInput = {
+  where: Prisma.categoriasWhereUniqueInput
+  create: Prisma.XOR<Prisma.categoriasCreateWithoutUsuarioInput, Prisma.categoriasUncheckedCreateWithoutUsuarioInput>
 }
 
-export type categoriasUncheckedUpdateManyWithoutUsuariosNestedInput = {
-  create?: Prisma.XOR<Prisma.categoriasCreateWithoutUsuariosInput, Prisma.categoriasUncheckedCreateWithoutUsuariosInput> | Prisma.categoriasCreateWithoutUsuariosInput[] | Prisma.categoriasUncheckedCreateWithoutUsuariosInput[]
-  connectOrCreate?: Prisma.categoriasCreateOrConnectWithoutUsuariosInput | Prisma.categoriasCreateOrConnectWithoutUsuariosInput[]
-  upsert?: Prisma.categoriasUpsertWithWhereUniqueWithoutUsuariosInput | Prisma.categoriasUpsertWithWhereUniqueWithoutUsuariosInput[]
-  createMany?: Prisma.categoriasCreateManyUsuariosInputEnvelope
-  set?: Prisma.categoriasWhereUniqueInput | Prisma.categoriasWhereUniqueInput[]
-  disconnect?: Prisma.categoriasWhereUniqueInput | Prisma.categoriasWhereUniqueInput[]
-  delete?: Prisma.categoriasWhereUniqueInput | Prisma.categoriasWhereUniqueInput[]
-  connect?: Prisma.categoriasWhereUniqueInput | Prisma.categoriasWhereUniqueInput[]
-  update?: Prisma.categoriasUpdateWithWhereUniqueWithoutUsuariosInput | Prisma.categoriasUpdateWithWhereUniqueWithoutUsuariosInput[]
-  updateMany?: Prisma.categoriasUpdateManyWithWhereWithoutUsuariosInput | Prisma.categoriasUpdateManyWithWhereWithoutUsuariosInput[]
-  deleteMany?: Prisma.categoriasScalarWhereInput | Prisma.categoriasScalarWhereInput[]
+export type categoriasCreateManyUsuarioInputEnvelope = {
+  data: Prisma.categoriasCreateManyUsuarioInput | Prisma.categoriasCreateManyUsuarioInput[]
+  skipDuplicates?: boolean
+}
+
+export type categoriasUpsertWithWhereUniqueWithoutUsuarioInput = {
+  where: Prisma.categoriasWhereUniqueInput
+  update: Prisma.XOR<Prisma.categoriasUpdateWithoutUsuarioInput, Prisma.categoriasUncheckedUpdateWithoutUsuarioInput>
+  create: Prisma.XOR<Prisma.categoriasCreateWithoutUsuarioInput, Prisma.categoriasUncheckedCreateWithoutUsuarioInput>
+}
+
+export type categoriasUpdateWithWhereUniqueWithoutUsuarioInput = {
+  where: Prisma.categoriasWhereUniqueInput
+  data: Prisma.XOR<Prisma.categoriasUpdateWithoutUsuarioInput, Prisma.categoriasUncheckedUpdateWithoutUsuarioInput>
+}
+
+export type categoriasUpdateManyWithWhereWithoutUsuarioInput = {
+  where: Prisma.categoriasScalarWhereInput
+  data: Prisma.XOR<Prisma.categoriasUpdateManyMutationInput, Prisma.categoriasUncheckedUpdateManyWithoutUsuarioInput>
+}
+
+export type categoriasScalarWhereInput = {
+  AND?: Prisma.categoriasScalarWhereInput | Prisma.categoriasScalarWhereInput[]
+  OR?: Prisma.categoriasScalarWhereInput[]
+  NOT?: Prisma.categoriasScalarWhereInput | Prisma.categoriasScalarWhereInput[]
+  cod_categoria?: Prisma.BigIntFilter<"categorias"> | bigint | number
+  cod_usuario?: Prisma.BigIntFilter<"categorias"> | bigint | number
+  nome?: Prisma.StringFilter<"categorias"> | string
+  tipo?: Prisma.StringFilter<"categorias"> | string
 }
 
 export type categoriasCreateWithoutLancamentosInput = {
   cod_categoria?: bigint | number
   nome: string
   tipo: string
-  usuarios: Prisma.usuariosCreateNestedOneWithoutCategoriasInput
+  usuario: Prisma.usuariosCreateNestedOneWithoutCategoriasInput
 }
 
 export type categoriasUncheckedCreateWithoutLancamentosInput = {
@@ -472,7 +510,7 @@ export type categoriasUpdateWithoutLancamentosInput = {
   cod_categoria?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   tipo?: Prisma.StringFieldUpdateOperationsInput | string
-  usuarios?: Prisma.usuariosUpdateOneRequiredWithoutCategoriasNestedInput
+  usuario?: Prisma.usuariosUpdateOneRequiredWithoutCategoriasNestedInput
 }
 
 export type categoriasUncheckedUpdateWithoutLancamentosInput = {
@@ -482,77 +520,27 @@ export type categoriasUncheckedUpdateWithoutLancamentosInput = {
   tipo?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type categoriasCreateWithoutUsuariosInput = {
-  cod_categoria?: bigint | number
-  nome: string
-  tipo: string
-  lancamentos?: Prisma.lancamentosCreateNestedManyWithoutCategoriasInput
-}
-
-export type categoriasUncheckedCreateWithoutUsuariosInput = {
-  cod_categoria?: bigint | number
-  nome: string
-  tipo: string
-  lancamentos?: Prisma.lancamentosUncheckedCreateNestedManyWithoutCategoriasInput
-}
-
-export type categoriasCreateOrConnectWithoutUsuariosInput = {
-  where: Prisma.categoriasWhereUniqueInput
-  create: Prisma.XOR<Prisma.categoriasCreateWithoutUsuariosInput, Prisma.categoriasUncheckedCreateWithoutUsuariosInput>
-}
-
-export type categoriasCreateManyUsuariosInputEnvelope = {
-  data: Prisma.categoriasCreateManyUsuariosInput | Prisma.categoriasCreateManyUsuariosInput[]
-  skipDuplicates?: boolean
-}
-
-export type categoriasUpsertWithWhereUniqueWithoutUsuariosInput = {
-  where: Prisma.categoriasWhereUniqueInput
-  update: Prisma.XOR<Prisma.categoriasUpdateWithoutUsuariosInput, Prisma.categoriasUncheckedUpdateWithoutUsuariosInput>
-  create: Prisma.XOR<Prisma.categoriasCreateWithoutUsuariosInput, Prisma.categoriasUncheckedCreateWithoutUsuariosInput>
-}
-
-export type categoriasUpdateWithWhereUniqueWithoutUsuariosInput = {
-  where: Prisma.categoriasWhereUniqueInput
-  data: Prisma.XOR<Prisma.categoriasUpdateWithoutUsuariosInput, Prisma.categoriasUncheckedUpdateWithoutUsuariosInput>
-}
-
-export type categoriasUpdateManyWithWhereWithoutUsuariosInput = {
-  where: Prisma.categoriasScalarWhereInput
-  data: Prisma.XOR<Prisma.categoriasUpdateManyMutationInput, Prisma.categoriasUncheckedUpdateManyWithoutUsuariosInput>
-}
-
-export type categoriasScalarWhereInput = {
-  AND?: Prisma.categoriasScalarWhereInput | Prisma.categoriasScalarWhereInput[]
-  OR?: Prisma.categoriasScalarWhereInput[]
-  NOT?: Prisma.categoriasScalarWhereInput | Prisma.categoriasScalarWhereInput[]
-  cod_categoria?: Prisma.BigIntFilter<"categorias"> | bigint | number
-  cod_usuario?: Prisma.BigIntFilter<"categorias"> | bigint | number
-  nome?: Prisma.StringFilter<"categorias"> | string
-  tipo?: Prisma.StringFilter<"categorias"> | string
-}
-
-export type categoriasCreateManyUsuariosInput = {
+export type categoriasCreateManyUsuarioInput = {
   cod_categoria?: bigint | number
   nome: string
   tipo: string
 }
 
-export type categoriasUpdateWithoutUsuariosInput = {
+export type categoriasUpdateWithoutUsuarioInput = {
   cod_categoria?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   tipo?: Prisma.StringFieldUpdateOperationsInput | string
-  lancamentos?: Prisma.lancamentosUpdateManyWithoutCategoriasNestedInput
+  lancamentos?: Prisma.lancamentosUpdateManyWithoutCategoriaNestedInput
 }
 
-export type categoriasUncheckedUpdateWithoutUsuariosInput = {
+export type categoriasUncheckedUpdateWithoutUsuarioInput = {
   cod_categoria?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   tipo?: Prisma.StringFieldUpdateOperationsInput | string
-  lancamentos?: Prisma.lancamentosUncheckedUpdateManyWithoutCategoriasNestedInput
+  lancamentos?: Prisma.lancamentosUncheckedUpdateManyWithoutCategoriaNestedInput
 }
 
-export type categoriasUncheckedUpdateManyWithoutUsuariosInput = {
+export type categoriasUncheckedUpdateManyWithoutUsuarioInput = {
   cod_categoria?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   tipo?: Prisma.StringFieldUpdateOperationsInput | string
@@ -594,7 +582,7 @@ export type categoriasSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   cod_usuario?: boolean
   nome?: boolean
   tipo?: boolean
-  usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
+  usuario?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
   lancamentos?: boolean | Prisma.categorias$lancamentosArgs<ExtArgs>
   _count?: boolean | Prisma.CategoriasCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["categorias"]>
@@ -604,7 +592,7 @@ export type categoriasSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   cod_usuario?: boolean
   nome?: boolean
   tipo?: boolean
-  usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
+  usuario?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["categorias"]>
 
 export type categoriasSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -612,7 +600,7 @@ export type categoriasSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   cod_usuario?: boolean
   nome?: boolean
   tipo?: boolean
-  usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
+  usuario?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["categorias"]>
 
 export type categoriasSelectScalar = {
@@ -624,21 +612,21 @@ export type categoriasSelectScalar = {
 
 export type categoriasOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"cod_categoria" | "cod_usuario" | "nome" | "tipo", ExtArgs["result"]["categorias"]>
 export type categoriasInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
+  usuario?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
   lancamentos?: boolean | Prisma.categorias$lancamentosArgs<ExtArgs>
   _count?: boolean | Prisma.CategoriasCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type categoriasIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
+  usuario?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
 }
 export type categoriasIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  usuarios?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
+  usuario?: boolean | Prisma.usuariosDefaultArgs<ExtArgs>
 }
 
 export type $categoriasPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "categorias"
   objects: {
-    usuarios: Prisma.$usuariosPayload<ExtArgs>
+    usuario: Prisma.$usuariosPayload<ExtArgs>
     lancamentos: Prisma.$lancamentosPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1040,7 +1028,7 @@ readonly fields: categoriasFieldRefs;
  */
 export interface Prisma__categoriasClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  usuarios<T extends Prisma.usuariosDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usuariosDefaultArgs<ExtArgs>>): Prisma.Prisma__usuariosClient<runtime.Types.Result.GetResult<Prisma.$usuariosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  usuario<T extends Prisma.usuariosDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usuariosDefaultArgs<ExtArgs>>): Prisma.Prisma__usuariosClient<runtime.Types.Result.GetResult<Prisma.$usuariosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   lancamentos<T extends Prisma.categorias$lancamentosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.categorias$lancamentosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$lancamentosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
