@@ -58,24 +58,20 @@ Com uma interface moderna e uma estrutura preparada para evolução, o Finora bu
 
 ## ✨ Funcionalidades
 
-O Finora oferece cadastro e login, painel mensal, registro e exclusão de receitas e despesas, categorias e projetos financeiros.
+O Finora oferece cadastro e login, painel mensal, registro e consulta de receitas e despesas, categorias personalizadas, projetos, relatórios com gráficos e exportação mensal em CSV.
 
-### Funcionalidades planejadas
+### Funcionalidades disponíveis
 
-- 💵 **Receitas e despesas:** cadastro, edição e exclusão de movimentações.
+- 💵 **Receitas e despesas:** cadastro, consulta por mês, filtros, edição e exclusão de movimentações.
 - 🗂️ **Categorias personalizadas:** organização de receitas e despesas.
-- 🏦 **Contas financeiras:** gerenciamento de diferentes contas e carteiras.
-- 📊 **Dashboard:** visão geral do saldo, receitas e despesas.
-- 🎯 **Metas financeiras:** criação e acompanhamento de objetivos.
-- 🧾 **Orçamentos:** definição de limites de gastos.
-- 🔁 **Transações recorrentes:** gerenciamento de despesas e receitas periódicas.
-- 📅 **Parcelamentos:** acompanhamento de compras parceladas.
-- 📈 **Relatórios:** gráficos e análises financeiras por período.
-- 📤 **Importação e exportação:** gerenciamento de dados financeiros.
-- 🔐 **Autenticação:** cadastro, login e proteção das informações.
-- 🌙 **Tema claro e escuro:** personalização da aparência da plataforma.
+- 📊 **Painel:** saldo, receitas, despesas e movimentações recentes.
+- 🎯 **Projetos:** agrupamento de movimentações e totais por objetivo.
+- 📈 **Relatórios:** comparação mensal, despesas por categoria e exportação CSV.
+- 🔐 **Autenticação:** cadastro, login, senha protegida e sessão segura.
 
-Os recursos de contas bancárias, metas, orçamentos, recorrências, parcelamentos e importação/exportação permanecem no roadmap.
+### Próximas funcionalidades
+
+Contas bancárias, metas, orçamentos, recorrências, parcelamentos e importação de dados permanecem no roadmap.
 
 ---
 
@@ -112,8 +108,7 @@ O Finora utiliza tecnologias modernas para desenvolver uma aplicação Full Stac
 | ORM | Prisma ORM | Comunicação com o banco |
 | Hospedagem do banco | Neon | PostgreSQL na nuvem |
 | Gráficos | Recharts | Visualização de dados financeiros |
-| Validação | Zod | Validação de informações |
-| Autenticação | Auth.js | Gerenciamento de autenticação |
+| Autenticação | bcryptjs e cookies seguros | Proteção de senhas e sessões |
 | Versionamento | Git e GitHub | Controle de versão |
 | Containerização | Docker | Ambiente de desenvolvimento |
 | Deploy | Vercel | Hospedagem da aplicação |
@@ -155,21 +150,28 @@ npm install
 
 ### 4. Configure as variáveis de ambiente
 
-Crie um arquivo `.env` na raiz do projeto, seguindo as instruções da seção [Configuração](#-configuração).
+Copie `.env.example` para `.env` e configure a conexão PostgreSQL e uma chave de sessão própria.
 
-### 5. Inicie a aplicação
+### 5. Prepare o banco
+
+```bash
+npm run db:setup
+```
+
+O comando cria as tabelas, os índices e a view do schema Finora. Pode ser executado novamente com segurança.
+
+### 6. Inicie a aplicação
 
 ```bash
 npm run dev
 ```
 
-### 6. Acesse no navegador
+### 7. Acesse no navegador
 
 ```text
 http://localhost:3000
 ```
 
-Antes do primeiro acesso, crie um banco PostgreSQL e execute o script `prisma/schema.sql` nele. O cadastro e as telas financeiras usam essa estrutura.
 
 ---
 
@@ -180,7 +182,9 @@ O projeto utiliza variáveis de ambiente para armazenar configurações sensíve
 Exemplo de configuração:
 
 ```env
-DATABASE_URL="sua_connection_string_do_postgresql"
+DATABASE_URL="postgresql://usuario:senha@host:5432/banco?sslmode=require"
+DIRECT_URL="postgresql://usuario:senha@host:5432/banco?sslmode=require"
+SESSION_SECRET="uma-chave-aleatoria-longa-e-secreta"
 ```
 
 ### Variáveis de ambiente
@@ -192,49 +196,41 @@ DATABASE_URL="sua_connection_string_do_postgresql"
 
 > 🔒 Nunca compartilhe seu arquivo `.env` ou envie informações sensíveis para o GitHub. Utilize o `.gitignore` para impedir que esses arquivos sejam versionados.
 
+O Finora usa `DATABASE_URL` nas rotas e no Prisma. Em uma hospedagem, configure as variáveis no painel do serviço e publique novamente a aplicação.
+
 ---
 
 ## 📂 Estrutura do projeto
 
-A estrutura planejada segue a arquitetura do Next.js com App Router:
+A estrutura atual segue a arquitetura do Next.js com App Router:
 
 ```text
 finora/
 │
 ├── prisma/
-│   └── schema.prisma
+│   ├── schema.prisma
+│   └── schema.sql
+├── scripts/
+│   └── setup-db.mjs
 │
 ├── public/
 │
 ├── src/
 │   ├── app/
-│   │   ├── (auth)/
-│   │   │   ├── login/
-│   │   │   └── cadastro/
-│   │   │
-│   │   ├── (dashboard)/
-│   │   │   ├── dashboard/
-│   │   │   ├── transacoes/
-│   │   │   ├── categorias/
-│   │   │   ├── contas/
-│   │   │   ├── projetos/
-│   │   │   └── relatorios/
-│   │   │
 │   │   ├── api/
+│   │   ├── cadastro/
+│   │   ├── categorias/
+│   │   ├── dashboard/
+│   │   ├── login/
+│   │   ├── projetos/
+│   │   ├── relatorios/
+│   │   ├── transacoes/
 │   │   ├── globals.css
 │   │   ├── layout.js
 │   │   └── page.js
 │   │
 │   ├── components/
-│   │   ├── ui/
-│   │   ├── layout/
-│   │   └── dashboard/
-│   │
-│   ├── lib/
-│   │
-│   ├── services/
-│   │
-│   └── validations/
+│   └── lib/
 │
 ├── .env
 ├── .env.example
@@ -244,8 +240,6 @@ finora/
 └── README.md
 ```
 
-> A estrutura apresentada representa a organização planejada. Diretórios e arquivos serão adicionados conforme o desenvolvimento.
-
 ---
 
 ## 🗺️ Roadmap
@@ -254,21 +248,21 @@ O desenvolvimento do Finora será dividido em etapas para facilitar a implementa
 
 - [x] Definição da proposta e do escopo inicial.
 - [x] Definição da stack tecnológica.
-- [ ] Configuração inicial do Next.js.
-- [ ] Configuração do PostgreSQL e Prisma.
-- [ ] Modelagem do banco de dados.
-- [ ] Cadastro e autenticação de usuários.
-- [ ] Gerenciamento de receitas e despesas.
-- [ ] Gerenciamento de categorias.
+- [x] Configuração inicial do Next.js.
+- [x] Configuração do PostgreSQL e Prisma.
+- [x] Modelagem do banco de dados.
+- [x] Cadastro e autenticação de usuários.
+- [x] Gerenciamento de receitas e despesas.
+- [x] Gerenciamento de categorias.
 - [ ] Gerenciamento de contas financeiras.
-- [ ] Dashboard financeiro.
-- [ ] Gráficos e indicadores.
-- [ ] Gerenciamento de projetos financeiros.
+- [x] Painel financeiro.
+- [x] Gráficos e indicadores.
+- [x] Gerenciamento de projetos financeiros.
 - [ ] Orçamentos e limites de gastos.
 - [ ] Metas financeiras.
 - [ ] Transações recorrentes e parcelamentos.
-- [ ] Relatórios financeiros.
-- [ ] Importação e exportação de dados.
+- [x] Relatórios financeiros e exportação CSV.
+- [ ] Importação de dados.
 - [ ] Tema claro e escuro.
 - [ ] Testes e melhorias de segurança.
 - [ ] Publicação da aplicação.

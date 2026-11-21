@@ -1,7 +1,8 @@
 "use client";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { ArrowDownLeft, ArrowUpRight, Wallet, Plus, Trash2, LogOut, FolderKanban, Tag, CalendarDays, X, LoaderCircle } from "lucide-react";
+import { ArrowDownLeft, ArrowUpRight, Wallet, Plus, Trash2, FolderKanban, Tag, CalendarDays, X, LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Navegacao from "@/components/navegacao";
 
 const money = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
 const today = new Date();
@@ -25,10 +26,9 @@ export default function Dashboard() {
     const r=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});const d=await r.json();if(!r.ok)throw new Error(d.mensagem);setModal("");setForm({descricao:"",valor:"",categoria:"",projeto:"",data:defaultDate,nome:"",detalhe:""});setAviso(d.mensagem);await carregar();
   }catch(e){setAviso(e.message);}finally{setBusy(false);}}
   async function remover(id){if(!window.confirm("Deseja excluir este lançamento?"))return;const r=await fetch(`/api/lancamentos?id=${id}`,{method:"DELETE"});const d=await r.json();setAviso(d.mensagem);carregar();}
-  async function sair(){await fetch("/api/logout",{method:"POST"});router.push("/login");}
   const categoriaOptions=useMemo(()=>data.categorias.filter(c=>c.tipo===tipo),[data.categorias,tipo]);
   const changeMonth=(delta)=>{const date=new Date(ano,mes-1+delta,1);setMes(date.getMonth()+1);setAno(date.getFullYear());};
-  return <main className="min-h-screen bg-slate-50 text-slate-800"><header className="border-b border-slate-200 bg-white"><div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4"><a href="/dashboard" className="flex items-center gap-3"><span className="rounded-xl bg-blue-600 p-2.5 text-white"><Wallet size={21}/></span><span className="text-xl font-bold">Finora<span className="text-blue-600">.</span></span></a><button onClick={sair} className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-500 hover:bg-slate-100"><LogOut size={17}/> Sair</button></div></header>
+  return <main className="min-h-screen bg-slate-50 text-slate-800"><Navegacao/>
   <div className="mx-auto max-w-7xl px-5 py-8 md:py-10"><div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end"><div><p className="text-sm font-semibold uppercase tracking-wider text-blue-600">Seu planejamento financeiro</p><h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900">Visão geral</h1><p className="mt-1 text-slate-500">Acompanhe tudo o que entra e sai.</p></div><div className="flex flex-wrap gap-2"><button onClick={()=>setModal("categoria")} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold hover:border-blue-300"><Tag size={17}/> Categoria</button><button onClick={()=>setModal("projeto")} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold hover:border-blue-300"><FolderKanban size={17}/> Projeto</button><button onClick={()=>setModal("lancamento")} className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-100 hover:bg-blue-700"><Plus size={18}/> Novo lançamento</button></div></div>
   {aviso&&<div role="status" className="mt-5 flex items-center justify-between rounded-xl bg-blue-50 px-4 py-3 text-sm text-blue-800">{aviso}<button onClick={()=>setAviso("")} aria-label="Fechar"><X size={16}/></button></div>}
   <div className="mt-7 flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3"><button onClick={()=>changeMonth(-1)} className="rounded-lg px-3 py-2 text-slate-500 hover:bg-slate-100">←</button><div className="flex items-center gap-2 font-semibold capitalize text-slate-700"><CalendarDays size={18} className="text-blue-600"/>{monthName.format(new Date(ano,mes-1,1))}</div><button onClick={()=>changeMonth(1)} className="rounded-lg px-3 py-2 text-slate-500 hover:bg-slate-100">→</button></div>

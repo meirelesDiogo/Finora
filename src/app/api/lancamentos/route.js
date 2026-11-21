@@ -8,8 +8,9 @@ export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const mes = Number(searchParams.get("mes")) || new Date().getMonth() + 1;
   const ano = Number(searchParams.get("ano")) || new Date().getFullYear();
+  const todos = searchParams.get("todos") === "1";
   const [lancamentos, categorias, projetos, totais] = await Promise.all([
-    pool.query("SELECT l.cod_lancamento,l.descricao,l.valor::float,l.tipo,l.data_lancamento,c.nome AS categoria,p.nome AS projeto FROM lancamentos l JOIN categorias c USING(cod_categoria) LEFT JOIN projetos p USING(cod_projeto) WHERE l.cod_usuario=$1 AND EXTRACT(MONTH FROM l.data_lancamento)=$2 AND EXTRACT(YEAR FROM l.data_lancamento)=$3 ORDER BY l.data_lancamento DESC,l.cod_lancamento DESC", [userId, mes, ano]),
+    pool.query("SELECT l.cod_lancamento,l.descricao,l.valor::float,l.tipo,l.data_lancamento,c.nome AS categoria,p.nome AS projeto FROM lancamentos l JOIN categorias c ON c.cod_usuario=l.cod_usuario AND c.cod_categoria=l.cod_categoria LEFT JOIN projetos p ON p.cod_usuario=l.cod_usuario AND p.cod_projeto=l.cod_projeto WHERE l.cod_usuario=$1 AND ($4::boolean OR (EXTRACT(MONTH FROM l.data_lancamento)=$2 AND EXTRACT(YEAR FROM l.data_lancamento)=$3)) ORDER BY l.data_lancamento DESC,l.cod_lancamento DESC LIMIT 1000", [userId, mes, ano, todos]),
     pool.query("SELECT cod_categoria,nome,tipo FROM categorias WHERE cod_usuario=$1 ORDER BY tipo,nome", [userId]),
     pool.query("SELECT cod_projeto,nome FROM projetos WHERE cod_usuario=$1 ORDER BY nome", [userId]),
     pool.query("SELECT COALESCE(SUM(valor) FILTER(WHERE tipo='RECEITA'),0)::float receitas,COALESCE(SUM(valor) FILTER(WHERE tipo='DESPESA'),0)::float despesas FROM lancamentos WHERE cod_usuario=$1 AND EXTRACT(MONTH FROM data_lancamento)=$2 AND EXTRACT(YEAR FROM data_lancamento)=$3", [userId, mes, ano]),
@@ -42,4 +43,27 @@ export async function DELETE(request) {
   const id = new URL(request.url).searchParams.get("id");
   const result = await pool.query("DELETE FROM lancamentos WHERE cod_usuario=$1 AND cod_lancamento=$2", [userId,id]);
   return result.rowCount ? NextResponse.json({ mensagem: "Lançamento removido." }) : NextResponse.json({ mensagem: "Lançamento não encontrado." }, { status: 404 });
+}
+
+export async function PUT(request) {
+  const userId = await currentUserId();
+  if (!userId) return NextResponse.json({ mensagem: "Faça login para continuar." }, { status: 401 });
+  const body = await request.json();
+  const id = String(body.id || "");
+  const descricao = String(body.descricao || "").trim();
+  const valor = Number(body.valor);
+  const categoria = Number(body.categoria);
+  const tipo = body.tipo;
+  const data = body.data;
+  const projeto = body.projeto ? Number(body.projeto) : null;
+  if (!/^\d+$/.test(id) || !descricao || descricao.length > 255 || !Number.isFinite(valor) || valor <= 0 || !Number.isInteger(categoria) || !["RECEITA","DESPESA"].includes(tipo) || !/^\d{4}-\d{2}-\d{2}$/.test(data || ""))
+    return NextResponse.json({ mensagem: "Confira os dados do lançamento." }, { status: 400 });
+  try {
+    const result = await pool.query("UPDATE lancamentos l SET cod_categoria=c.cod_categoria,cod_projeto=p.cod_projeto,descricao=$4,valor=$5,tipo=$6,data_lancamento=$7 FROM categorias c LEFT JOIN projetos p ON p.cod_usuario=$1 AND p.cod_projeto=$3 WHERE l.cod_usuario=$1 AND l.cod_lancamento=$8 AND c.cod_usuario=$1 AND c.cod_categoria=$2 AND c.tipo=$6 AND ($3::bigint IS NULL OR p.cod_projeto IS NOT NULL) RETURNING l.cod_lancamento", [userId,categoria,projeto,descricao,valor,tipo,data,id]);
+    if (!result.rowCount) return NextResponse.json({ mensagem: "Lançamento, categoria ou projeto não encontrado." }, { status: 404 });
+    return NextResponse.json({ mensagem: "Lançamento atualizado." });
+  } catch (error) {
+    console.error("Falha ao atualizar lançamento:", error);
+    return NextResponse.json({ mensagem: "Não foi possível atualizar o lançamento." }, { status: 500 });
+  }
 }
