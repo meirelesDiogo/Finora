@@ -17,10 +17,12 @@ CREATE TABLE IF NOT EXISTS projetos (
   cod_projeto BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   cod_usuario BIGINT NOT NULL REFERENCES usuarios(cod_usuario) ON DELETE CASCADE,
   nome VARCHAR(150) NOT NULL, descricao TEXT,
+  valor_meta NUMERIC(12,2) NOT NULL DEFAULT 0 CHECK (valor_meta >= 0),
   data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT uq_projeto_usuario UNIQUE (cod_usuario,cod_projeto),
   CONSTRAINT uq_projeto_nome UNIQUE (cod_usuario,nome)
 );
+ALTER TABLE projetos ADD COLUMN IF NOT EXISTS valor_meta NUMERIC(12,2) NOT NULL DEFAULT 0;
 CREATE TABLE IF NOT EXISTS lancamentos (
   cod_lancamento BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   cod_usuario BIGINT NOT NULL REFERENCES usuarios(cod_usuario) ON DELETE CASCADE,
