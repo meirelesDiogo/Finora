@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Wallet, LayoutDashboard, ArrowLeftRight, Tag, FolderKanban, ChartNoAxesCombined, LogOut, Moon, Sun, BriefcaseBusiness } from "lucide-react";
+import { useEffect } from "react";
+import { Wallet, LayoutDashboard, ArrowLeftRight, Tag, FolderKanban, ChartNoAxesCombined, LogOut, Moon, BriefcaseBusiness } from "lucide-react";
 
 const links = [
   ["/dashboard", "Painel", LayoutDashboard],
@@ -16,15 +16,12 @@ const links = [
 export default function Navegacao() {
   const path = usePathname();
   const router = useRouter();
-  const [escuro, setEscuro] = useState(false);
   useEffect(() => {
     const preferencia = localStorage.getItem("finora-tema") === "escuro";
-    setEscuro(preferencia);
     document.documentElement.classList.toggle("dark", preferencia);
   }, []);
   function alternarTema() {
-    const novoTema = !escuro;
-    setEscuro(novoTema);
+    const novoTema = !document.documentElement.classList.contains("dark");
     document.documentElement.classList.toggle("dark", novoTema);
     localStorage.setItem("finora-tema", novoTema ? "escuro" : "claro");
   }
@@ -41,7 +38,7 @@ export default function Navegacao() {
     <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4">
       <Link href="/dashboard" className="flex shrink-0 items-center gap-3"><span className="rounded-xl bg-blue-600 p-2.5 text-white"><Wallet size={21}/></span><span className="text-xl font-bold text-slate-900">Finora<span className="text-blue-600">.</span></span></Link>
       <nav aria-label="Navegação principal" className="hidden items-center gap-1 lg:flex">{links.map(([href,label,Icon])=><Link key={href} href={href} className={linkClasses(href)}><Icon size={17}/>{label}</Link>)}</nav>
-      <div className="flex items-center gap-1"><button onClick={alternarTema} aria-label={escuro?"Ativar tema claro":"Ativar tema escuro"} title={escuro?"Tema claro":"Tema escuro"} className="rounded-lg p-2.5 text-slate-500 hover:bg-slate-100">{escuro?<Sun size={19}/>:<Moon size={19}/>}</button><button onClick={sair} className="flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-500 hover:bg-slate-100"><LogOut size={17}/><span className="hidden sm:inline">Sair</span></button></div>
+      <div className="flex items-center gap-1"><button onClick={alternarTema} aria-label="Alternar tema claro ou escuro" title="Alternar tema claro ou escuro" className="rounded-lg p-2.5 text-slate-500 hover:bg-slate-100"><Moon size={19}/><span className="sr-only">Alternar tema claro ou escuro</span></button><button onClick={sair} className="flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-500 hover:bg-slate-100"><LogOut size={17}/><span className="hidden sm:inline">Sair</span></button></div>
     </div>
     <nav aria-label="Navegação móvel" className="flex gap-1 overflow-x-auto border-t border-slate-100 px-3 py-2 lg:hidden">{links.map(([href,label,Icon])=><Link key={href} href={href} className={linkClasses(href,true)}><Icon size={15}/>{label}</Link>)}</nav>
   </header>;
