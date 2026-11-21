@@ -89,6 +89,7 @@ ALTER TABLE ativos_investimento ADD COLUMN IF NOT EXISTS rendimento_liquido NUME
 
 CREATE TABLE IF NOT EXISTS operacoes_investimento (
   cod_operacao BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  cod_lancamento BIGINT UNIQUE REFERENCES lancamentos(cod_lancamento) ON DELETE CASCADE,
   cod_usuario BIGINT NOT NULL REFERENCES usuarios(cod_usuario) ON DELETE CASCADE,
   cod_ativo BIGINT NOT NULL,
   tipo VARCHAR(10) NOT NULL CHECK (tipo IN ('COMPRA','VENDA','APORTE','RESGATE')),
@@ -102,6 +103,7 @@ CREATE TABLE IF NOT EXISTS operacoes_investimento (
   CONSTRAINT fk_operacao_ativo FOREIGN KEY (cod_usuario,cod_ativo)
     REFERENCES ativos_investimento(cod_usuario,cod_ativo) ON DELETE CASCADE
 );
+ALTER TABLE operacoes_investimento ADD COLUMN IF NOT EXISTS cod_lancamento BIGINT UNIQUE REFERENCES lancamentos(cod_lancamento) ON DELETE CASCADE;
 
 CREATE INDEX IF NOT EXISTS idx_ativos_usuario_tipo
 ON ativos_investimento(cod_usuario,tipo);
