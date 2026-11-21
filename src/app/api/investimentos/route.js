@@ -112,7 +112,7 @@ export async function POST(request) {
     return NextResponse.json({ mensagem: "Ativos de renda fixa devem ser registrados em reais." }, { status: 400 });
   try {
     const ativo = await prisma.$transaction(async (tx) => {
-      const saldoInicial = fixa && temAplicacaoInicial ? valorInicial - custosIniciais : 0;
+      const saldoInicial = fixa && temAplicacaoInicial ? valorInicial : 0;
       const cotacao = !fixa && temAplicacaoInicial ? precoInicial : 0;
       const rows = await tx.$queryRaw`INSERT INTO ativos_investimento
         (cod_usuario,nome,tipo,ticker,moeda,percentual_cdi,taxa_anual,data_aplicacao,data_vencimento,cotacao_atual,cambio_brl,saldo_atual)
