@@ -28,7 +28,7 @@ export async function GET() {
         where: { cod_usuario: userId, tipo: "DESPESA", data_lancamento: { gte: inicioMes, lt: fimMes } },
         _sum: { valor: true },
       }),
-      prisma.projetos.findMany({ where: { cod_usuario: userId }, select: { cod_projeto: true, nome: true }, orderBy: { nome: "asc" } }),
+      prisma.$queryRawUnsafe("SELECT cod_projeto,nome,valor_meta FROM projetos WHERE cod_usuario=$1 ORDER BY nome ASC", userId),
       prisma.lancamentos.groupBy({
         by: ["cod_projeto", "tipo"],
         where: { cod_usuario: userId, cod_projeto: { not: null } },
@@ -55,10 +55,14 @@ export async function GET() {
       categorias: categorias.map((item) => ({ nome: item.nome, total: totaisCategorias.get(String(item.cod_categoria)) ?? 0 })),
       projetos: projetos.map((item) => {
         const valores = valoresPorProjeto.filter((row) => row.cod_projeto === item.cod_projeto);
+        const receitas = Number(valores.find((row) => row.tipo === "RECEITA")?._sum.valor ?? 0);
+        const despesas = Number(valores.find((row) => row.tipo === "DESPESA")?._sum.valor ?? 0);
+        const meta = Number(item.valor_meta);
+        const valorGuardado = Math.max(0, receitas - despesas);
         return {
           nome: item.nome,
-          receitas: Number(valores.find((row) => row.tipo === "RECEITA")?._sum.valor ?? 0),
-          despesas: Number(valores.find((row) => row.tipo === "DESPESA")?._sum.valor ?? 0),
+          receitas, despesas, valor_meta: meta, valor_guardado: valorGuardado,
+          progresso: meta > 0 ? Math.min(100, (valorGuardado / meta) * 100) : 0,
         };
       }),
     });
