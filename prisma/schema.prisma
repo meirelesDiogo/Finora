@@ -39,6 +39,7 @@ model projetos {
   cod_usuario  BigInt
   nome         String       @db.VarChar(150)
   descricao    String?      @db.Text
+  valor_meta   Decimal      @default(0) @db.Decimal(12, 2)
   data_criacao DateTime     @default(now()) @db.Timestamp(6)
   usuario      usuarios    @relation(fields: [cod_usuario], references: [cod_usuario], onDelete: Cascade)
   lancamentos  lancamentos[]
