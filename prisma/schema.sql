@@ -73,6 +73,8 @@ CREATE TABLE IF NOT EXISTS ativos_investimento (
   moeda VARCHAR(10) NOT NULL DEFAULT 'BRL' CHECK (moeda IN ('BRL','USD','EUR','GBP','BTC','USDT')),
   percentual_cdi NUMERIC(8,3) CHECK (percentual_cdi IS NULL OR percentual_cdi >= 0),
   taxa_anual NUMERIC(8,4) CHECK (taxa_anual IS NULL OR taxa_anual >= 0),
+  rendimento_bruto NUMERIC(12,2) CHECK (rendimento_bruto IS NULL OR rendimento_bruto >= 0),
+  rendimento_liquido NUMERIC(12,2) CHECK (rendimento_liquido IS NULL OR rendimento_liquido >= 0),
   data_aplicacao DATE,
   data_vencimento DATE,
   cotacao_atual NUMERIC(18,8) NOT NULL DEFAULT 0 CHECK (cotacao_atual >= 0),
@@ -81,6 +83,8 @@ CREATE TABLE IF NOT EXISTS ativos_investimento (
   data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT uq_ativo_usuario UNIQUE (cod_usuario,cod_ativo)
 );
+ALTER TABLE ativos_investimento ADD COLUMN IF NOT EXISTS rendimento_bruto NUMERIC(12,2);
+ALTER TABLE ativos_investimento ADD COLUMN IF NOT EXISTS rendimento_liquido NUMERIC(12,2);
 
 CREATE TABLE IF NOT EXISTS operacoes_investimento (
   cod_operacao BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
