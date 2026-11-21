@@ -279,34 +279,13 @@ O desenvolvimento do Finora será dividido em etapas para facilitar a implementa
 - [ ] Recursos de inteligência financeira.
 
 ---
+## 🌐 Acesso e utilização
 
-## 🤝 Contribuindo
+O Finora é um projeto desenvolvido de forma independente e disponibilizado publicamente no GitHub.
 
-Contribuições, sugestões e melhorias são bem-vindas!
+Qualquer pessoa interessada poderá acessar o código-fonte, conhecer sua implementação e utilizar o projeto conforme os termos da licença MIT.
 
-Caso queira contribuir:
-
-1. Faça um fork do projeto.
-2. Crie uma branch para sua funcionalidade:
-
-```bash
-git checkout -b feature/minha-feature
-```
-
-3. Faça suas alterações.
-4. Registre suas alterações utilizando commits descritivos:
-
-```bash
-git commit -m "feat: adiciona nova funcionalidade"
-```
-
-5. Envie sua branch:
-
-```bash
-git push origin feature/minha-feature
-```
-
-6. Abra um Pull Request.
+O desenvolvimento e a evolução do sistema são conduzidos individualmente pelo autor.
 
 ### 📝 Padrão de commits
 
